@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Index = () => {
+const Home = () => {
   const [nowShowing, setNowShowing] = React.useState({});
   const [upcoming, setUpcoming] = React.useState({});
   React.useEffect(() => {
@@ -196,4 +196,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Home;

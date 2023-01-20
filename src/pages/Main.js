@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 
 import Signin from "./Signin";
-import Index from "./Index";
+import Home from "./Home";
 import Homeapi from "./Homeapi";
 import Signup from "./Signup";
 import Forgot from "./Forgot";
@@ -29,7 +29,7 @@ const Main = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/signin" element={<Signin />} />
-        <Route path="/index" element={<Index />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/homeapi" element={<Homeapi />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<Forgot />} />
