@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Home = () => {
+const Index = () => {
   const [nowShowing, setNowShowing] = React.useState({});
   const [upcoming, setUpcoming] = React.useState({});
   React.useEffect(() => {
@@ -62,7 +62,7 @@ const Home = () => {
           <div className="text-[16px] text-[#5F2EEA] font-bold">view all</div>
         </div>
         <div className="flex overflow-auto flex-nowrap">
-          {nowShowing?.map((char) => (
+          {nowShowing?.results?.map((char) => (
             <div className="pt-[56px]">
               <div className="border-box border-2 p-[32px] rounded-[8px] border-white mr-[28px] text-center">
                 <div>
@@ -196,4 +196,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Index;

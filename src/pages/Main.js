@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 
 import Signin from "./Signin";
-import Home from "./Home";
-import Homeapi from "./Homeapi";
+import Index from "./Index";
+
 import Signup from "./Signup";
 import Forgot from "./Forgot";
 import Reset from "./Reset";
@@ -29,8 +29,8 @@ const Main = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/signin" element={<Signin />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/homeapi" element={<Homeapi />} />
+        <Route path="/" element={<Index />} />
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/reset" element={<Reset />} />
