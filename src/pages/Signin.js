@@ -16,7 +16,8 @@ const SignInScheme = Yup.object().shape({
 
 const Signin = () => {
   const [errMessage, setErrMessage] = React.useState("");
-  const [showAlert, setShowAlert] = React.useState(false);
+  const [alertError, setAlertError] = React.useState(false);
+  const [alertSuccess, setAlertSuccess] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -49,7 +50,9 @@ const Signin = () => {
 
   const login = async (value) => {
     const cb = () => {
-      navigate("/homepage");
+      setTimeout(() => {
+        navigate("/homepage");
+      }, 3000);
     };
 
     try {
@@ -59,7 +62,7 @@ const Signin = () => {
         setErrMessage(result.payload);
       }
     } catch (err) {
-      console.log(err);
+      setErrMessage(err?.response?.data?.message);
     }
 
     //   const { value: email } = event.target.email;
@@ -95,11 +98,7 @@ const Signin = () => {
       >
         <div className=" text-[48px] mb-3 font-[600px]">Sign In</div>
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-3 text-[#AAAAAA] font-[400px]">Sign in with your data that you entered during your registration</div>
-        {/* {showAlert && ( */}
-        {/* <div className="bg-red-400 border border-red-700 mb-3 py-4 flex justify-center rounded-[12px]">
-          <span>Wrong username or password</span>
-        </div> */}
-        {/* )} */}
+
         <Formik
           initialValues={{
             email: "",
@@ -124,6 +123,32 @@ const Signin = () => {
                 {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
               </div>
               <div>
+                {alertError ? (
+                  <div className="alert alert-error shadow-lg mt-8">
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{errMessage}</span>
+                    </div>
+                  </div>
+                ) : (
+                  false
+                )}
+                {alertSuccess ? (
+                  <div className="alert alert-success shadow-lg mt-8">
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Login succesfully</span>
+                    </div>
+                  </div>
+                ) : (
+                  false
+                )}
+              </div>
+              <div>
                 <button type="submit" className="w-full text-white font-bold box-border border-2 pr-10 pl-10 py-4 text-center bg-[#5F2EEA] rounded-[12px] mb-[32px]">
                   Sign In
                 </button>
@@ -145,7 +170,6 @@ const Signin = () => {
             </Link>
           </div>
         </div>
-        <div></div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import YupPassword from "yup-password";
 YupPassword(Yup);
 
 const forgotScheme = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
+  // email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
   confirmPassword: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
   code: Yup.string().required("Required"),
@@ -82,7 +82,7 @@ const Reset = () => {
         <Formik
           initialValues={{
             code: "",
-            email: "",
+            // email: "",
             password: "",
             confirmPassword: "",
           }}
@@ -96,11 +96,11 @@ const Reset = () => {
                 <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " name="code" placeholder="Write your code" />
                 {errors.code && touched.code ? <div className="text-red-500 text-sm ">{errors.code}</div> : null}
               </div>{" "}
-              <div className=" mb-3">
+              {/* <div className=" mb-3">
                 <label>Email</label>
                 <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3" type="email" name="email" placeholder="Write your email" />
                 {errors.email && touched.email ? <div className="text-red-500 text-sm ">{errors.email}</div> : null}
-              </div>
+              </div> */}
               <div className=" mb-3">
                 <label>Password</label>
                 <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type="password" name="password" placeholder="Write your password" />

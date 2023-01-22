@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import { Navigate } from "react-router-dom";
-
+import http from "../helpers/http";
 import { useDispatch } from "react-redux";
 import { chooseMovie as chooseMovieAction } from "../redux/reducers/transaction";
 
@@ -45,11 +45,11 @@ const Moviedetails = () => {
   };
 
   const getSchedule = async () => {
-    const { data } = await axios.get("http://localhost:8888/movieSchedules");
+    const { data } = await axios.get(`http://localhost:8888/movieSchedules/${id}`);
     setSchedule(data.results);
     console.log(data);
   };
-
+  console.log(schedule);
   const selectTime = (time, cinema) => {
     setSelectedTime(time);
     setSelectedCinema(cinema);
@@ -156,13 +156,11 @@ const Moviedetails = () => {
                 </div>
                 <hr className="mt-[24px] mb-[16px]" />
                 <div className=" pl-[32px] text-[12px]">
-                  {schedule.map((time) => (
-                    <div className="flex mb-[16px] font-semibold">
-                      <button className={`mr-[32px] ${cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(time, cinema)}>
-                        {time.startDate}
-                      </button>
-                    </div>
-                  ))}
+                  <div className="flex mb-[16px] font-semibold">
+                    <button className={`mr-[32px] ${cinema === selectedCinema && schedule.times === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(schedule.times, cinema)}>
+                      {schedule.times}
+                    </button>
+                  </div>
                 </div>
                 <div className="flex pl-[32px] pr-[24px] text-[16px] mb-[32px]">
                   <div className="flex-1 text-[#6B6B6B] ">Price</div>
