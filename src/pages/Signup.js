@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
+import { GiTicket } from "react-icons/gi";
 import { Formik, Form, Field } from "formik";
 import http from "../helpers/http";
 import { useDispatch } from "react-redux";
@@ -53,17 +54,15 @@ const Signup = () => {
 
   return (
     <div className="flex">
-      <div
-        className=" w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')]
-      max-[425px]:hidden"
-      >
-        <div className="bg-[#2B156BCC] opacity-80  w-[800px] h-[1054px]">
-          <div className="pt-[390px] pl-[150px]">
-            <div className="">
-              <img src={require("../assets/images/tickitz 1.png")} alt="logo" />
+      <div className=" w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] ">
+        <div className="bg-[#0b2361]   w-[800px] h-[1054px]">
+          <div className="pt-[250px] pl-[150px]">
+            <div className=" relative">
+              <span className="text-[100px] text-[#ef91a1] font-Rubik">Cluezzy</span>
+              <GiTicket className="text-[#ef91a1] text-[50px] absolute right-48 top-10" />
             </div>
-            <div className="text-[48px] text-white pl-[50px]">
-              <div> wait, watch, wow!</div>
+            <div className="text-[48px] text-[#ef91a1] pl-[30px]">
+              <div>ezzy, watch, enjoy!</div>
             </div>
           </div>
         </div>
@@ -115,7 +114,7 @@ const Signup = () => {
                 </label>
                 {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
               </div>
-              <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#5F2EEA] rounded-[12px] mb-[32px] text-white">
+              <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white">
                 Sign Up
               </button>
             </Form>
