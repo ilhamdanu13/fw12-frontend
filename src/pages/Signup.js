@@ -1,10 +1,56 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { Formik, Form, Field } from "formik";
+import http from "../helpers/http";
+import { useDispatch } from "react-redux";
+import { useRoutes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { loginAction } from "../redux/actions/auth";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
+import { registerAction } from "../redux/actions/auth";
+YupPassword(Yup);
+
+const phoneRegEx = /^(^08)(\d{8,10})$/;
+
+const SignUpScheme = Yup.object().shape({
+  firstName: Yup.string().required("Required"),
+  lastName: Yup.string().required("Required"),
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
+  phoneNumber: Yup.string().matches(phoneRegEx, "Invalid phone number").required("Required"),
+});
 
 const Signup = () => {
+  const [errMessage, setErrorMessage] = React.useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [show, setShow] = React.useState(false);
+  const handleShow = () => {
+    setShow(!show);
+  };
+
+  // Register
+  const register = (value) => {
+    const cb = () => {
+      navigate("/Signin");
+    };
+
+    try {
+      const results = dispatch(
+        registerAction({
+          ...value,
+          cb,
+        })
+      );
+      setErrorMessage(results.payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex">
       <div
@@ -23,46 +69,67 @@ const Signup = () => {
         </div>
       </div>
       <div
-        className="basis-2/5 pt-[176px] pr-20 pl-[83px]
+        className="basis-2/5 pt-[100px] pr-20 pl-[83px]
       min-[320px]: max-[425px]:text-[80%]"
       >
         <div className=" text-[48px] mb-3 font-[600px]">Sign Up</div>
         <div className="text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">Fill your additional details</div>
-        <form>
-          <label>First Name</label>
-          <div className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 mb-3">
-            <input type="email" placeholder="Write your first name" />
-          </div>
-          <label>Last Name</label>
-          <div className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 mb-3">
-            <input type="email" placeholder="Write your last name" />
-          </div>
-          <label>Phone Number</label>
-          <div className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 mb-3">
-            <input type="email" placeholder="Write your phone number" />
-          </div>
-          <label>Email</label>
-          <div className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 mb-3">
-            <input type="email" placeholder="Write your email" />
-          </div>
-          <label>Password</label>
-          <div className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 mb-12">
-            <input type="password" placeholder="Write your password" />
-          </div>
-          <div className="box-border border-2 pr-10 pl-10 py-4 text-center bg-[#5F2EEA] rounded-[12px] mb-[32px]">
-            <Link to="/home" className="text-white">
-              Sign Up
+        <Formik
+          initialValues={{
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            email: "",
+            password: "",
+          }}
+          validationSchema={SignUpScheme}
+          onSubmit={register}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <div className="flex flex-col mb-3">
+                <label className="">First Name</label>
+                <Field type="text" id="firstName" name="firstName" placeholder="Write your first name" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-2 " />
+                {errors.firstName && touched.firstName ? <div className=" text-red-500 text-sm">{errors.firstName}</div> : null}
+              </div>
+              <div className="flex flex-col mb-3">
+                <label className="">Last Name</label>
+                <Field type="text" name="lastName" placeholder="Write your last name" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                {errors.lastName && touched.lastName ? <div className=" text-red-500 text-sm">{errors.lastName}</div> : null}
+              </div>
+              <div className="flex flex-col mb-3">
+                <label>Phone Number</label>
+                <Field type="phoneNumber" name="phoneNumber" placeholder="Write your phone number" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                {errors.phoneNumber && touched.phoneNumber ? <div className=" text-red-500 text-sm">{errors.phoneNumber}</div> : null}
+              </div>
+              <div className="flex flex-col mb-3">
+                <label>Email</label>
+                <Field type="email" name="email" placeholder="Write your email" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
+              </div>
+              <div className="flex flex-col mb-5 relative">
+                <label>Password</label>
+                <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
+                  {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
+                </label>
+                {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
+              </div>
+              <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#5F2EEA] rounded-[12px] mb-[32px] text-white">
+                Sign Up
+              </button>
+            </Form>
+          )}
+        </Formik>
+
+        <div className="text-center">
+          <div className="text-[#8692A6] mb-[19px]">
+            Already have account ?{" "}
+            <Link to="/signin" className="text-blue-700">
+              Sign In
             </Link>
           </div>
-          <div className="text-center">
-            <div className="text-[#8692A6] mb-[19px]">
-              Already have account ?{" "}
-              <Link to="/signin" className="text-blue-700">
-                Sign In
-              </Link>
-            </div>
-          </div>
-        </form>
+        </div>
         <div></div>
       </div>
     </div>

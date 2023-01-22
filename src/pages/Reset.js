@@ -1,7 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BsEyeSlash, BsEye } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { resetPassword as resetAction } from "../redux/actions/auth";
+import { Formik, Form, Field, validateYupSchema } from "formik";
+import * as Yup from "yup";
+import YupPassword from "yup-password";
+YupPassword(Yup);
+
+const forgotScheme = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
+  confirmPassword: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
+  code: Yup.string().required("Required"),
+});
 
 const Reset = () => {
+  const [errMessage, setErrMessage] = React.useState("");
+  const [showAlert, setShowAlert] = React.useState(false);
+  const [show, setShow] = React.useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleShow = () => {
+    setShow(!show);
+  };
+
+  const reset = async (value) => {
+    const cb = () => {
+      navigate("/signin");
+    };
+
+    try {
+      const result = await dispatch(resetAction({ ...value, cb }));
+      setErrMessage(result.payload);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="flex">
       <div
@@ -38,26 +74,54 @@ const Reset = () => {
         </div>
       </div>
       <div
-        className="basis-2/5 pt-[176px] pr-20 pl-[83px]
+        className="basis-2/5 pt-[100px] pr-20 pl-[83px]
         min-[320px]: w-[320px] pt-[30px] max-[425px]:text-[60%] pt-[30px] w-[425px]]"
       >
         <div className=" text-[26px] mb-3 font-[600px]">Fill your complete password</div>
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">set your new password</div>
-        <form>
-          <label>Password</label>
-          <div className="">
-            <input className="form-input pr-[170px] pl-5 py-4 border-2 box-border rounded-[12px] mt-3 mb-3" type="email" placeholder="Write your password" />
-          </div>
-          <label>Confirm Password</label>
-          <div className="">
-            <input className="form-input pr-[170px] pl-5 py-4 border-2 box-border rounded-[12px] mt-3 mb-3" type="email" placeholder="Write your confirm password" />
-          </div>
-          <div className="box-border border-2 pr-10 pl-10 py-4 text-center bg-[#5F2EEA] rounded-[12px] mb-[32px]">
-            <Link to="/home" className="text-white">
-              Submit
-            </Link>
-          </div>
-        </form>
+        <Formik
+          initialValues={{
+            code: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          }}
+          validationSchema={forgotScheme}
+          onSubmit={reset}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <div className=" mb-3">
+                <label>Code</label>
+                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " name="code" placeholder="Write your code" />
+                {errors.code && touched.code ? <div className="text-red-500 text-sm ">{errors.code}</div> : null}
+              </div>{" "}
+              <div className=" mb-3">
+                <label>Email</label>
+                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3" type="email" name="email" placeholder="Write your email" />
+                {errors.email && touched.email ? <div className="text-red-500 text-sm ">{errors.email}</div> : null}
+              </div>
+              <div className=" mb-3">
+                <label>Password</label>
+                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type="password" name="password" placeholder="Write your password" />
+                {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
+              </div>
+              <div className="mb-5 relative">
+                <label>Confirm Password</label>
+                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type={show ? "text" : "password"} name="confirmPassword" placeholder="Write your confirm password" />
+                <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
+                  {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
+                </label>
+                {errors.confirmPassword && touched.confirmPassword ? <div className="text-red-500 text-sm ">{errors.confirmPassword}</div> : null}
+              </div>
+              <div>
+                <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#5F2EEA] rounded-[12px] mb-[32px] text-white font-bold">
+                  Submit
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
         <div></div>
       </div>
     </div>

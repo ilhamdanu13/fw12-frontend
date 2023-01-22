@@ -1,7 +1,37 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Formik, Form, Field } from "formik";
+import { forgotPassword as forgotAction } from "../redux/actions/auth";
+import * as Yup from "yup";
+import YupPassword from "yup-password";
+YupPassword(Yup);
+
+const resetScheme = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+});
 
 const Forgot = () => {
+  const [errMessage, setErrMessage] = React.useState("");
+  const [showAlert, setShowAlert] = React.useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const forgot = async (value) => {
+    const cb = () => {
+      navigate("/reset");
+    };
+
+    try {
+      const result = await dispatch(forgotAction({ ...value, cb }));
+      if (result.payload.startsWith("Req")) {
+        setErrMessage(result.payload);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="flex">
       <div
@@ -43,17 +73,28 @@ const Forgot = () => {
       >
         <div className=" text-[26px] mb-3 font-[600px]">Fill your complete email</div>
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">we'll send a link to your email shortly</div>
-        <form>
-          <label>Email</label>
-          <div className="">
-            <input className="form-input pr-[170px] pl-5 py-4 border-2 box-border rounded-[12px] mt-3 mb-3" type="email" placeholder="Write your email" />
-          </div>
-          <div className="box-border border-2 pr-10 pl-10 py-4 text-center bg-[#5F2EEA] rounded-[12px] mb-[32px]">
-            <Link to="/reset" className="text-white">
-              Send
-            </Link>
-          </div>
-        </form>
+        <Formik
+          initialValues={{
+            email: "",
+          }}
+          validationSchema={resetScheme}
+          onSubmit={forgot}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <label>Email</label>
+              <div className="mb-5">
+                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3" type="email" name="email" placeholder="Write your email" />
+                {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
+              </div>
+              <div>
+                <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#5F2EEA] rounded-[12px] mb-[32px] text-white font-bold">
+                  Send
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
         <div></div>
       </div>
     </div>
