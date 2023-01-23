@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import http from "../helpers/http";
 import { useDispatch } from "react-redux";
 import { chooseMovie as chooseMovieAction } from "../redux/reducers/transaction";
+import NavbarUser from "../components/NavbarUser";
 
 const Moviedetails = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Moviedetails = () => {
   const [cityList, setCityList] = React.useState([]);
   const [city, setCity] = React.useState({});
   const [schedule, setSchedule] = React.useState([]);
+  const [selectedPrice, setSelectedPrice] = React.useState("");
   const [selectedTime, setSelectedTime] = React.useState("");
   const [selectedCinema, setSelectedCinema] = React.useState(null);
 
@@ -50,9 +52,14 @@ const Moviedetails = () => {
     console.log(data);
   };
   console.log(schedule);
-  const selectTime = (time, cinema) => {
+  const selectTime = (time, cinema, price) => {
     setSelectedTime(time);
     setSelectedCinema(cinema);
+    setSelectedPrice(price);
+  };
+
+  const selectPrice = (price) => {
+    setSelectedPrice(price);
   };
 
   const book = () => {
@@ -62,6 +69,7 @@ const Moviedetails = () => {
         cinemaId: selectedCinema,
         bookingDate: date,
         bookingTime: selectedTime,
+        price: selectedPrice,
       })
     );
     navigate("/orderpage");
@@ -69,26 +77,7 @@ const Moviedetails = () => {
 
   return (
     <div>
-      <nav className="flex flex-1 pt-[36px] px-[79px]">
-        <div>
-          <img className="mr-[81px]" src={require("../assets/images/navlogo.png")} alt="navlogo" />
-        </div>
-        <div className="flex-1 items-center content-center pt-[13px]">
-          <Link className="pt-[13px] mr-[81px]" to="/home">
-            Home
-          </Link>
-          <Link className="pt-[13px]" to="/home">
-            List Movie
-          </Link>
-        </div>
-        <div className=" pt-[23px] pr-[50px]">
-          <img className="w-[18px]" src={require("../assets/images/search.png")} alt="Search" />
-        </div>
-        <div className=" items-center pt-[13px]">
-          <img className="w-[56px]" src={require("../assets/images/Profile.png")} alt="Profile" />
-        </div>
-      </nav>
-
+      <NavbarUser />
       <div className="px-[79px] flex mb-[80px] pt-[40px]">
         <div className="border-box border-2 p-[32px] rounded-[8px] mr-[28px]">
           <img className="w-[236px] h-[362px]" src={movieDetail.picture} alt={movieDetail.title} />
@@ -112,8 +101,8 @@ const Moviedetails = () => {
             <div>Casts</div>
           </div>
           <div className="flex mb-[24px] text-[#121212] text-[16px]">
-            <div className="mr-[72px]">{movieDetail.duration}</div>
-            <div>Tom Holland, Michael Keaton, Robert Downey Jr., ...</div>
+            <div className="mr-[150px]">{movieDetail.duration}</div>
+            <div>{movieDetail.casts}, ...</div>
           </div>
           <hr className="mb-[16px]" />
           <div>
@@ -141,39 +130,37 @@ const Moviedetails = () => {
         </div>
 
         <div className=" px-[79px] pt-[72px] mb-[66px] flex">
-          {cityList.map((cinema) => (
-            <div className="flex">
-              <div className="border-2 rounded-[8px] py-[24px] bg-white mr-[32px]">
-                <div className="flex pl-[41px] pr-[24px]">
-                  <div className="pt-[15px]">
-                    <img className="w-[106px] h-[40px]" src={require("../assets/images/ebu.png")} alt="Ebu" />
-                  </div>
-                  <div className="pl-[46px]">
-                    <div className="text-[24px] font-semibold leading-8 tracking-[.75px]">{cinema.name}</div>
-                    <div className="text-[12px] leading-[18px] tracking-[.75px] text-[#6E7191]">{cinema.address}</div>
-                    <div className="text-[12px] leading-[18px] tracking-[.75px] text-[#6E7191]">{cinema.city}</div>
-                  </div>
+          <div className="flex">
+            <div className="border-2 rounded-[8px] py-[24px] bg-white mr-[32px]">
+              <div className="flex pl-[41px] pr-[24px]">
+                <div className="pt-[15px]">
+                  <img className="w-[106px] h-[40px]" src={require("../assets/images/ebu.png")} alt="Ebu" />
                 </div>
-                <hr className="mt-[24px] mb-[16px]" />
-                <div className=" pl-[32px] text-[12px]">
-                  <div className="flex mb-[16px] font-semibold">
-                    <button className={`mr-[32px] ${cinema === selectedCinema && schedule.times === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(schedule.times, cinema)}>
-                      {schedule.times}
-                    </button>
-                  </div>
+                <div className="pl-[46px]">
+                  <div className="text-[24px] font-semibold leading-8 tracking-[.75px]">{schedule.cinema}</div>
+                  <div className="text-[12px] leading-[18px] tracking-[.75px] text-[#6E7191]">{schedule.address}</div>
+                  <div className="text-[12px] leading-[18px] tracking-[.75px] text-[#6E7191]">{schedule.city}</div>
                 </div>
-                <div className="flex pl-[32px] pr-[24px] text-[16px] mb-[32px]">
-                  <div className="flex-1 text-[#6B6B6B] ">Price</div>
-                  <div className="font-semibold">$10.00/seat</div>
-                </div>
-                <div className="flex justify-center text-center">
-                  <button disabled={selectedCinema !== cinema} onClick={book} className="border-2 rounded-[8px] pl-[112px] pr-[112px] py-[4px] bg-[#5F2EEA] text-white">
-                    Book now
+              </div>
+              <hr className="mt-[24px] mb-[16px]" />
+              <div className=" pl-[32px] text-[12px]">
+                <div className="flex mb-[16px] font-semibold">
+                  <button className={`mr-[32px] ${schedule.cinema === selectedCinema && schedule.times === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(schedule.times, schedule.cinema)}>
+                    <span className="mr-5">{schedule.times}</span>
                   </button>
                 </div>
               </div>
+              <div className="flex pl-[32px] pr-[24px] text-[16px] mb-[32px]">
+                <div className="flex-1 text-[#6B6B6B] ">Price</div>
+                <div className="font-semibold">IDR.{schedule.price}/seat</div>
+              </div>
+              <div className="flex justify-center text-center">
+                <button disabled={selectedCinema !== schedule.cinema} onClick={book} className="border-2 rounded-[8px] pl-[112px] pr-[112px] py-[4px] bg-[#5F2EEA] text-white">
+                  Book now
+                </button>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
 
         <div className="flex px-[70px] justify-center items-center">

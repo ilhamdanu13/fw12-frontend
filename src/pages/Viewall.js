@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import NavbarUser from "../components/NavbarUser";
+import Month from "../components/Month";
 
 const Viewall = () => {
   const [allMovie, setAllMovie] = React.useState({});
@@ -17,25 +19,7 @@ const Viewall = () => {
 
   return (
     <div>
-      <nav className="flex flex-1 pt-[36px] px-[136px]">
-        <div>
-          <img className="mr-[81px]" src={require("../assets/images/navlogo.png")} alt="navlogo" />
-        </div>
-        <div className="flex-1 items-center content-center pt-[13px]">
-          <Link className="pt-[13px] mr-[81px]" to="/home">
-            Home
-          </Link>
-          <Link className="pt-[13px]" to="/home">
-            List Movie
-          </Link>
-        </div>
-        <div className=" pt-[23px] pr-[50px]">
-          <img className="w-[18px]" src={require("../assets/images/search.png")} alt="Search" />
-        </div>
-        <div className=" items-center pt-[13px]">
-          <img className="w-[56px]" src={require("../assets/images/Profile.png")} alt="Profile" />
-        </div>
-      </nav>
+      <NavbarUser />
       <div className="px-[136px] bg-[#F5F6F8] pb-[32px]">
         <div className="flex mb-[40px] pt-[57px]">
           <div className="flex-1 text-[24px] font-bold ">List Movie</div>
@@ -49,57 +33,24 @@ const Viewall = () => {
             <input className="form-input pl-5 py-[5px] border-2 box-border rounded-[12px]" type="text" placeholder="Search Movie Name..." />
           </div>
         </div>
-        <div className="flex overflow-auto mb-[68px]">
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>September</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>Oktober</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>November</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>Desember</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>January</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>February</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>March</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>April</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>May</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>June</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA] mr-[16px]">
-            <div>July</div>
-          </div>
-          <div className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#5F2EEA]">
-            <div>August</div>
-          </div>
-        </div>
+        <Month />
         <div className="flex flex-wrap bg-white pl-[55px] py-[45px] rounded-[8px]">
           {allMovie?.results?.map((char) => (
-            <div className="flex">
-              <div className="border-box border-2 p-[32px] rounded-[8px] text-center mr-[24px] mb-[48px]">
-                <div className=" overflow-auto">
-                  <img className="w-[159px] h-[200px] rounded-[4px]" src={char.picture} alt={char.picture} />
+            <div className="pt-[56px] ">
+              <div className="flex flex-col border-box h-[452px] border-2 p-[32px] rounded-[8px] border-[#e9ecf4] mr-[28px] text-center mb-[20px]">
+                <div className="">
+                  <img className="w-[159px] h-[200px] rounded-[4px]" src={char.picture} alt={char.title} />
                 </div>
-                <div className="pt-[24px]">
-                  <div className="text-[18px] font-bold">{char.title}</div>
-                  <div className="text-[12px] text-[#A0A3BD] mb-[40px]">{char.director}</div>
-                  <Link to={"/moviedetails/" + char.id} className="border-2 px-[45px] py-[5px] rounded-[4px] text-[#5F2EEA] text-[14px] border-[#5F2EEA]">
-                    Details
-                  </Link>
+                <div className="flex-1 pt-[24px]">
+                  <div className="text-[18px] font-bold w-[150px]">{char.title}</div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-[12px] text-[#A0A3BD] mb-[40px]">{char.genre}</div>
+                </div>
+                <div className="">
+                  <button className=" border-2 px-[45px] py-[5px] rounded-[4px] text-[#f1554c] text-[14px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-xl duration-300">
+                    <Link to={"/moviedetails/" + char.id}>Details</Link>
+                  </button>
                 </div>
               </div>
             </div>
