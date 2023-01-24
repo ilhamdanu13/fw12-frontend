@@ -7,6 +7,8 @@ import http from "../helpers/http";
 import { useDispatch } from "react-redux";
 import { chooseMovie as chooseMovieAction } from "../redux/reducers/transaction";
 import NavbarUser from "../components/NavbarUser";
+import Footer from "../components/Footer";
+import Copyright from "../components/Copyright";
 
 const Moviedetails = () => {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const Moviedetails = () => {
   const [date, setDate] = React.useState(moment().format("YYYY-MM-DD"));
   const [cityList, setCityList] = React.useState([]);
   const [city, setCity] = React.useState({});
-  const [schedule, setSchedule] = React.useState([]);
+  const [schedule, setSchedule] = React.useState({});
   const [selectedPrice, setSelectedPrice] = React.useState("");
   const [selectedTime, setSelectedTime] = React.useState("");
   const [selectedCinema, setSelectedCinema] = React.useState(null);
@@ -34,13 +36,13 @@ const Moviedetails = () => {
   const getMovieDetail = async () => {
     const { data } = await axios.get("http://localhost:8888/movies/" + id);
     setMovieDetail(data.results);
-    console.log(data);
+    // console.log(data);
   };
 
   const getCinemas = async () => {
     const { data } = await axios.get("http://localhost:8888/cinemas");
     setCityList(data.results);
-    console.log(data);
+    // console.log(data);
     if (data.results.length) {
       setCity(data.results[0].name);
     }
@@ -49,16 +51,12 @@ const Moviedetails = () => {
   const getSchedule = async () => {
     const { data } = await axios.get(`http://localhost:8888/movieSchedules/${id}`);
     setSchedule(data.results);
-    console.log(data);
+    // console.log(data);
   };
-  console.log(schedule);
+
   const selectTime = (time, cinema, price) => {
     setSelectedTime(time);
     setSelectedCinema(cinema);
-    setSelectedPrice(price);
-  };
-
-  const selectPrice = (price) => {
     setSelectedPrice(price);
   };
 
@@ -74,6 +72,7 @@ const Moviedetails = () => {
     );
     navigate("/orderpage");
   };
+  // console.log(schedule.times.find((time) => time === "08:30"));
 
   return (
     <div>
@@ -115,6 +114,7 @@ const Moviedetails = () => {
       <div className="bg-[#F5F6F8] py-[78px]">
         <div className="text-center justify-center">
           <div className="text-[24px] font-bold mb-[24px]">Showtimes and Tickets</div>
+
           <div className="flex justify-center">
             <div className="text-[#4E4B66]">
               <input className="border-2 mr-[24px] py-[4px] pl-[5px] pr-[100px] rounded-[4px]" type="date" defaultValue={date} onChange={(e) => setDate(e.target.value)} />
@@ -143,71 +143,37 @@ const Moviedetails = () => {
                 </div>
               </div>
               <hr className="mt-[24px] mb-[16px]" />
+
               <div className=" pl-[32px] text-[12px]">
                 <div className="flex mb-[16px] font-semibold">
-                  <button className={`mr-[32px] ${schedule.cinema === selectedCinema && schedule.times === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(schedule.times, schedule.cinema)}>
-                    <span className="mr-5">{schedule.times}</span>
-                  </button>
+                  {schedule?.times?.map((time) => (
+                    <button className={`mr-[32px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(time, schedule.cinema, schedule.price)}>
+                      <span className="mr-5">{time}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
+
               <div className="flex pl-[32px] pr-[24px] text-[16px] mb-[32px]">
                 <div className="flex-1 text-[#6B6B6B] ">Price</div>
                 <div className="font-semibold">IDR.{schedule.price}/seat</div>
               </div>
               <div className="flex justify-center text-center">
-                <button disabled={selectedCinema !== schedule.cinema} onClick={book} className="border-2 rounded-[8px] pl-[112px] pr-[112px] py-[4px] bg-[#5F2EEA] text-white">
+                <button disabled={selectedCinema !== schedule.cinema} onClick={book} className="rounded-[8px] pl-[112px] pr-[112px] py-[4px] bg-[#f1554c] text-white font-bold">
                   Book now
                 </button>
               </div>
             </div>
           </div>
         </div>
-
         <div className="flex px-[70px] justify-center items-center">
           <hr className="w-[523px] " />
-          <div className="text-[#5F2EEA] text-[16px] px-[23px]">view more</div>
+          <div className="text-[#f1554c] text-[16px] px-[23px]">view more</div>
           <hr className="w-[523px]" />
         </div>
       </div>
-
-      <footer className="flex px-[136px]">
-        <div className="pt-[110px] flex-1">
-          <img src={require("../assets/images/logoreal.png")} alt="logo footer" />
-          <div className="pt-[30px] text-[16px] text-[#6E7191] mb-[5px]">Stop waiting in line. Buy tickets</div>
-          <div className="text-[16px] text-[#6E7191]">conveniently, watch movies quietly.</div>
-        </div>
-        <div className="pt-[110px] pl-[80px] flex-1">
-          <div className="text-[16px] mb-[30px] font-bold">Explore</div>
-          <div className="mb-2">Home</div>
-          <div>List Movie</div>
-        </div>
-        <div className="pt-[110px] text-[16px] mb-[30px] font-bold flex-1">
-          <div className="mb-[30px]">Our Sponsor</div>
-          <img className="mb-[30px]" src={require("../assets/images/pic1.png")} alt="ebu" />
-          <img className="mb-[30px]" src={require("../assets/images/pic2.png")} alt="cineone" />
-          <img className="mb-[30px]" src={require("../assets/images/pic3.png")} alt="hiflix" />
-        </div>
-        <div className="pt-[110px] flex-1">
-          <div className="mb-[35px] font-bold">Follow us</div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[22px]" src={require("../assets/images/facebook.png")} alt="facebook" />
-            <div>Tickitz Cinema id</div>
-          </div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[15px]" src={require("../assets/images/instagram.png")} alt="instagram" />
-            <div>tickitz.id</div>
-          </div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[22px]" src={require("../assets/images/twitter.png")} alt="twitter" />
-            <div>tickitz.id</div>
-          </div>
-          <div className="flex flex-row">
-            <img className="mr-[20px]" src={require("../assets/images/youtube.png")} alt="youtube" />
-            <div>Tickitz Cinema id</div>
-          </div>
-        </div>
-      </footer>
-      <div className="text-center text-[#4E4B66] text-[14px] pt-[70px] tracking-[.5px] leading-[18px] mb-[48px]">© 2020 Tickitz. All Rights Reserved.</div>
+      <Footer />
+      <Copyright />
     </div>
   );
 };

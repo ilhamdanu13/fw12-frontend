@@ -4,6 +4,9 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import { chooseSeat as chooseSeatAction } from "../redux/reducers/transaction";
+import NavbarUser from "../components/NavbarUser";
+import Footer from "../components/Footer";
+import Copyright from "../components/Copyright";
 
 const OrderPage = () => {
   // const [movieDetail, setMovieDetail] = React.useState({});
@@ -49,25 +52,7 @@ const OrderPage = () => {
 
   return (
     <div>
-      <nav className="flex flex-1 pt-[36px] px-[79px]">
-        <div>
-          <img className="mr-[81px]" src={require("../assets/images/navlogo.png")} alt="navlogo" />
-        </div>
-        <div className="flex-1 items-center content-center pt-[13px]">
-          <Link className="pt-[13px] mr-[81px]" to="/home">
-            Home
-          </Link>
-          <Link className="pt-[13px]" to="/home">
-            List Movie
-          </Link>
-        </div>
-        <div className=" pt-[23px] pr-[50px]">
-          <img className="w-[18px]" src={require("../assets/images/search.png")} alt="Search" />
-        </div>
-        <div className=" items-center pt-[13px]">
-          <img className="w-[56px]" src={require("../assets/images/Profile.png")} alt="Profile" />
-        </div>
-      </nav>
+      <NavbarUser />
       <div className="flex bg-[#F5F6F8] ">
         <div className="py-[78px] pl-[70px] pr-[24px] w-[850px]">
           <div className="mb-[24px]">
@@ -76,7 +61,7 @@ const OrderPage = () => {
           <div className="border-1 bg-white rounded-[8px]">
             <div className="flex py-[37px] px-[48px]">
               <div className="text-[24px] font-semibold tracking-[.25px] leading-[30px] flex-1">Spider-Man: Homecoming</div>
-              <button className="border-1 rounded-[8px] text-[14px] bg-[#F5F6F8] text-[#5F2EEA] font-bold py-[5px] px-[10px]">Change movie</button>
+              <button className="border-1 rounded-[8px] text-[14px] bg-[#F5F6F8] text-[#f1554c] font-bold py-[5px] px-[10px]">Change movie</button>
             </div>
           </div>
           <div>
@@ -88,8 +73,8 @@ const OrderPage = () => {
                 <div className="text-[14px] font-semibold mb-[8px]">Screen</div>
                 <hr className="border-2 rounded-[4px]" />
               </div>
-              <div className="grid grid-cols-2 gap-11">
-                <div className="grid grid-rows-8 gap-1">
+              <div className="grid grid-cols-2 gap-11 ml-[50px]">
+                <div className="grid grid-rows-8 gap-1 font-Mulish font-semibold">
                   {["A", "B", "C", "D", "E", "F", "G", ""].map((alphabet, _i) => {
                     return (
                       <div className="grid grid-cols-8">
@@ -109,7 +94,7 @@ const OrderPage = () => {
                     );
                   })}
                 </div>
-                <div className="grid grid-rows-8 gap-1">
+                <div className="grid grid-rows-8 gap-1 font-Mulish font-semibold">
                   {["A", "B", "C", "D", "E", "F", "G", ""].map((alphabet, _i) => {
                     return (
                       <div className="grid grid-cols-8">
@@ -142,11 +127,11 @@ const OrderPage = () => {
                     <div>Available</div>
                   </div>
                   <div className="flex mr-[40px]">
-                    <div className="border-[13px] rounded-[4px] border-[#5F2EEA] mr-[16px]"></div>
+                    <div className="border-[13px] rounded-[4px] border-[#f1554c] mr-[16px]"></div>
                     <div>Selected</div>
                   </div>
                   <div className="flex mr-[40px] ">
-                    <div className="border-[13px] rounded-[4px] border-[#6E7191] mr-[16px]"></div>
+                    <div className="border-[13px] rounded-[4px] border-[#0b2361] mr-[16px]"></div>
                     <div className="">Sold</div>
                   </div>
                 </div>
@@ -154,12 +139,12 @@ const OrderPage = () => {
             </div>
             <div className="flex pt-[40px]">
               <div className="flex-1">
-                <button type="submit" className="border-2 border-[#5F2EEA] text-[#5F2EEA] px-[75px] py-[10px] rounded-[4px]">
+                <button type="submit" className="border-2 border-[#f1554c] text-[#f1554c] px-[75px] py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
                   Change your movie
                 </button>
               </div>
               <div>
-                <button onClick={checkout} className="border-2 border-[#5F2EEA] text-[#5F2EEA] px-[75px] py-[10px] rounded-[4px]">
+                <button onClick={checkout} className="border-2 border-[#f1554c] text-[#f1554c] px-[75px] py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
                   Checkout now
                 </button>
               </div>
@@ -204,44 +189,8 @@ const OrderPage = () => {
         </div>
       </div>
 
-      <footer className="flex px-[136px]">
-        <div className="pt-[110px] flex-1">
-          <img src={require("../assets/images/logoreal.png")} alt="logo footer" />
-          <div className="pt-[30px] text-[16px] text-[#6E7191] mb-[5px]">Stop waiting in line. Buy tickets</div>
-          <div className="text-[16px] text-[#6E7191]">conveniently, watch movies quietly.</div>
-        </div>
-        <div className="pt-[110px] pl-[80px] flex-1">
-          <div className="text-[16px] mb-[30px] font-bold">Explore</div>
-          <div className="mb-2">Home</div>
-          <div>List Movie</div>
-        </div>
-        <div className="pt-[110px] text-[16px] mb-[30px] font-bold flex-1">
-          <div className="mb-[30px]">Our Sponsor</div>
-          <img className="mb-[30px]" src={require("../assets/images/pic1.png")} alt="ebu" />
-          <img className="mb-[30px]" src={require("../assets/images/pic2.png")} alt="cineone" />
-          <img className="mb-[30px]" src={require("../assets/images/pic3.png")} alt="hiflix" />
-        </div>
-        <div className="pt-[110px] flex-1">
-          <div className="mb-[35px] font-bold">Follow us</div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[22px]" src={require("../assets/images/facebook.png")} alt="facebook" />
-            <div>Tickitz Cinema id</div>
-          </div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[15px]" src={require("../assets/images/instagram.png")} alt="instagram" />
-            <div>tickitz.id</div>
-          </div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[22px]" src={require("../assets/images/twitter.png")} alt="twitter" />
-            <div>tickitz.id</div>
-          </div>
-          <div className="flex flex-row">
-            <img className="mr-[20px]" src={require("../assets/images/youtube.png")} alt="youtube" />
-            <div>Tickitz Cinema id</div>
-          </div>
-        </div>
-      </footer>
-      <div className="text-center text-[#4E4B66] text-[14px] pt-[70px] tracking-[.5px] leading-[18px] mb-[48px]">© 2020 Tickitz. All Rights Reserved.</div>
+      <Footer />
+      <Copyright />
     </div>
   );
 };

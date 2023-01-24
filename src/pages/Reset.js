@@ -145,7 +145,6 @@ const Reset = () => {
             </Form>
           )}
         </Formik>
-        <div></div>
       </div>
     </div>
   );

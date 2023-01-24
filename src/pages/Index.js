@@ -46,7 +46,9 @@ const Index = () => {
             <div className="text-[24px] text-[#0b2361] font-bold mb-[10px]">Now Showing</div>
             <div className="content-none h-[2.5px] w-[100px] bg-[#f1554c] ml-[25px]"></div>
           </div>
-          <div className="text-[16px] text-[#0b2361] font-bold">view all</div>
+          <Link to="/all" className="text-[16px] text-[#0b2361] font-bold">
+            view all
+          </Link>
         </div>
         <div className="flex overflow-auto ">
           {nowShowing?.results?.map((char) => (
@@ -74,7 +76,9 @@ const Index = () => {
       <div className="px-[136px]">
         <div className="flex mb-[40px]">
           <div className="flex-1 text-[24px] font-bold text-[#0b2361]">Upcoming Movie</div>
-          <div className="text-[16px] text-[#f1554c] font-bold">view all</div>
+          <Link to="/all" className="text-[16px] text-[#f1554c] font-bold">
+            view all
+          </Link>
         </div>
 
         <div className="flex overflow-auto mb-[68px]">

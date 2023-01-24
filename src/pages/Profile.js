@@ -1,62 +1,147 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RiImageEditLine } from "react-icons/ri";
 import { logout as logoutAction } from "../redux/reducers/auth";
+import NavbarUser from "../components/NavbarUser";
+import Footer from "../components/Footer";
+import Copyright from "../components/Copyright";
+import http from "../helpers/http";
+import { BsEyeSlash, BsEye } from "react-icons/bs";
+import jwtDecode from "jwt-decode";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import YupPassword from "yup-password";
+YupPassword(Yup);
+
+const phoneRegEx = /^(^08)(\d{8,10})$/;
+
+const profileScheme = Yup.object().shape({
+  email: Yup.string().email("Invalid email"),
+  phoneNumber: Yup.string().matches(phoneRegEx, "Invalid phone number"),
+});
+
+const passwordScheme = Yup.object().shape({
+  password: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1"),
+  confirmPassword: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1"),
+});
 
 const ProfilePage = () => {
-  const [movieDetail, setMovieDetail] = React.useState({});
-  React.useEffect(() => {
-    getMovieDetail().then((data) => {
-      setMovieDetail(data);
-    });
-  }, []);
+  const token = useSelector((state) => state?.auth?.token);
+  const decode = jwtDecode(token);
+  const { id } = decode;
+  const [bio, setBio] = React.useState({});
+  const [show, setShow] = React.useState(false);
+  const [picture, setPicture] = React.useState(false);
+  const [alertSuccess, setAlertSuccess] = React.useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const getMovieDetail = async () => {
-    const { data } = await axios.get("http://localhost:8888/movies/1");
+  React.useEffect(() => {
+    getBio().then((data) => {
+      setBio(data?.results);
+    });
+  }, [id]);
+
+  const getBio = async () => {
+    const { data } = await http(token).get("/profile/" + id);
     return data;
   };
 
-  const dispatch = useDispatch();
+  const updateProfile = async (value) => {
+    try {
+      const values = {
+        firstName: value.firstName,
+        lastName: value.lastName,
+        phoneNumber: value.phoneNumber,
+        email: value.email,
+      };
+      await http(token).patch(`http://localhost:8888/profile/${id}/update/`, values);
+      setAlertSuccess(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updatePassword = async (value) => {
+    try {
+      const values = {
+        password: value.password,
+        confirmPassword: value.confirmPassword,
+      };
+      await http(token).patch(`http://localhost:8888/profile/${id}/update/`, values);
+      setAlertSuccess(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(bio);
+  const upload = async (e) => {
+    e.preventDefault();
+    const file = e.target.picture.files[0];
+    console.log(file);
+    if (file?.size > 1024 * 1024 * 2) {
+      window.alert("File too large");
+    } else {
+      try {
+        const form = new FormData();
+        form.append("picture", file);
+        const { data } = await http(token).patch(`http://localhost:8888/profile/${id}/update/`, form);
+        window.alert(data.message);
+        setTimeout(() => {
+          navigate.replace("/profile");
+          setPicture(false);
+        }, 3000);
+      } catch (err) {
+        window.alert(err.response);
+      }
+    }
+  };
+
+  const handleShow = () => {
+    setShow(!show);
+  };
+
+  console.log(bio.picture);
   return (
     <div>
-      <nav className="flex flex-1 pt-[36px] px-[79px]">
-        <div>
-          <img className="mr-[81px]" src={require("../assets/images/navlogo.png")} alt="navlogo" />
-        </div>
-        <div className="flex-1 items-center content-center pt-[13px]">
-          <Link className="pt-[13px] mr-[81px]" to="/home">
-            Home
-          </Link>
-          <Link className="pt-[13px]" to="/home">
-            List Movie
-          </Link>
-        </div>
-        <button type="button" onClick={() => dispatch(logoutAction())}>
-          Logout
-        </button>
-        <div className=" pt-[23px] pr-[50px]">
-          <img className="w-[18px]" src={require("../assets/images/search.png")} alt="Search" />
-        </div>
-        <div className=" items-center pt-[13px]">
-          <img className="w-[56px]" src={require("../assets/images/Profile.png")} alt="Profile" />
-        </div>
-      </nav>
+      <NavbarUser />
       <div className="flex bg-[#F5F6F8] px-[79px]">
         <div className="pt-[56px]">
           <div className="border-1 bg-white rounded-[24px]">
             <div className="p-[40px]">
               <div className="text-[#4E4B66] text-[16px]">INFO</div>
               <div className="pt-[32px]">
-                <img className="mb-[32px]" src={require("../assets/images/Profile.png")} alt="Profile" />
+                <img className="w-[50px] h-[50px]" src={bio.picture} alt="Profile" />
               </div>
-              <div className="text-[#14142B] text-[20px] text-center">Jonas El Rodriguez</div>
+              <div onClick={() => setPicture(true)} className="flex justify-center items-center mb-[30px] cursor-pointer">
+                <RiImageEditLine className="w-[20px] h-[20px]" />
+              </div>
+              {/* The button to open modal */}
+              <label htmlFor="my-modal-3" className="">
+                <RiImageEditLine className="w-[20px] h-[20px]" />
+              </label>
+
+              {/* Put this part before </body> tag */}
+              <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+              <div className="modal">
+                <div className="modal-box relative">
+                  <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">
+                    ✕
+                  </label>
+                  <form onSubmit={upload}>
+                    <input type="file" name="picture" />
+                    <button type="submit">Save</button>
+                  </form>
+                </div>
+              </div>
+              <div className="text-[#14142B] text-[20px] text-center">{bio.firstName + " " + bio.lastName}</div>
               <div className="text-[14px] text-[#4E4B66] text-center  tracking-[.75px] leading-[24px]">Moviegoers</div>
             </div>
             <hr className="mb-[20px]" />
             <div className="flex justify-center pb-[25px]">
-              <button className="border-1 bg-[#5F2EEA] rounded-[16px] text-white  px-[70px] py-[8px] text-[16px]">Logout</button>
+              <button className="border-1 bg-[#f1554c] rounded-[16px] text-white  px-[70px] py-[8px] text-[16px]">Logout</button>
             </div>
           </div>
         </div>
@@ -68,108 +153,110 @@ const ProfilePage = () => {
                 <Link className="text-[18px] tracking-[.75] leading-[34px] text-[#AAAAAA]">Order History</Link>
               </div>
               <div className="pl-[45px]">
-                <hr className=" w-[140px] pl-[25px] border-2 border-[#5F2EEA] rounded-[4px]" />
+                <hr className=" w-[140px] pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />
               </div>
             </div>
           </div>
-          <div className="pt-[56px]">
-            <div className="border-1 bg-white rounded-[16px] w-[900px]">
-              <div className="px-[32px] pt-[40px] mb-[49px]">
-                <div className="mb-[16px] text-[#14142B] text-[16px]">Details Information</div>
-                <hr />
-              </div>
-              <div className="text-[#4E4B66] text-[16px]">
-                <div className="flex pl-[32px] mb-[32px]">
-                  <div className=" mr-[24px]">
-                    <div className="mb-[12px]">First Name</div>
-                    <div className="border-2 pl-[24px] pr-[314px] py-[10px] rounded-[16px]">Jonas</div>
+          <Formik
+            initialValues={{
+              firstName: "",
+              lastName: "",
+              email: "",
+              phoneNumber: "",
+            }}
+            onSubmit={updateProfile}
+            validationSchema={profileScheme}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                <div className="pt-[56px]">
+                  <div className="border-1 bg-white rounded-[16px] w-[900px]">
+                    <div className="px-[32px] pt-[40px] mb-[49px]">
+                      <div className="mb-[16px] text-[#14142B] text-[16px]">Details Information</div>
+                      <hr />
+                    </div>
+                    <div className="text-[#4E4B66] text-[16px]">
+                      <div className="flex pl-[32px] mb-[32px]">
+                        <div className=" mr-[24px]">
+                          <div className="mb-[12px] text-[#4E4B66]">First Name</div>
+                          <Field name="firstName" className="border-2 pl-[24px] pr-[160px] py-[10px] rounded-[16px] focus:outline-none" placeholder={bio.firstName} />
+                        </div>
+                        <div className="">
+                          <div className="mb-[12px] text-[#4E4B66]">Last Name</div>
+                          <Field name="lastName" className="border-2 pl-[24px] pr-[160px] rounded-[16px] py-[10px] focus:outline-none" placeholder={bio.lastName} />
+                        </div>
+                      </div>
+                      <div className="flex pl-[32px] pb-[63px]">
+                        <div className=" mr-[24px]">
+                          <div className="mb-[12px] text-[#4E4B66]">E-mail</div>
+                          <Field name="email" className="border-2 pl-[24px] pr-[160px] py-[10px] rounded-[16px] focus:outline-none" placeholder={bio.email} />
+                          {errors.email && touched.email ? <div className="text-red-500 text-sm ">{errors.email}</div> : null}
+                        </div>
+                        <div className="">
+                          <div className="mb-[12px] text-[#4E4B66]">Phone Number</div>
+                          <Field name="phoneNumber" className="border-2 pl-[24px] pr-[160px] rounded-[16px] py-[10px] focus:outline-none" placeholder={bio.phoneNumber} />
+                          {errors.phoneNumber && touched.phoneNumber ? <div className="text-red-500 text-sm ">{errors.phoneNumber}</div> : null}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="">
-                    <div className="mb-[12px]">Last Name</div>
-                    <div className="border-2 pl-[24px] pr-[314px] rounded-[16px] py-[10px]"> El Rodriguez</div>
+                  <div className="pt-[17px] mb-[22px]">
+                    <button type="submit" className="border-1 rounded-[16px] bg-[#f1554c] py-[10px] px-[120px] text-white ">
+                      Update changes
+                    </button>
                   </div>
                 </div>
-                <div className="flex pl-[32px] pb-[63px]">
-                  <div className=" mr-[24px]">
-                    <div className="mb-[12px]">E-mail</div>
-                    <div className="border-2 pl-[24px] pr-[150px] py-[10px] rounded-[16px]">jonasrodrigu123@gmail.com</div>
+              </Form>
+            )}
+          </Formik>
+          <Formik
+            initialValues={{
+              password: "",
+              confirmPassword: "",
+            }}
+            onSubmit={updatePassword}
+            validationSchema={passwordScheme}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                <div className="border-1 bg-white rounded-[16px] w-[900px]">
+                  <div className="px-[32px] pt-[40px] mb-[49px]">
+                    <div className="mb-[16px] text-[#14142B] text-[16px]">Account and Privacy</div>
+                    <hr />
                   </div>
-                  <div className="">
-                    <div className="mb-[12px]">Phone Number</div>
-                    <div className="border-2 pl-[24px] pr-[274px] rounded-[16px] py-[10px]"> +62 81445687121</div>
+                  <div className="text-[#4E4B66] text-[16px] pb-[64px] mb-[48px]">
+                    <div className="flex pl-[32px] mb-[32px]">
+                      <div className=" mr-[24px] relative">
+                        <div className="mb-[12px] text-[#4E4B66]">New Password</div>
+                        <Field name="password" className="border-2 pl-[24px] pr-[195px] py-[10px] rounded-[16px] focus:outline-none" placeholder="Write your password" type={show ? "text" : "password"} />
+                        <label onClick={handleShow} className="absolute right-6 top-12 cursor-pointer">
+                          {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
+                        </label>
+                        {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
+                      </div>
+                      <div className="relative">
+                        <div className="mb-[12px] text-[#4E4B66]">Confirm Password</div>
+                        <Field name="confirmPassword" className="border-2 pl-[24px] pr-[195px] rounded-[16px] py-[10px] focus:outline-none" placeholder="Confirm your password" type={show ? "text" : "password"} />
+                        <label onClick={handleShow} className="absolute right-6 top-12 cursor-pointer">
+                          {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
+                        </label>
+                        {errors.confirmPassword && touched.confirmPassword ? <div className="text-red-500 text-sm ">{errors.confirmPassword}</div> : null}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="pt-[17px] mb-[22px]">
-              <button type="button" className="border-1 rounded-[16px] bg-[#5F2EEA] py-[10px] px-[120px] text-white ">
-                Update changes
-              </button>
-            </div>
-          </div>
-          <div className="border-1 bg-white rounded-[16px] w-[900px]">
-            <div className="px-[32px] pt-[40px] mb-[49px]">
-              <div className="mb-[16px] text-[#14142B] text-[16px]">Account and Privacy</div>
-              <hr />
-            </div>
-            <div className="text-[#4E4B66] text-[16px] pb-[64px] mb-[48px]">
-              <div className="flex pl-[32px] mb-[32px]">
-                <div className=" mr-[24px]">
-                  <div className="mb-[12px]">New Password</div>
-                  <input className="border-2 pl-[24px] pr-[195px] py-[10px] rounded-[16px]" placeholder="Write your password" />
+                <div className="pt-[17px] mb-[36px]">
+                  <button type="submit" className="border-1 rounded-[16px] bg-[#f1554c] py-[10px] px-[120px] text-white ">
+                    Update changes
+                  </button>
                 </div>
-                <div className="">
-                  <div className="mb-[12px]">Confirm Password</div>
-                  <input className="border-2 pl-[24px] pr-[195px] rounded-[16px] py-[10px]" placeholder="Confirm your password" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="pt-[17px] mb-[36px]">
-            <button type="button" className="border-1 rounded-[16px] bg-[#5F2EEA] py-[10px] px-[120px] text-white ">
-              Update changes
-            </button>
-          </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
-      <footer className="flex px-[136px]">
-        <div className="pt-[110px] flex-1">
-          <img src={require("../assets/images/logoreal.png")} alt="logo footer" />
-          <div className="pt-[30px] text-[16px] text-[#6E7191] mb-[5px]">Stop waiting in line. Buy tickets</div>
-          <div className="text-[16px] text-[#6E7191]">conveniently, watch movies quietly.</div>
-        </div>
-        <div className="pt-[110px] pl-[80px] flex-1">
-          <div className="text-[16px] mb-[30px] font-bold">Explore</div>
-          <div className="mb-2">Home</div>
-          <div>List Movie</div>
-        </div>
-        <div className="pt-[110px] text-[16px] mb-[30px] font-bold flex-1">
-          <div className="mb-[30px]">Our Sponsor</div>
-          <img className="mb-[30px]" src={require("../assets/images/pic1.png")} alt="ebu" />
-          <img className="mb-[30px]" src={require("../assets/images/pic2.png")} alt="cineone" />
-          <img className="mb-[30px]" src={require("../assets/images/pic3.png")} alt="hiflix" />
-        </div>
-        <div className="pt-[110px] flex-1">
-          <div className="mb-[35px] font-bold">Follow us</div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[22px]" src={require("../assets/images/facebook.png")} alt="facebook" />
-            <div>Tickitz Cinema id</div>
-          </div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[15px]" src={require("../assets/images/instagram.png")} alt="instagram" />
-            <div>tickitz.id</div>
-          </div>
-          <div className="flex flex-row mb-[28px]">
-            <img className="mr-[22px]" src={require("../assets/images/twitter.png")} alt="twitter" />
-            <div>tickitz.id</div>
-          </div>
-          <div className="flex flex-row">
-            <img className="mr-[20px]" src={require("../assets/images/youtube.png")} alt="youtube" />
-            <div>Tickitz Cinema id</div>
-          </div>
-        </div>
-      </footer>
-      <div className="text-center text-[#4E4B66] text-[14px] pt-[70px] tracking-[.5px] leading-[18px] mb-[48px]">© 2020 Tickitz. All Rights Reserved.</div>
+      <Footer />
+      <Copyright />
     </div>
   );
 };

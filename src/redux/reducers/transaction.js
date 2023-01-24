@@ -4,7 +4,7 @@ import { transactionAction } from "../actions/transaction";
 
 const initialState = {
   movieId: "",
-  cinemaId: "",
+  cinema: "",
   bookingDate: "",
   bookingTime: "",
   price: "",
@@ -22,22 +22,22 @@ const transactionReducer = createSlice({
     chooseMovie: (state, { payload }) => {
       console.log(payload);
       state.movieId = payload.movieId;
+      state.cinema = payload.cinemaId;
       state.price = payload.price;
-      state.cinemaId = payload.cinemaId;
       state.bookingDate = payload.bookingDate;
       state.bookingTime = payload.bookingTime;
     },
     chooseSeat: (state, { payload }) => {
       state.seatNumber = payload.seatNumber;
     },
-    // choosePayment: (state, action) => {
-    //   const { paymentMethodId, fullName, email, phoneNumber, cb } = action.payload;
-    //   cb();
-    //   return (state = {
-    //     ...state,
-    //     ...{ paymentMethodId, fullName, email, phoneNumber },
-    //   });
-    // },
+    choosePayment: (state, action) => {
+      const { paymentMethodId, fullName, email, phoneNumber, cb } = action.payload;
+      cb();
+      return (state = {
+        ...state,
+        ...{ paymentMethodId, fullName, email, phoneNumber },
+      });
+    },
   },
   // extraReducers: (build) => {
   //   build.addCase(transactionAction.fulfilled, (state, action) => {
@@ -49,10 +49,6 @@ const transactionReducer = createSlice({
   // },
 });
 
-export const {
-  chooseMovie,
-  chooseSeat,
-  // choosePayment
-} = transactionReducer.actions;
+export const { chooseMovie, chooseSeat, choosePayment } = transactionReducer.actions;
 
 export default transactionReducer.reducer;

@@ -5,7 +5,8 @@ import { logout as logoutAction } from "../redux/reducers/auth";
 
 const NavbarUser = () => {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
+  // const token = useSelector((state) => state.auth.token);
+
   const navigate = useNavigate();
 
   const handlerLogout = () => {
@@ -37,13 +38,13 @@ const NavbarUser = () => {
       </div>
 
       <div className=" items-center pt-[13px] group">
-        <img className="w-[56px]" src={require("../assets/images/Profile.png")} alt="Profile" />
+        <img className="w-[56px] rounded-[50%] shadow-lg" src={require("../assets/images/User.png")} alt="Profile" />
         <div className="h-0 overflow-hidden duration-500 group-hover:h-[100px] absolute ">
-          <div className="font-Mulish  text-[#4E4B66] mb-[15px] cursor-pointer" onClick={handlerLogout}>
+          <div className="font-Mulish  text-[#4E4B66] mb-[15px] pt-[10px] cursor-pointer hover:font-bold duration-500 hover:shadow-md" onClick={handlerLogout}>
             Logout
           </div>
 
-          <Link className=" font-Mulish  text-[#4E4B66]" to="/profile">
+          <Link className=" font-Mulish  text-[#4E4B66] hover:font-bold duration-500 hover:shadow-md" to="/profile/">
             Profile
           </Link>
         </div>
