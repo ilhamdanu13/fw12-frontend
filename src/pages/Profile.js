@@ -77,6 +77,7 @@ const ProfilePage = () => {
     }
   };
   console.log(bio);
+
   const upload = async (e) => {
     e.preventDefault();
     const file = e.target.picture.files[0];
@@ -87,12 +88,13 @@ const ProfilePage = () => {
       try {
         const form = new FormData();
         form.append("picture", file);
-        const { data } = await http(token).patch(`http://localhost:8888/profile/${id}/update/`, form);
+        const { data } = await http(token).patch(`/profile/${id}/update/`, form);
         window.alert(data.message);
         setTimeout(() => {
-          navigate.replace("/profile");
+          navigate(0);
+
           setPicture(false);
-        }, 3000);
+        }, 1500);
       } catch (err) {
         window.alert(err.response);
       }
@@ -103,7 +105,12 @@ const ProfilePage = () => {
     setShow(!show);
   };
 
-  console.log(bio.picture);
+  const handlerLogout = () => {
+    setTimeout(() => {
+      dispatch(logoutAction());
+      navigate("/signin");
+    }, 2000);
+  };
   return (
     <div>
       <NavbarUser />
@@ -113,13 +120,15 @@ const ProfilePage = () => {
             <div className="p-[40px]">
               <div className="text-[#4E4B66] text-[16px]">INFO</div>
               <div className="pt-[32px]">
-                <img className="w-[50px] h-[50px]" src={bio.picture} alt="Profile" />
+                {bio?.picture ? (
+                  <img className="w-[136px] h-[136px] rounded-[50%] mb-3 shadow-lg" src={"https://res.cloudinary.com/fw12/image/upload/v1674621799/" + bio.picture} alt="Profile" />
+                ) : (
+                  <img className="w-[136px] h-[136px] rounded-[50%] mb-3 shadow-lg" src={"https://res.cloudinary.com/fw12/image/upload/v1674616077/Cluezzy/User_phom73.png"} alt="Profile" />
+                )}
               </div>
-              <div onClick={() => setPicture(true)} className="flex justify-center items-center mb-[30px] cursor-pointer">
-                <RiImageEditLine className="w-[20px] h-[20px]" />
-              </div>
+
               {/* The button to open modal */}
-              <label htmlFor="my-modal-3" className="">
+              <label htmlFor="my-modal-3" className="flex justify-center items-center mb-[30px]">
                 <RiImageEditLine className="w-[20px] h-[20px]" />
               </label>
 
@@ -141,7 +150,9 @@ const ProfilePage = () => {
             </div>
             <hr className="mb-[20px]" />
             <div className="flex justify-center pb-[25px]">
-              <button className="border-1 bg-[#f1554c] rounded-[16px] text-white  px-[70px] py-[8px] text-[16px]">Logout</button>
+              <button onClick={handlerLogout} className="border-1 bg-[#f1554c] rounded-[16px] text-white  px-[70px] py-[8px] text-[16px]">
+                Logout
+              </button>
             </div>
           </div>
         </div>
@@ -150,7 +161,9 @@ const ProfilePage = () => {
             <div className="border-1 bg-white rounded-[16px] w-[900px]">
               <div className="py-[25px] flex">
                 <Link className="text-[18px] tracking-[.75] leading-[34px] text-[#14142B] mr-[56px] pl-[48px]">Account Settings</Link>
-                <Link className="text-[18px] tracking-[.75] leading-[34px] text-[#AAAAAA]">Order History</Link>
+                <Link to="/order history" className="text-[18px] tracking-[.75] leading-[34px] text-[#AAAAAA]">
+                  Order History
+                </Link>
               </div>
               <div className="pl-[45px]">
                 <hr className=" w-[140px] pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />

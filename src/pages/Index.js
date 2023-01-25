@@ -5,8 +5,11 @@ import Navbar from "../components/Navbar";
 import Subscribe from "../components/Subscribe";
 import Footer from "../components/Footer";
 import Copyright from "../components/Copyright";
+import { useSelector } from "react-redux";
+import NavbarUser from "../components/NavbarUser";
 
 const Index = () => {
+  const token = useSelector((state) => state?.auth?.token);
   const [nowShowing, setNowShowing] = React.useState({});
   const [upcoming, setUpcoming] = React.useState({});
   React.useEffect(() => {
@@ -19,18 +22,18 @@ const Index = () => {
   }, []);
 
   const getNowShowing = async () => {
-    const { data } = await axios.get("http://localhost:8888/movies/now");
+    const { data } = await axios.get("https://fw12-backend-red.vercel.app/movies/now");
     return data;
   };
 
   const getUpcoming = async () => {
-    const { data } = await axios.get("http://localhost:8888/movies/upcoming");
+    const { data } = await axios.get("https://fw12-backend-red.vercel.app/movies/upcoming");
     return data;
   };
 
   return (
     <div>
-      <Navbar />
+      {token ? <NavbarUser /> : <Navbar />}
       <div className="flex items-center px-[136px]">
         <div className="flex-1">
           <div className="text-[#A0A3BD] text-[24px]">Nearest Cinema, Newest Movie, </div>

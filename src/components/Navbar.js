@@ -8,7 +8,7 @@ const Navbar = () => {
         <span className="text-[30px] text-[#ef91a1] font-Rubik">Cluezzy</span>
       </div>
       <div className="flex-1 items-center content-center pt-[13px]">
-        <Link className="pt-[13px] mr-[81px] font-Mulish font-semibold" to="/index">
+        <Link className="pt-[13px] mr-[81px] font-Mulish font-semibold" to="/">
           Home
         </Link>
         <Link className="pt-[13px] font-Mulish font-semibold" to="/all">

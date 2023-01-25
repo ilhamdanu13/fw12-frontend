@@ -4,13 +4,18 @@ import axios from "axios";
 import moment from "moment";
 import { Navigate } from "react-router-dom";
 import http from "../helpers/http";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { chooseMovie as chooseMovieAction } from "../redux/reducers/transaction";
 import NavbarUser from "../components/NavbarUser";
 import Footer from "../components/Footer";
 import Copyright from "../components/Copyright";
+import Navbar from "../components/Navbar";
+import jwtDecode from "jwt-decode";
 
 const Moviedetails = () => {
+  const token = useSelector((state) => state?.auth?.token);
+  const decode = jwtDecode(token);
+  const userId = decode.id;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -22,6 +27,8 @@ const Moviedetails = () => {
   const [selectedPrice, setSelectedPrice] = React.useState("");
   const [selectedTime, setSelectedTime] = React.useState("");
   const [selectedCinema, setSelectedCinema] = React.useState(null);
+  const [selectedCinemaId, setSelectedCinemaId] = React.useState(null);
+  const [selectedMovie, setSelectedMovie] = React.useState("");
 
   React.useEffect(() => {
     getMovieDetail();
@@ -51,32 +58,39 @@ const Moviedetails = () => {
   const getSchedule = async () => {
     const { data } = await axios.get(`http://localhost:8888/movieSchedules/${id}`);
     setSchedule(data.results);
-    // console.log(data);
   };
 
-  const selectTime = (time, cinema, price) => {
+  const selectTime = (time, cinema, price, title) => {
     setSelectedTime(time);
     setSelectedCinema(cinema);
     setSelectedPrice(price);
+    setSelectedMovie(title);
   };
+
+  // const selectTitle = (movieTitle) => {
+  //   setSelectedMovie(movieTitle)
+  // }
 
   const book = () => {
     dispatch(
       chooseMovieAction({
+        userId: userId,
         movieId: id,
         cinemaId: selectedCinema,
         bookingDate: date,
         bookingTime: selectedTime,
         price: selectedPrice,
+        movieName: selectedMovie,
       })
     );
     navigate("/orderpage");
   };
-  // console.log(schedule.times.find((time) => time === "08:30"));
+
+  console.log(schedule);
 
   return (
     <div>
-      <NavbarUser />
+      {token ? <NavbarUser /> : <Navbar />}
       <div className="px-[79px] flex mb-[80px] pt-[40px]">
         <div className="border-box border-2 p-[32px] rounded-[8px] mr-[28px]">
           <img className="w-[236px] h-[362px]" src={movieDetail.picture} alt={movieDetail.title} />
@@ -134,7 +148,7 @@ const Moviedetails = () => {
             <div className="border-2 rounded-[8px] py-[24px] bg-white mr-[32px]">
               <div className="flex pl-[41px] pr-[24px]">
                 <div className="pt-[15px]">
-                  <img className="w-[106px] h-[40px]" src={require("../assets/images/ebu.png")} alt="Ebu" />
+                  <img className="" src={schedule.cinemapicture} alt={schedule.cinema} />
                 </div>
                 <div className="pl-[46px]">
                   <div className="text-[24px] font-semibold leading-8 tracking-[.75px]">{schedule.cinema}</div>
@@ -143,16 +157,27 @@ const Moviedetails = () => {
                 </div>
               </div>
               <hr className="mt-[24px] mb-[16px]" />
-
-              <div className=" pl-[32px] text-[12px]">
-                <div className="flex mb-[16px] font-semibold">
-                  {schedule?.times?.map((time) => (
-                    <button className={`mr-[32px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(time, schedule.cinema, schedule.price)}>
-                      <span className="mr-5">{time}</span>
-                    </button>
-                  ))}
+              {token ? (
+                <div className="w-[381px] pl-[32px] text-[12px]">
+                  <div className="flex mb-[16px] font-semibold flex-wrap">
+                    {schedule?.times?.map((time) => (
+                      <button className={` mb-[16px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(time, schedule.cinema, schedule.price, schedule.title)}>
+                        <span className="mr-[40px]">{time}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className=" pl-[32px] text-[12px]">
+                  <div className="flex mb-[16px] font-semibold">
+                    {schedule?.times?.map((time) => (
+                      <button className={`mr-[32px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => window.alert("Please login")}>
+                        <span className="mr-5">{time}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="flex pl-[32px] pr-[24px] text-[16px] mb-[32px]">
                 <div className="flex-1 text-[#6B6B6B] ">Price</div>

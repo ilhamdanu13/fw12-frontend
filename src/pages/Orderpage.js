@@ -33,9 +33,17 @@ const OrderPage = () => {
   //   };
   //   dispatch(transactionAction({ transactionData: { ...transactionData, ...data } }));
   // };
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [schedule, setSchedule] = React.useState({});
   const [selectedSeat, setSelectedSeat] = React.useState([]);
+  const [totalPrice, setTotalPrice] = React.useState("");
+  const movieName = useSelector((state) => state.transaction.movieName);
+  const bookingDate = useSelector((state) => state.transaction.bookingDate);
+  const bookingTime = useSelector((state) => state.transaction.bookingTime);
+  const price = useSelector((state) => state.transaction.price);
+  const cinema = useSelector((state) => state.transaction.cinema);
 
   const selectSeat = (seat) => {
     if (selectedSeat.includes(seat)) {
@@ -46,7 +54,7 @@ const OrderPage = () => {
   };
 
   const checkout = () => {
-    dispatch(chooseSeatAction({ seatNumber: selectedSeat.join(", ") }));
+    dispatch(chooseSeatAction({ seatNumber: selectedSeat.join(", "), totalPrice: selectedSeat.length * price }));
     navigate("/paymentpage");
   };
 
@@ -60,7 +68,7 @@ const OrderPage = () => {
           </div>
           <div className="border-1 bg-white rounded-[8px]">
             <div className="flex py-[37px] px-[48px]">
-              <div className="text-[24px] font-semibold tracking-[.25px] leading-[30px] flex-1">Spider-Man: Homecoming</div>
+              <div className="text-[24px] font-semibold tracking-[.25px] leading-[30px] flex-1">{movieName}</div>
               <button className="border-1 rounded-[8px] text-[14px] bg-[#F5F6F8] text-[#f1554c] font-bold py-[5px] px-[10px]">Change movie</button>
             </div>
           </div>
@@ -161,29 +169,29 @@ const OrderPage = () => {
                 <img className="" src={require("../assets/images/cineone.png")} alt="Cineone" />
               </div>
               <div className="mb-[24px]">
-                <div className="font-semibold text-[24px]">CineOne21 Cinema</div>
+                <div className="font-semibold text-[24px]">{cinema}</div>
               </div>
             </div>
             <div className="flex px-[24px] mb-[16px]">
               <div className="flex-1 text-[#6B6B6B] text-[14px]">Movie selected</div>
-              <div className="text-[#14142B] text-[14px]">Spider-Man: Homecoming</div>
+              <div className="text-[#14142B] text-[14px]">{movieName}</div>
             </div>
             <div className="flex px-[24px] mb-[16px]">
-              <div className="flex-1 text-[#6B6B6B] text-[14px]">Tuesday, 07 July 2020</div>
-              <div className="text-[#14142B] text-[14px]">02:00</div>
+              <div className="flex-1 text-[#6B6B6B] text-[14px]">{bookingDate}</div>
+              <div className="text-[#14142B] text-[14px]">{bookingTime}</div>
             </div>
             <div className="flex px-[24px] mb-[16px]">
               <div className="flex-1 text-[#6B6B6B] text-[14px]">One ticket price</div>
-              <div className="text-[#14142B] text-[14px]">$10</div>
+              <div className="text-[#14142B] text-[14px]">{price}</div>
             </div>
             <div className="flex px-[24px] mb-[40px]">
               <div className="flex-1 text-[#6B6B6B] text-[14px]">Seat choosed</div>
-              <div className="text-[#14142B] text-[14px]">C4, C5, C6</div>
+              <div className="text-[#14142B] text-[14px]">{selectedSeat.join(", ")}</div>
             </div>
             <hr className="mb-[24px] " />
-            <div className="flex px-[24px] mb-[24px]">
-              <div className="flex-1 font-semibold text-[18px] pt-[5px]">Total Payment</div>
-              <div className="text-[#5F2EEA] text-[24px] mb-[24px]">$30</div>
+            <div className="flex px-[24px] pb-[24px] items-center justify-center ">
+              <div className="flex-1 font-semibold text-[18px]">Total Payment</div>
+              <div className="text-[#5F2EEA] text-[14px] ">counting...</div>
             </div>
           </div>
         </div>

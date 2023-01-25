@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import http from "../../helpers/http";
 
-export const transactionAction = createAsyncThunk("transaction/doTransaction", async ({ payload }) => {
-  const { data } = await axios.post("/transactions", { ...payload });
+export const transactionAction = createAsyncThunk("transaction/doTransaction", async ({ token, ...payload }) => {
+  const { data } = await http(token).post("/transactions/orderTransaction", { ...payload });
   return data.results;
 });

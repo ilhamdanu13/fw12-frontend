@@ -3,17 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { transactionAction } from "../actions/transaction";
 
 const initialState = {
+  userId: "",
   movieId: "",
+  movieName: "",
   cinema: "",
+
   bookingDate: "",
   bookingTime: "",
   price: "",
-  seatNumber: [],
+  seatNum: [],
   fullName: "",
   email: "",
   phoneNumber: "",
-  userId: "",
   paymentMethodId: "",
+  totalPrice: "",
 };
 const transactionReducer = createSlice({
   name: "transaction",
@@ -21,14 +24,18 @@ const transactionReducer = createSlice({
   reducers: {
     chooseMovie: (state, { payload }) => {
       console.log(payload);
+      state.userId = payload.userId;
       state.movieId = payload.movieId;
+
       state.cinema = payload.cinemaId;
       state.price = payload.price;
       state.bookingDate = payload.bookingDate;
       state.bookingTime = payload.bookingTime;
+      state.movieName = payload.movieName;
     },
     chooseSeat: (state, { payload }) => {
-      state.seatNumber = payload.seatNumber;
+      state.seatNum = payload.seatNumber;
+      state.totalPrice = payload.totalPrice;
     },
     choosePayment: (state, action) => {
       const { paymentMethodId, fullName, email, phoneNumber, cb } = action.payload;
