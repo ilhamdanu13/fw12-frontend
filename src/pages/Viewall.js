@@ -36,7 +36,7 @@ const Viewall = () => {
       <div className="px-[136px] bg-[#F5F6F8] pb-[32px]">
         <div className="flex mb-[40px] pt-[57px]">
           <div className="flex-1 text-[24px] font-bold font-Mulish">List Movie</div>
-          <select name="value" onChange={(value) => setSort(value)} className="flex pr-[20px] pl-[10px] py-[5px] border-2 box-border rounded-[12px] items-center mr-[12px] bg-whit text-[#4E4B66] font-Mulish focus:outline-none">
+          <select name="sort" onChange={(e) => setSort(e.target.value)} className="flex pr-[20px] pl-[10px] py-[5px] border-2 box-border rounded-[12px] items-center mr-[12px] bg-whit text-[#4E4B66] font-Mulish focus:outline-none">
             <option value="ASC">A-Z</option>
             <option value="DESC">Z-A</option>
 
@@ -45,7 +45,7 @@ const Viewall = () => {
             </div>
           </select>
           <div>
-            <input name="search" onChange={(value) => setSearch(value)} className="form-input pl-5 py-[5px] border-2 box-border rounded-[12px] text-[#4E4B66] focus:outline-none" type="text" placeholder="Search Movie Name..." />
+            <input name="search" onChange={(e) => setSearch(e.target.value)} className="form-input pl-5 py-[5px] border-2 box-border rounded-[12px] text-[#4E4B66] focus:outline-none" type="text" placeholder="Search Movie Name..." />
           </div>
         </div>
         <Month />
