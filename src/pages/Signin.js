@@ -60,21 +60,14 @@ const Signin = () => {
       const result = await dispatch(loginAction({ ...value, cb }));
 
       if (result.payload.startsWith("Wrong")) {
+        setAlertError(true);
         setErrMessage(result.payload);
+      } else {
+        setAlertSuccess(true);
       }
     } catch (err) {
       setErrMessage(err?.response?.data?.message);
     }
-
-    //   const { value: email } = event.target.email;
-    //   const { value: password } = event.target.password;
-    //   if (email && password) {
-    //     const cb = () => {
-    //       navigate("/homepage");
-    //     };
-    //     dispatch(loginAction({ email, password, cb }));
-    //   }
-    // };
   };
   return (
     <div className="flex">
@@ -96,7 +89,7 @@ const Signin = () => {
       </div>
       <div
         className="basis-2/5 pt-[100px] pr-20 pl-[83px]
-      min-[320px]: max-[425px]:text-[80%] "
+      min-[320px]: max-[425px]:text-[80%]"
       >
         <div className=" text-[48px] mb-3 font-[600px]">Sign In</div>
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-3 text-[#AAAAAA] font-[400px]">Sign in with your data that you entered during your registration</div>
@@ -113,22 +106,22 @@ const Signin = () => {
             <Form>
               <div className="flex flex-col mb-3">
                 <label>Email</label>
-                <Field type="email" name="email" placeholder="Write your email" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                <Field type="email" name="email" placeholder="Write your email" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
               </div>
-              <div className="flex flex-col mb-12 relative">
+              <div className="flex flex-col mb-3 relative">
                 <label>Password</label>
-                <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3" />
+                <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
                 {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
               </div>
-              <div>
+              <div className="mb-3">
                 {alertError ? (
-                  <div className="alert alert-error shadow-lg mt-8">
+                  <div className="alert alert-error shadow-lg mt-3">
                     <div>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                      <svg onClick={() => setAlertError(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>{errMessage}</span>
@@ -138,7 +131,7 @@ const Signin = () => {
                   false
                 )}
                 {alertSuccess ? (
-                  <div className="alert alert-success shadow-lg mt-8">
+                  <div className="alert alert-success shadow-lg mt-3">
                     <div>
                       <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

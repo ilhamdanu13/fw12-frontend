@@ -24,7 +24,10 @@ const SignUpScheme = Yup.object().shape({
 });
 
 const Signup = () => {
-  const [errMessage, setErrorMessage] = React.useState("");
+  const [errMessage, setErrMessage] = React.useState("");
+  const [succesMessage, setSuccessMessage] = React.useState("");
+  const [alertError, setAlertError] = React.useState(false);
+  const [alertSuccess, setAlertSuccess] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,21 +37,33 @@ const Signup = () => {
   };
 
   // Register
-  const register = (value) => {
+  const register = async (value) => {
     const cb = () => {
-      navigate("/Signin");
+      setTimeout(() => {
+        navigate("/Signin");
+      }, 3000);
     };
 
     try {
-      const results = dispatch(
+      const results = await dispatch(
         registerAction({
           ...value,
           cb,
         })
       );
-      setErrorMessage(results.payload);
+
+      if (results.payload.startsWith("Email")) {
+        setAlertError(true);
+        setErrMessage(results.payload);
+      } else if (results.payload.startsWith("Phone")) {
+        setAlertError(true);
+        setErrMessage(results.payload);
+      } else if (results.payload.startsWith("Register")) {
+        setAlertSuccess(true);
+        setSuccessMessage(results.payload);
+      }
     } catch (error) {
-      console.log(error);
+      setErrMessage(error?.response?.data?.message);
     }
   };
 
@@ -88,31 +103,57 @@ const Signup = () => {
             <Form>
               <div className="flex flex-col mb-3">
                 <label className="">First Name</label>
-                <Field type="text" id="firstName" name="firstName" placeholder="Write your first name" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-2 " />
+                <Field type="text" id="firstName" name="firstName" placeholder="Write your first name" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-2 focus:outline-none" />
                 {errors.firstName && touched.firstName ? <div className=" text-red-500 text-sm">{errors.firstName}</div> : null}
               </div>
               <div className="flex flex-col mb-3">
                 <label className="">Last Name</label>
-                <Field type="text" name="lastName" placeholder="Write your last name" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                <Field type="text" name="lastName" placeholder="Write your last name" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 {errors.lastName && touched.lastName ? <div className=" text-red-500 text-sm">{errors.lastName}</div> : null}
               </div>
               <div className="flex flex-col mb-3">
                 <label>Phone Number</label>
-                <Field type="phoneNumber" name="phoneNumber" placeholder="Write your phone number" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                <Field type="phoneNumber" name="phoneNumber" placeholder="Write your phone number" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 {errors.phoneNumber && touched.phoneNumber ? <div className=" text-red-500 text-sm">{errors.phoneNumber}</div> : null}
               </div>
               <div className="flex flex-col mb-3">
                 <label>Email</label>
-                <Field type="email" name="email" placeholder="Write your email" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                <Field type="email" name="email" placeholder="Write your email" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
               </div>
               <div className="flex flex-col mb-5 relative">
                 <label>Password</label>
-                <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " />
+                <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
                 {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
+              </div>
+              <div className="mb-3">
+                {alertError ? (
+                  <div className="alert alert-error shadow-lg mt-3">
+                    <div>
+                      <svg onClick={() => setAlertError(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{errMessage}</span>
+                    </div>
+                  </div>
+                ) : (
+                  false
+                )}
+                {alertSuccess ? (
+                  <div className="alert alert-success shadow-lg mt-3">
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{succesMessage}</span>
+                    </div>
+                  </div>
+                ) : (
+                  false
+                )}
               </div>
               <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white">
                 Sign Up
