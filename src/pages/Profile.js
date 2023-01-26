@@ -32,9 +32,13 @@ const ProfilePage = () => {
   const decode = jwtDecode(token);
   const { id } = decode;
   const [bio, setBio] = React.useState({});
-  const [show, setShow] = React.useState(false);
+  const [showLeft, setShowLeft] = React.useState(false);
+  const [showRight, setShowRight] = React.useState(false);
   const [picture, setPicture] = React.useState(false);
-  const [alertSuccess, setAlertSuccess] = React.useState("");
+  const [alertSuccessData, setAlertSuccessData] = React.useState(false);
+  const [alertSuccessPassword, setAlertSuccessPassword] = React.useState(false);
+  const [alertErrorPassword, setAlertErrorPassword] = React.useState(false);
+  const [alertSuccessUpload, setAlertSuccessUpload] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -58,7 +62,7 @@ const ProfilePage = () => {
         email: value.email,
       };
       await http(token).patch(`http://localhost:8888/profile/${id}/update/`, values);
-      setAlertSuccess(true);
+      setAlertSuccessData(true);
     } catch (error) {
       console.log(error);
     }
@@ -70,8 +74,10 @@ const ProfilePage = () => {
         password: value.password,
         confirmPassword: value.confirmPassword,
       };
+
       await http(token).patch(`http://localhost:8888/profile/${id}/update/`, values);
-      setAlertSuccess(true);
+
+      setAlertSuccessPassword(true);
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +95,7 @@ const ProfilePage = () => {
         const form = new FormData();
         form.append("picture", file);
         const { data } = await http(token).patch(`/profile/${id}/update/`, form);
-        window.alert(data.message);
+        setAlertSuccessUpload(true);
         setTimeout(() => {
           navigate(0);
 
@@ -101,8 +107,12 @@ const ProfilePage = () => {
     }
   };
 
-  const handleShow = () => {
-    setShow(!show);
+  const handleShowLeft = () => {
+    setShowLeft(!showLeft);
+  };
+
+  const handleShowRight = () => {
+    setShowRight(!showRight);
   };
 
   const handlerLogout = () => {
@@ -136,12 +146,26 @@ const ProfilePage = () => {
               <input type="checkbox" id="my-modal-3" className="modal-toggle" />
               <div className="modal">
                 <div className="modal-box relative">
+                  {alertSuccessUpload ? (
+                    <div className="alert alert-success shadow-lg mb-5">
+                      <div>
+                        <svg onClick={() => setAlertSuccessUpload(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Upload succeed</span>
+                      </div>
+                    </div>
+                  ) : (
+                    false
+                  )}
                   <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">
                     ✕
                   </label>
-                  <form onSubmit={upload}>
-                    <input type="file" name="picture" />
-                    <button type="submit">Save</button>
+                  <form onSubmit={upload} className="flex flex-col">
+                    <input type="file" name="picture" className="mb-[20px]" />
+                    <button type="submit" className="bg-[#f1554c] w-1/3 py-[10xp] rounded-[12px] text-white font-Mulish">
+                      Save
+                    </button>
                   </form>
                 </div>
               </div>
@@ -183,7 +207,7 @@ const ProfilePage = () => {
             {({ errors, touched }) => (
               <Form>
                 <div className="pt-[56px]">
-                  <div className="border-1 bg-white rounded-[16px] w-[900px]">
+                  <div className="border-1 bg-white rounded-[16px] w-[900px] mb-3">
                     <div className="px-[32px] pt-[40px] mb-[49px]">
                       <div className="mb-[16px] text-[#14142B] text-[16px]">Details Information</div>
                       <hr />
@@ -213,8 +237,20 @@ const ProfilePage = () => {
                       </div>
                     </div>
                   </div>
+                  {alertSuccessData ? (
+                    <div className="alert alert-success shadow-lg mb-3 w-1/3">
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Update data succeed</span>
+                      </div>
+                    </div>
+                  ) : (
+                    false
+                  )}
                   <div className="pt-[17px] mb-[22px]">
-                    <button type="submit" className="border-1 rounded-[16px] bg-[#f1554c] py-[10px] px-[120px] text-white ">
+                    <button type="submit" className="w-1/3 border-1 rounded-[16px] bg-[#f1554c] py-[10px]  text-white ">
                       Update changes
                     </button>
                   </div>
@@ -232,34 +268,58 @@ const ProfilePage = () => {
           >
             {({ errors, touched }) => (
               <Form>
-                <div className="border-1 bg-white rounded-[16px] w-[900px]">
+                <div className="border-1 bg-white rounded-[16px] w-[900px] mb-3">
                   <div className="px-[32px] pt-[40px] mb-[49px]">
                     <div className="mb-[16px] text-[#14142B] text-[16px]">Account and Privacy</div>
                     <hr />
                   </div>
-                  <div className="text-[#4E4B66] text-[16px] pb-[64px] mb-[48px]">
+                  <div className="text-[#4E4B66] text-[16px] pb-[64px] ">
                     <div className="flex pl-[32px] mb-[32px]">
                       <div className=" mr-[24px] relative">
                         <div className="mb-[12px] text-[#4E4B66]">New Password</div>
-                        <Field name="password" className="border-2 pl-[24px] pr-[195px] py-[10px] rounded-[16px] focus:outline-none" placeholder="Write your password" type={show ? "text" : "password"} />
-                        <label onClick={handleShow} className="absolute right-6 top-12 cursor-pointer">
-                          {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
+                        <Field name="password" className="border-2 pl-[24px] pr-[195px] py-[10px] rounded-[16px] focus:outline-none" placeholder="Write your password" type={showLeft ? "text" : "password"} />
+                        <label onClick={handleShowLeft} className="absolute right-6 top-12 cursor-pointer">
+                          {showLeft ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                         </label>
                         {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
                       </div>
                       <div className="relative">
                         <div className="mb-[12px] text-[#4E4B66]">Confirm Password</div>
-                        <Field name="confirmPassword" className="border-2 pl-[24px] pr-[195px] rounded-[16px] py-[10px] focus:outline-none" placeholder="Confirm your password" type={show ? "text" : "password"} />
-                        <label onClick={handleShow} className="absolute right-6 top-12 cursor-pointer">
-                          {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
+                        <Field name="confirmPassword" className="border-2 pl-[24px] pr-[195px] rounded-[16px] py-[10px] focus:outline-none" placeholder="Confirm your password" type={showRight ? "text" : "password"} />
+                        <label onClick={handleShowRight} className="absolute right-6 top-12 cursor-pointer">
+                          {showRight ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                         </label>
                         {errors.confirmPassword && touched.confirmPassword ? <div className="text-red-500 text-sm ">{errors.confirmPassword}</div> : null}
                       </div>
                     </div>
                   </div>
                 </div>
+                {alertSuccessPassword ? (
+                  <div className="alert alert-success shadow-lg mb-3 w-1/3">
+                    <div>
+                      <svg onClick={() => setAlertSuccessPassword(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Change password succeed</span>
+                    </div>
+                  </div>
+                ) : (
+                  false
+                )}
+                {alertErrorPassword ? (
+                  <div className="alert alert-error shadow-lg">
+                    <div>
+                      <svg onClick={() => setAlertErrorPassword(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Error! Task failed successfully.</span>
+                    </div>
+                  </div>
+                ) : (
+                  false
+                )}
                 <div className="pt-[17px] mb-[36px]">
-                  <button type="submit" className="border-1 rounded-[16px] bg-[#f1554c] py-[10px] px-[120px] text-white ">
+                  <button type="submit" className="w-1/3 border-1 rounded-[16px] bg-[#f1554c] py-[10px] text-white ">
                     Update changes
                   </button>
                 </div>
