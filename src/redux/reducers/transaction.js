@@ -7,7 +7,7 @@ const initialState = {
   movieId: "",
   movieName: "",
   cinema: "",
-
+  cinemaPicture: "",
   bookingDate: "",
   bookingTime: "",
   price: "",
@@ -17,6 +17,7 @@ const initialState = {
   phoneNumber: "",
   paymentMethodId: "",
   totalPrice: "",
+  genre: "",
 };
 const transactionReducer = createSlice({
   name: "transaction",
@@ -26,12 +27,13 @@ const transactionReducer = createSlice({
       console.log(payload);
       state.userId = payload.userId;
       state.movieId = payload.movieId;
-
+      state.cinemaPicture = payload.cinemaPicture;
       state.cinema = payload.cinemaId;
       state.price = payload.price;
       state.bookingDate = payload.bookingDate;
       state.bookingTime = payload.bookingTime;
       state.movieName = payload.movieName;
+      state.genre = payload.genre;
     },
     chooseSeat: (state, { payload }) => {
       state.seatNum = payload.seatNumber;

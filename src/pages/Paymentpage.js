@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import Moment from "moment";
@@ -11,6 +11,7 @@ import Copyright from "../components/Copyright";
 const PaymentPage = () => {
   const token = useSelector((state) => state?.auth?.token);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const dataTransaction = useSelector((state) => state.transaction);
   const movieId = useSelector((state) => state.transaction.movieId);
   const bookingDate = useSelector((state) => state.transaction.bookingDate);
@@ -20,6 +21,16 @@ const PaymentPage = () => {
   const cinema = useSelector((state) => state.transaction.cinema);
   const movieName = useSelector((state) => state.transaction.movieName);
   const totalPrice = useSelector((state) => state.transaction.totalPrice);
+
+  let duration = bookingTime;
+  let hour = String(duration).split(":").slice(0, 1).join(":");
+  let minute = String(duration).split(":")[1];
+
+  let NewDate = new Date(bookingDate).toDateString();
+  let month = NewDate.split(" ")[1];
+  let dates = NewDate.split(" ")[2];
+  let year = NewDate.split(" ")[3];
+
   const [form, setForm] = React.useState({
     fullName: "",
     email: "",
@@ -42,9 +53,13 @@ const PaymentPage = () => {
 
   const pay = () => {
     dispatch(trxAction({ ...dataTransaction, ...form, token }));
-    alert("Order success");
   };
 
+  const redirect = () => {
+    setTimeout(() => {
+      navigate("/order history");
+    }, 3000);
+  };
   console.log(paymentList);
   return (
     <div>
@@ -58,7 +73,9 @@ const PaymentPage = () => {
             <div className="py-[37px] px-[48px]">
               <div className="flex mb-[24px]">
                 <div className="text-[20px] text-[#6B6B6B] tracking-[.25px] leading-[25px] flex-1 ">Date & time</div>
-                <div className="text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">{bookingDate + " " + bookingTime} </div>
+                <div className="text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">
+                  {month} {dates}, {year} at {hour}:{minute}{" "}
+                </div>
               </div>
               <hr className="mb-[24px]" />
               <div className="flex mb-[24px]">
@@ -114,9 +131,27 @@ const PaymentPage = () => {
                 </button>
               </div>
               <div>
-                <button onClick={pay} type="submit" className="border-2 border-[#f1554c] text-[#f1554c] px-[75px] py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
+                {/* <button onClick={pay} type="submit" className="border-2 border-[#f1554c] text-[#f1554c] px-[75px] py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
                   Pay your order
-                </button>
+                </button> */}
+              </div>
+              {/* The button to open modal */}
+              <label htmlFor="my-modal-6" className="border-2 border-[#f1554c] text-[#f1554c] px-[75px] py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md" onClick={pay}>
+                Pay your order
+              </label>
+
+              {/* Put this part before </body> tag */}
+              <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+              <div className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg">Congratulations order ticket succeed!</h3>
+                  <p className="py-4">While we prepare your seat, please check other movies</p>
+                  <div className="modal-action">
+                    <label htmlFor="my-modal-6" className="bg-[#f1554c] px-[20px] py-[10px] text-white font-[500] font-Mulish rounded-[10px]" onClick={redirect}>
+                      Yay!
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

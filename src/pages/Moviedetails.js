@@ -28,7 +28,18 @@ const Moviedetails = () => {
   const [selectedTime, setSelectedTime] = React.useState("");
   const [selectedCinema, setSelectedCinema] = React.useState(null);
   const [selectedCinemaId, setSelectedCinemaId] = React.useState(null);
+  const [selectedCinemaPicture, setSelectedCinemaPicture] = React.useState("");
   const [selectedMovie, setSelectedMovie] = React.useState("");
+  const [selectedGenre, setSelectedGenre] = React.useState("");
+
+  let duration = movieDetail?.duration;
+  let hour = String(duration).split(":").slice(0, 1).join(":");
+  let minute = String(duration).split(":")[1];
+
+  let NewDate = new Date(movieDetail?.releaseDate).toDateString();
+  let month = NewDate.split(" ")[1];
+  let dates = NewDate.split(" ")[2];
+  let year = NewDate.split(" ")[3];
 
   React.useEffect(() => {
     getMovieDetail();
@@ -60,16 +71,14 @@ const Moviedetails = () => {
     setSchedule(data.results);
   };
 
-  const selectTime = (time, cinema, price, title) => {
+  const selectTime = (time, cinema, price, title, cinemaPicture, genre) => {
     setSelectedTime(time);
     setSelectedCinema(cinema);
     setSelectedPrice(price);
     setSelectedMovie(title);
+    setSelectedCinemaPicture(cinemaPicture);
+    setSelectedGenre(genre);
   };
-
-  // const selectTitle = (movieTitle) => {
-  //   setSelectedMovie(movieTitle)
-  // }
 
   const book = () => {
     dispatch(
@@ -81,6 +90,8 @@ const Moviedetails = () => {
         bookingTime: selectedTime,
         price: selectedPrice,
         movieName: selectedMovie,
+        cinemaPicture: selectedCinemaPicture,
+        genre: selectedGenre,
       })
     );
     navigate("/orderpage");
@@ -93,34 +104,38 @@ const Moviedetails = () => {
       {token ? <NavbarUser /> : <Navbar />}
       <div className="px-[79px] flex mb-[80px] pt-[40px]">
         <div className="border-box border-2 p-[32px] rounded-[8px] mr-[28px]">
-          <img className="w-[236px] h-[362px]" src={movieDetail.picture} alt={movieDetail.title} />
+          <img className="w-[236px] h-[362px] rounded-[4px]" src={movieDetail.picture} alt={movieDetail.title} />
           {/* <img className="w-[236px] h-[362px]" src={require("../assets/images/spidey.png")} alt="Spiderman" /> */}
         </div>
         <div className="w-[850px]">
-          <div className="mb-[32px]">
+          <div className="mb-[32px] font-Mulish">
             <div className="text-[#14142B] text-[32px] font-bold">{movieDetail.title}</div>
             <div className="text-[#4E4B66] text-[18px]">{movieDetail.genre}</div>
           </div>
-          <div className="text-[#8692A6] text-[14px] flex ">
-            <div className="mr-[128px]">Release date</div>
+          <div className="text-[#8692A6] text-[14px] flex font-Mulish">
+            <div className="mr-[181px]">Release date</div>
             <div>Directed by</div>
           </div>
           <div className="flex mb-[16px] text-[#121212] text-[16px]">
-            <div className="mr-[110px]">{movieDetail.releaseDate}</div>
-            <div>{movieDetail.director}</div>
+            <div className="mr-[168px] text-[#12121] font-Mulish">
+              {month} {dates}, {year}
+            </div>
+            <div className="text-[#12121] font-Mulish">{movieDetail.director}</div>
           </div>
-          <div className="flex text-[#8692A6] text-[14px]">
-            <div className="mr-[153px]">Duration</div>
+          <div className="flex text-[#8692A6] text-[14px] font-Mulish">
+            <div className="mr-[210px]">Duration</div>
             <div>Casts</div>
           </div>
           <div className="flex mb-[24px] text-[#121212] text-[16px]">
-            <div className="mr-[150px]">{movieDetail.duration}</div>
-            <div>{movieDetail.casts}, ...</div>
+            <div className="mr-[115px] text-[#12121] font-Mulish">
+              {hour} hours {minute} minutes
+            </div>
+            <div className="text-[#12121] font-Mulish">{movieDetail.casts}, ...</div>
           </div>
           <hr className="mb-[16px]" />
           <div>
-            <div className="text-[20px] font-semibold mb-[4px]">Synopsis</div>
-            <div className="text-[16px] tracking-[.75px] leading-[32px]">{movieDetail.synopsis}</div>
+            <div className="text-[20px] font-semibold mb-[4px] font-Mulish">Synopsis</div>
+            <div className="text-[16px] tracking-[.75px] leading-[32px] text-[#12121] font-Mulish text-[#4E4B66]">{movieDetail.synopsis}</div>
           </div>
         </div>
       </div>
@@ -161,7 +176,10 @@ const Moviedetails = () => {
                 <div className="w-[381px] pl-[32px] text-[12px]">
                   <div className="flex mb-[16px] font-semibold flex-wrap">
                     {schedule?.times?.map((time) => (
-                      <button className={` mb-[16px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => selectTime(time, schedule.cinema, schedule.price, schedule.title)}>
+                      <button
+                        className={` mb-[16px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`}
+                        onClick={() => selectTime(time, schedule.cinema, schedule.price, schedule.title, schedule.cinemapicture, movieDetail.genre)}
+                      >
                         <span className="mr-[40px]">{time}</span>
                       </button>
                     ))}

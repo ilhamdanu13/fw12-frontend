@@ -14,15 +14,21 @@ const OrderHistory = () => {
   const decode = jwtDecode(token);
   const { id } = decode;
   const [bio, setBio] = React.useState({});
-  const [movieDetail, setMovieDetail] = React.useState({});
+  const movieName = useSelector((state) => state.transaction.movieName);
+  const bookingDate = useSelector((state) => state.transaction.bookingDate);
+  const bookingTime = useSelector((state) => state.transaction.bookingTime);
+  const cinemaPicture = useSelector((state) => state.transaction.cinemaPicture);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    getMovieDetail().then((data) => {
-      setMovieDetail(data);
-    });
-  }, []);
+  let duration = bookingTime;
+  let hour = String(duration).split(":").slice(0, 1).join(":");
+  let minute = String(duration).split(":")[1];
+
+  let NewDate = new Date(bookingDate).toDateString();
+  let month = NewDate.split(" ")[1];
+  let dates = NewDate.split(" ")[2];
+  let year = NewDate.split(" ")[3];
 
   React.useEffect(() => {
     getBio().then((data) => {
@@ -32,11 +38,6 @@ const OrderHistory = () => {
 
   const getBio = async () => {
     const { data } = await http(token).get("/profile/" + id);
-    return data;
-  };
-
-  const getMovieDetail = async () => {
-    const { data } = await axios.get("http://localhost:8888/movies/1");
     return data;
   };
 
@@ -91,53 +92,20 @@ const OrderHistory = () => {
             <div className="border-1 bg-white rounded-[16px] w-[900px] mb-[24px]">
               <div className="pl-[32px] pr-[67px] pt-[40px] mb-[49px] flex ">
                 <div className="flex-1">
-                  <div className=" text-[#AAAAAA] text-[14px]">Tuesday, 07 July 2020 - 04:30pm</div>
-                  <div className="text-[24px] font-semibold">Spider-Man: Homecoming</div>
+                  <div className=" text-[#AAAAAA] text-[14px]">
+                    {month} {dates}, {year} - {hour} {minute}
+                  </div>
+                  <div className="text-[24px] font-semibold">{movieName}</div>
                 </div>
                 <div className="pt-[15px]">
-                  <img className="" src={require("../assets/images/cineone.png")} alt="cineone" />
+                  <img className="" src={cinemaPicture} alt="cinema" />
                 </div>
               </div>
+
               <hr className="mb-[32px]" />
               <div className="flex pl-[32px] pr-[67px] pb-[32px]">
                 <div className="border-1 bg-[#00BA88] py-[10px] px-[50px] rounded-[4px] text-white mr-[500px]">Ticket in active</div>
-                <Link to="" className="text-[#AAAAAA] text-[18px] pt-[8px] ">
-                  See Details
-                </Link>
-              </div>
-            </div>
-            <div className="border-1 bg-white rounded-[16px] w-[900px] mb-[24px]">
-              <div className="pl-[32px] pr-[67px] pt-[40px] mb-[49px] flex ">
-                <div className="flex-1">
-                  <div className=" text-[#AAAAAA] text-[14px]">Monday, 14 June 2020 - 02:00pm</div>
-                  <div className="text-[24px] font-semibold">Avengers: End Game</div>
-                </div>
-                <div className="pt-[10px]">
-                  <img className="" src={require("../assets/images/ebu.png")} alt="ebu" />
-                </div>
-              </div>
-              <hr className="mb-[32px]" />
-              <div className="flex pl-[32px] pr-[67px] pb-[32px]">
-                <div className="border-1 bg-[#6E7191] py-[10px] px-[50px] rounded-[4px] text-white mr-[530px]">Ticket used</div>
-                <Link to="" className="text-[#AAAAAA] text-[18px] pt-[8px] ">
-                  See Details
-                </Link>
-              </div>
-            </div>
-            <div className="border-1 bg-white rounded-[16px] w-[900px] mb-[72px]">
-              <div className="pl-[32px] pr-[67px] pt-[40px] mb-[49px] flex ">
-                <div className="flex-1">
-                  <div className=" text-[#AAAAAA] text-[14px]">Monday, 10 March 2020 - 04:00pm</div>
-                  <div className="text-[24px] font-semibold">Thor: Ragnarok</div>
-                </div>
-                <div className="pt-[10px]">
-                  <img className="" src={require("../assets/images/ebu.png")} alt="ebu" />
-                </div>
-              </div>
-              <hr className="mb-[32px]" />
-              <div className="flex pl-[32px] pr-[67px] pb-[32px]">
-                <div className="border-1 bg-[#6E7191] py-[10px] px-[50px] rounded-[4px] text-white mr-[530px]">Ticket used</div>
-                <Link to="" className="text-[#AAAAAA] text-[18px] pt-[8px] ">
+                <Link to="/ticket result" className="text-[#AAAAAA] text-[18px] pt-[8px] ">
                   See Details
                 </Link>
               </div>
