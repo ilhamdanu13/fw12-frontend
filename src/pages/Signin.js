@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -67,7 +66,7 @@ const Signin = () => {
       <div className="basis-2/5 pt-12 pr-3 pl-3 md:pt-[100px] md:pl-[83px] md:pr-20">
         <div className="relative block md:hidden">
           <span className="text-[50px] text-[#ef91a1] font-Rubik md:ext-[100px]">Cluezzy</span>
-          <GiTicket className="text-[#ef91a1] text-[25px] absolute right-14 top-5 md:text-[50px] md:right-48 md:top-10" />
+          <GiTicket className="text-[#ef91a1] text-[25px] absolute top-5 md:text-[50px] left-52 md:top-10" />
         </div>
         <div className=" text-[48px] mb-3 font-[600px]">Sign In</div>
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-3 text-[#AAAAAA] font-[400px] ">Sign in with your data that you entered during your registration</div>
