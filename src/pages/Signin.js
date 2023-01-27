@@ -26,36 +26,14 @@ const Signin = () => {
   const handleShow = () => {
     setShow(!show);
   };
-  // const loginRequest = async (event) => {
-  //   event.preventDefault();
-  //   const { value: email } = event.target.email;
-  //   const { value: password } = event.target.password;
-  //   //   if (email === "admin@mail.com" && password === "1234") {
-  //   //     navigate("/homepage");
-  //   //   } else {
-  //   //     setShowAlert(true);
-  //   //   }
-  //   //   event.preventDefault();
-  //   // };
-  //   try {
-  //     const form = URLSearchParams({
-  //       email,
-  //       password,
-  //     });
 
-  //     const { data } = await axios.post("http://localhost:8888/auth/login", form);
-  //   } catch (e) {
-  //     setShowAlert(true);
-  //   }
-  // };
+  const cb = () => {
+    setTimeout(() => {
+      navigate("/homepage");
+    }, 3000);
+  };
 
   const login = async (value) => {
-    const cb = () => {
-      setTimeout(() => {
-        navigate("/homepage");
-      }, 3000);
-    };
-
     try {
       const result = await dispatch(loginAction({ ...value, cb }));
 
@@ -63,6 +41,8 @@ const Signin = () => {
         setAlertError(true);
         setErrMessage(result.payload);
       } else {
+        cb();
+        setAlertError(false);
         setAlertSuccess(true);
       }
     } catch (err) {
@@ -70,12 +50,9 @@ const Signin = () => {
     }
   };
   return (
-    <div className="flex">
-      <div
-        className=" w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')]
-      max-[425px]:hidden"
-      >
-        <div className="bg-[#0b2361]   w-[800px] h-[1054px]">
+    <div className="flex ">
+      <div className="hidden w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] md:block">
+        <div className="bg-[#0b2361] w-[800px] h-[1054px]">
           <div className="pt-[250px] pl-[150px]">
             <div className=" relative">
               <span className="text-[100px] text-[#ef91a1] font-Rubik">Cluezzy</span>
@@ -87,12 +64,13 @@ const Signin = () => {
           </div>
         </div>
       </div>
-      <div
-        className="basis-2/5 pt-[100px] pr-20 pl-[83px]
-      min-[320px]: max-[425px]:text-[80%]"
-      >
+      <div className="basis-2/5 pt-12 pr-3 pl-3 md:pt-[100px] md:pl-[83px] md:pr-20">
+        <div className="relative block md:hidden">
+          <span className="text-[50px] text-[#ef91a1] font-Rubik md:ext-[100px]">Cluezzy</span>
+          <GiTicket className="text-[#ef91a1] text-[25px] absolute right-14 top-5 md:text-[50px] md:right-48 md:top-10" />
+        </div>
         <div className=" text-[48px] mb-3 font-[600px]">Sign In</div>
-        <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-3 text-[#AAAAAA] font-[400px]">Sign in with your data that you entered during your registration</div>
+        <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-3 text-[#AAAAAA] font-[400px] ">Sign in with your data that you entered during your registration</div>
 
         <Formik
           initialValues={{
@@ -104,12 +82,12 @@ const Signin = () => {
         >
           {({ errors, touched }) => (
             <Form>
-              <div className="flex flex-col mb-3">
+              <div className="flex flex-col mb-3 w-full">
                 <label>Email</label>
                 <Field type="email" name="email" placeholder="Write your email" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
               </div>
-              <div className="flex flex-col mb-3 relative">
+              <div className="flex flex-col mb-3 relative w-full">
                 <label>Password</label>
                 <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
@@ -144,7 +122,7 @@ const Signin = () => {
                 )}
               </div>
               <div>
-                <button type="submit" className="w-full text-white font-bold box-border border-2 pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px]">
+                <button type="submit" className="w-full text-white font-bold box-border pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px]">
                   Sign In
                 </button>
               </div>

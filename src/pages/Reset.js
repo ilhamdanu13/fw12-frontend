@@ -43,8 +43,8 @@ const Reset = () => {
   return (
     <div className="flex">
       <div
-        className=" w-[800px] h-[1054px] bg-cover bg-center bg-[url('../images/background.png')]
-      max-[425px]:hidden"
+        className="hidden md:block w-[800px] h-[1054px] bg-cover bg-center bg-[url('../images/background.png')]
+      "
       >
         <div className="bg-[#0b2361]  w-[800px] h-[1054px]">
           <div className="pl-[117px] pt-[80px]">
@@ -94,9 +94,13 @@ const Reset = () => {
         </div>
       </div>
       <div
-        className="basis-2/5 pt-[100px] pr-20 pl-[83px]
-        min-[320px]: w-[320px] pt-[30px] max-[425px]:text-[60%] pt-[30px] w-[425px]]"
+        className="basis-2/5 pt-12 md:pt-[100px] pr-3 md:pr-20 pl-3 md:pl-[83px]
+       "
       >
+        <div className="relative block md:hidden">
+          <span className="text-[50px] text-[#ef91a1] font-Rubik md:ext-[100px]">Cluezzy</span>
+          <GiTicket className="text-[#ef91a1] text-[25px] absolute left-52 top-5" />
+        </div>
         <div className=" text-[26px] mb-3 font-[600px]">Fill your complete password</div>
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">set your new password</div>
         <Formik
@@ -110,10 +114,10 @@ const Reset = () => {
           onSubmit={reset}
         >
           {({ errors, touched }) => (
-            <Form>
-              <div className=" mb-3">
+            <Form className="w-">
+              <div className=" mb-3 text-[16px]">
                 <label>Code</label>
-                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " name="code" placeholder="Write your code" />
+                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3" name="code" placeholder="Write your code" />
                 {errors.code && touched.code ? <div className="text-red-500 text-sm ">{errors.code}</div> : null}
               </div>{" "}
               {/* <div className=" mb-3">
@@ -121,24 +125,24 @@ const Reset = () => {
                 <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3" type="email" name="email" placeholder="Write your email" />
                 {errors.email && touched.email ? <div className="text-red-500 text-sm ">{errors.email}</div> : null}
               </div> */}
-              <div className=" mb-3 relative">
+              <div className=" mb-3 relative text-[16px]">
                 <label>Password</label>
-                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type={show ? "text" : "password"} name="password" placeholder="Write your password" />
+                <Field className="form-inpu w-[295px] md:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type={show ? "text" : "password"} name="password" placeholder="Write your password" />
                 <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
                 {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
               </div>
-              <div className="mb-5 relative">
+              <div className="mb-5 relative text-[16px]">
                 <label>Confirm Password</label>
-                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type={show ? "text" : "password"} name="confirmPassword" placeholder="Write your confirm password" />
+                <Field className="form-input w-[295px] md:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type={show ? "text" : "password"} name="confirmPassword" placeholder="Write your confirm password" />
                 <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
                 {errors.confirmPassword && touched.confirmPassword ? <div className="text-red-500 text-sm ">{errors.confirmPassword}</div> : null}
               </div>
               <div>
-                <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
+                <button type="submit" className="w-[295px] box-border border-2 pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
                   Submit
                 </button>
               </div>

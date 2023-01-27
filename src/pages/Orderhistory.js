@@ -51,12 +51,12 @@ const OrderHistory = () => {
   return (
     <div>
       <NavbarUser />
-      <div className="flex bg-[#F5F6F8] px-[79px]">
-        <div className="pt-[56px]">
+      <div className="md:flex bg-[#F5F6F8] px-3 md:px-[79px]">
+        <div className="py-5 md:py-[56px]">
           <div className="border-1 bg-white rounded-[24px]">
-            <div className="p-[40px]">
-              <div className="text-[#4E4B66] text-[16px]">INFO</div>
-              <div className="pt-[32px]">
+            <div className="md:p-[40px] mb-3 md:mb-0">
+              <div className="pl-[40px] md:pl-0 pt-[40px] md:pt-0 text-[#4E4B66] text-[16px]">INFO</div>
+              <div className="pt-[32px] flex justify-center items-center">
                 {bio?.picture ? (
                   <img className="w-[136px] h-[136px] rounded-[50%] mb-3 shadow-lg" src={"https://res.cloudinary.com/fw12/image/upload/v1674621799/" + bio.picture} alt="Profile" />
                 ) : (
@@ -74,23 +74,23 @@ const OrderHistory = () => {
             </div>
           </div>
         </div>
-        <div className="pl-[32px]">
-          <div className="pt-[56px]">
-            <div className="border-1 bg-white rounded-[16px] w-[900px]">
+        <div className="pl-3 md:pl-[32px]">
+          <div className="md:pt-[56px]">
+            <div className="border-1 bg-white rounded-[16px] md:w-[900px]">
               <div className="py-[25px] flex">
                 <Link to="/profile" className="text-[18px] tracking-[.75] leading-[34px] text-[#AAAAAA] mr-[56px] pl-[48px]">
                   Account Settings
                 </Link>
                 <Link className="text-[18px] tracking-[.75] leading-[34px] text-[#14142B]">Order History</Link>
               </div>
-              <div className="pl-[240px]">
-                <hr className=" w-[105px] pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />
+              <div className="pl-[205px] md:pl-[240px]">
+                <hr className="w-[50px] md:w-[105px] pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />
               </div>
             </div>
           </div>
-          <div className="pt-[56px]">
-            <div className="border-1 bg-white rounded-[16px] w-[900px] mb-[24px]">
-              <div className="pl-[32px] pr-[67px] pt-[40px] mb-[49px] flex ">
+          <div className="pt-5 md:pt-[56px] pb-5 md:pb-0">
+            <div className="border-1 bg-white rounded-[16px] md:w-[900px] mb-[24px]">
+              <div className="pl-[32px] pr-[67px] pt-[40px] mb-[49px] md:flex ">
                 <div className="flex-1">
                   <div className=" text-[#AAAAAA] text-[14px]">
                     {month} {dates}, {year} - {hour} {minute}
@@ -103,9 +103,9 @@ const OrderHistory = () => {
               </div>
 
               <hr className="mb-[32px]" />
-              <div className="flex pl-[32px] pr-[67px] pb-[32px]">
-                <div className="border-1 bg-[#00BA88] py-[10px] px-[50px] rounded-[4px] text-white mr-[500px]">Ticket in active</div>
-                <Link to="/ticket result" className="text-[#AAAAAA] text-[18px] pt-[8px] ">
+              <div className="md:flex pl-3 md:pl-[32px] pr-3 md:pr-[67px] pb-[32px]">
+                <div className="border-1 bg-[#00BA88] py-[10px] px-[78px] md:px-[50px] rounded-[4px] text-white md:mr-[500px] mb-3 md:mb-0">Ticket in active</div>
+                <Link to="/ticket result" className="text-[#AAAAAA] text-[18px] pt-[8px] flex justify-center items-center md:block">
                   See Details
                 </Link>
               </div>

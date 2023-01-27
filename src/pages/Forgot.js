@@ -37,8 +37,8 @@ const Forgot = () => {
   return (
     <div className="flex">
       <div
-        className=" w-[800px] h-[1054px] bg-cover bg-center bg-[url('../images/background.png')]
-      max-[425px]:hidden"
+        className="hidden md:block w-[800px] h-[1054px] bg-cover bg-center bg-[url('../images/background.png')]
+      "
       >
         <div className="bg-[#0b2361]  w-[800px] h-[1054px]">
           <div className="pl-[117px] pt-[80px]">
@@ -89,9 +89,13 @@ const Forgot = () => {
         </div>
       </div>
       <div
-        className="basis-2/5 pt-[176px] pr-20 pl-[83px]
+        className="basis-2/5 pt-12 md:pt-[176px] pr-3 md:pr-20 pl-3 md:pl-[83px]
       min-[320px]: w-[320px] pt-[30px] max-[425px]:text-[70%] pt-[30px] w-[425px]"
       >
+        <div className="relative block md:hidden">
+          <span className="text-[50px] text-[#ef91a1] font-Rubik md:ext-[100px]">Cluezzy</span>
+          <GiTicket className="text-[#ef91a1] text-[25px] absolute left-52 top-5" />
+        </div>
         <div className=" text-[26px] mb-3 font-[600px]">Fill your complete email</div>
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">we'll send a link to your email shortly</div>
         <Formik
@@ -109,7 +113,7 @@ const Forgot = () => {
                 {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
               </div>
               <div>
-                <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
+                <button type="submit" className="w-full box-border pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
                   Send
                 </button>
               </div>

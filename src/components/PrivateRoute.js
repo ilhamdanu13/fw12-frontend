@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { redirect } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 function PrivateRoute({ children }) {

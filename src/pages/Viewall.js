@@ -5,9 +5,6 @@ import NavbarUser from "../components/NavbarUser";
 import Month from "../components/Month";
 import Footer from "../components/Footer";
 import Copyright from "../components/Copyright";
-// import Search from "../components/Search";
-import Pagination from "../components/Pagination";
-import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
 import { FiChevronDown } from "react-icons/fi";
 import http from "../helpers/http";
@@ -32,10 +29,10 @@ const Viewall = () => {
 
   return (
     <div>
-      {token ? <NavbarUser /> : <Navbar />}
-      <div className="px-[136px] bg-[#F5F6F8] pb-[32px]">
-        <div className="flex mb-[40px] pt-[57px]">
-          <div className="flex-1 text-[24px] font-bold font-Mulish">List Movie</div>
+      <NavbarUser />
+      <div className="px-3 md:px-[136px] bg-[#F5F6F8] pb-[32px]">
+        <div className="md:flex mb-[40px] pt-5 md:pt-[57px]">
+          <div className="flex-1 text-[18px] text-[24px] font-bold font-Mulish mb-3 md:mb-0">List Movie</div>
           <select name="sort" onChange={(e) => setSort(e.target.value)} className="flex pr-[20px] pl-[10px] py-[5px] border-2 box-border rounded-[12px] items-center mr-[12px] bg-whit text-[#4E4B66] font-Mulish focus:outline-none">
             <option value="ASC">A-Z</option>
             <option value="DESC">Z-A</option>
@@ -50,10 +47,10 @@ const Viewall = () => {
         </div>
         <Month />
         {allMovie?.results?.map ? (
-          <div className="flex flex-wrap bg-white pl-[55px] py-[45px] rounded-[8px] mb-[32px]">
+          <div className="md:flex flex-wrap bg-white pl-3 md:pl-[55px] pr-3 md:pr-0 py-3 md:py-[45px] rounded-[8px] mb-[32px]">
             {allMovie?.results?.map((char) => (
-              <div className="pt-[56px] ">
-                <div className="flex flex-col border-box h-[452px] border-2 p-[32px] rounded-[8px] border-[#e9ecf4] mr-[28px] text-center mb-[20px]">
+              <div className="pt-3 md:pt-[56px] ">
+                <div className="flex flex-col items-center border-box h-[452px] border-2 p-[32px] rounded-[8px] border-[#e9ecf4] md:mr-[28px] text-center mb-[20px]">
                   <div className="">
                     <img className="w-[159px] h-[200px] rounded-[4px]" src={char.picture} alt={char.title} />
                   </div>

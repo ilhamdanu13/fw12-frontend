@@ -58,7 +58,9 @@ const Signup = () => {
       } else if (results.payload.startsWith("Phone")) {
         setAlertError(true);
         setErrMessage(results.payload);
-      } else if (results.payload.startsWith("Register")) {
+      }
+      if (results.payload.startsWith("Register")) {
+        setAlertError(false);
         setAlertSuccess(true);
         setSuccessMessage(results.payload);
       }
@@ -69,7 +71,7 @@ const Signup = () => {
 
   return (
     <div className="flex">
-      <div className=" w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] ">
+      <div className="hidden md:block w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] ">
         <div className="bg-[#0b2361]   w-[800px] h-[1054px]">
           <div className="pt-[250px] pl-[150px]">
             <div className=" relative">
@@ -83,9 +85,13 @@ const Signup = () => {
         </div>
       </div>
       <div
-        className="basis-2/5 pt-[100px] pr-20 pl-[83px]
-      min-[320px]: max-[425px]:text-[80%]"
+        className="basis-2/5 pt-12 md:pt-[100px] px-3 md:pr-20 md:pl-[83px]
+      min-[320px]: max-[425px]:text-[80%] "
       >
+        <div className="relative block md:hidden">
+          <span className="text-[50px] text-[#ef91a1] font-Rubik md:ext-[100px]">Cluezzy</span>
+          <GiTicket className="text-[#ef91a1] text-[25px] absolute right-6 top-5 md:text-[50px]" />
+        </div>
         <div className=" text-[48px] mb-3 font-[600px]">Sign Up</div>
         <div className="text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">Fill your additional details</div>
         <Formik
@@ -155,7 +161,7 @@ const Signup = () => {
                   false
                 )}
               </div>
-              <button type="submit" className="w-full box-border border-2 pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white">
+              <button type="submit" className="w-full box-border  pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white">
                 Sign Up
               </button>
             </Form>
