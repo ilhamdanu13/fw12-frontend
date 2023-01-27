@@ -100,7 +100,7 @@ const Moviedetails = () => {
     <div>
       <NavbarUser />
       <div className="px-3 md:px-[79px] md:flex mb-5 md:mb-[80px] pt-[40px]">
-        <div className="border-box border-2 p-[32px] rounded-[8px] md:mr-[28px] mb-3 md:mb-0">
+        <div className="border-box border-2 p-[32px] rounded-[8px] md:mr-[28px] mb-3 md:mb-0 flex justify-center items-center">
           <img className="w-[236px] h-[362px] rounded-[4px]" src={movieDetail.picture} alt={movieDetail.title} />
           {/* <img className="w-[236px] h-[362px]" src={require("../assets/images/spidey.png")} alt="Spiderman" /> */}
         </div>
