@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { chooseSeat as chooseSeatAction } from "../redux/reducers/transaction";
@@ -182,7 +182,7 @@ const OrderPage = () => {
             <hr className="mb-[24px] " />
             <div className="flex px-[24px] pb-[24px] items-center justify-center ">
               <div className="flex-1 font-semibold text-[18px] font-Mulish">Total Payment</div>
-              <div className="text-[#5F2EEA] text-[14px] ">counting...</div>
+              <div className="text-[#5F2EEA] text-[14px] ">IDR.{selectedSeat.length * price}</div>
             </div>
           </div>
         </div>

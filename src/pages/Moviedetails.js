@@ -1,15 +1,12 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import moment from "moment";
-import { Navigate } from "react-router-dom";
 import http from "../helpers/http";
 import { useDispatch, useSelector } from "react-redux";
 import { chooseMovie as chooseMovieAction } from "../redux/reducers/transaction";
 import NavbarUser from "../components/NavbarUser";
 import Footer from "../components/Footer";
 import Copyright from "../components/Copyright";
-import Navbar from "../components/Navbar";
 import jwtDecode from "jwt-decode";
 
 const Moviedetails = () => {
@@ -52,13 +49,13 @@ const Moviedetails = () => {
   }, []);
 
   const getMovieDetail = async () => {
-    const { data } = await axios.get("http://localhost:8888/movies/" + id);
+    const { data } = await http(token).get("https://fw12-backend-red.vercel.app/movies/" + id);
     setMovieDetail(data.results);
     // console.log(data);
   };
 
   const getCinemas = async () => {
-    const { data } = await axios.get("http://localhost:8888/cinemas");
+    const { data } = await http(token).get("https://fw12-backend-red.vercel.app/cinemas");
     setCityList(data.results);
     // console.log(data);
     if (data.results.length) {
@@ -67,7 +64,7 @@ const Moviedetails = () => {
   };
 
   const getSchedule = async () => {
-    const { data } = await axios.get(`http://localhost:8888/movieSchedules/${id}`);
+    const { data } = await http(token).get(`https://fw12-backend-red.vercel.app/movieSchedules/${id}`);
     setSchedule(data.results);
   };
 

@@ -49,7 +49,7 @@ const ProfilePage = () => {
   }, [id]);
 
   const getBio = async () => {
-    const { data } = await http(token).get("/profile/" + id);
+    const { data } = await http(token).get("https://fw12-backend-red.vercel.app/profile/" + id);
     return data;
   };
 
@@ -61,8 +61,11 @@ const ProfilePage = () => {
         phoneNumber: value.phoneNumber,
         email: value.email,
       };
-      await http(token).patch(`http://localhost:8888/profile/${id}/update/`, values);
+      await http(token).patch(`https://fw12-backend-red.vercel.app/profile/${id}/update/`, values);
       setAlertSuccessData(true);
+      setTimeout(() => {
+        setAlertSuccessData(false);
+      }, 5000);
     } catch (error) {
       console.log(error);
     }
@@ -75,9 +78,11 @@ const ProfilePage = () => {
         confirmPassword: value.confirmPassword,
       };
 
-      await http(token).patch(`http://localhost:8888/profile/${id}/update/`, values);
-
+      await http(token).patch(`https://fw12-backend-red.vercel.app/profile/${id}/update/`, values);
       setAlertSuccessPassword(true);
+      setTimeout(() => {
+        setAlertSuccessPassword(false);
+      }, 5000);
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +99,7 @@ const ProfilePage = () => {
       try {
         const form = new FormData();
         form.append("picture", file);
-        const { data } = await http(token).patch(`/profile/${id}/update/`, form);
+        const { data } = await http(token).patch(`https://fw12-backend-red.vercel.app/profile/${id}/update/`, form);
         setAlertSuccessUpload(true);
         setTimeout(() => {
           navigate(0);
@@ -238,7 +243,7 @@ const ProfilePage = () => {
                     </div>
                   </div>
                   {alertSuccessData ? (
-                    <div className="alert alert-success shadow-lg mb-3 w-1/3">
+                    <div className="alert alert-success shadow-lg mb-3 md:w-1/3">
                       <div>
                         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -295,7 +300,7 @@ const ProfilePage = () => {
                   </div>
                 </div>
                 {alertSuccessPassword ? (
-                  <div className="alert alert-success shadow-lg mb-3 w-1/3">
+                  <div className="alert alert-success shadow-lg mb-3 md:w-1/3">
                     <div>
                       <svg onClick={() => setAlertSuccessPassword(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

@@ -23,7 +23,7 @@ const Viewall = () => {
   }, [page, sort, search]);
 
   const getAllMovie = async () => {
-    const { data } = await http(token).get(`/movies?page=${page}&limit=8&search=${search}&sortBy=title&sort=${sort}`);
+    const { data } = await http(token).get(`https://fw12-backend-red.vercel.app/movies?page=${page}&limit=8&search=${search}&sortBy=title&sort=${sort}`);
     return data;
   };
 

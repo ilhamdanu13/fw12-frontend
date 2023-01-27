@@ -20,7 +20,7 @@ const NavbarUser = () => {
   }, [id]);
 
   const getBio = async () => {
-    const { data } = await http(token).get("/profile/" + id);
+    const { data } = await http(token).get("https://fw12-backend-red.vercel.app/profile/" + id);
     return data;
   };
 

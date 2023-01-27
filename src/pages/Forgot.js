@@ -89,7 +89,7 @@ const Forgot = () => {
         </div>
       </div>
       <div
-        className="basis-2/5 pt-12 md:pt-[176px] pr-3 md:pr-20 pl-3 md:pl-[83px]
+        className="md:basis-2/5 pt-12 md:pt-[176px] pr-3 md:pr-20 pl-3 md:pl-[83px]
       min-[320px]: w-[320px] pt-[30px] max-[425px]:text-[70%] pt-[30px] w-[425px]"
       >
         <div className="relative block md:hidden">
