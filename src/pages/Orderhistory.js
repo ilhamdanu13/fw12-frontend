@@ -83,7 +83,7 @@ const OrderHistory = () => {
                 </Link>
                 <Link className="text-[18px] tracking-[.75] leading-[34px] text-[#14142B]">Order History</Link>
               </div>
-              <div className="pl-[205px] md:pl-[240px]">
+              <div className="pl-[245px] md:pl-[240px]">
                 <hr className="w-[50px] md:w-[105px] pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />
               </div>
             </div>
@@ -104,7 +104,7 @@ const OrderHistory = () => {
 
               <hr className="mb-[32px]" />
               <div className="md:flex pl-3 md:pl-[32px] pr-3 md:pr-[67px] pb-[32px]">
-                <div className="border-1 bg-[#00BA88] py-[10px] px-[78px] md:px-[50px] rounded-[4px] text-white md:mr-[500px] mb-3 md:mb-0">Ticket in active</div>
+                <div className="border-1 bg-[#00BA88] py-[10px] text-center md:px-[50px] rounded-[4px] text-white md:mr-[500px] mb-3 md:mb-0">Ticket in active</div>
                 <Link to="/ticket result" className="text-[#AAAAAA] text-[18px] pt-[8px] flex justify-center items-center md:block">
                   See Details
                 </Link>

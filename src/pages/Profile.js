@@ -194,7 +194,7 @@ const ProfilePage = () => {
                   Order History
                 </Link>
               </div>
-              <div className="pl-3 md:pl-[45px]">
+              <div className="pl-8 md:pl-[45px]">
                 <hr className="w-[80px] md:w-[140px] pl-3 md:pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />
               </div>
             </div>

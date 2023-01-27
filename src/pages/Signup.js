@@ -70,7 +70,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="md:flex">
       <div className="hidden md:block w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] ">
         <div className="bg-[#0b2361]   w-[800px] h-[1054px]">
           <div className="pt-[250px] pl-[150px]">
@@ -84,10 +84,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      <div
-        className="basis-2/5 pt-12 md:pt-[100px] px-3 md:pr-20 md:pl-[83px]
-      min-[320px]: max-[425px]:text-[80%] "
-      >
+      <div className="basis-2/5 pt-12 md:pt-[100px] px-3 md:pr-20 md:pl-[83px] ">
         <div className="relative block md:hidden">
           <span className="text-[50px] text-[#ef91a1] font-Rubik md:ext-[100px]">Cluezzy</span>
           <GiTicket className="text-[#ef91a1] text-[25px] absolute right-6 top-5 md:text-[50px]" />
@@ -109,7 +106,7 @@ const Signup = () => {
             <Form>
               <div className="flex flex-col mb-3">
                 <label className="">First Name</label>
-                <Field type="text" id="firstName" name="firstName" placeholder="Write your first name" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-2 focus:outline-none" />
+                <Field type="text" id="firstName" name="firstName" placeholder="Write your first name" className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-2 focus:outline-none" />
                 {errors.firstName && touched.firstName ? <div className=" text-red-500 text-sm">{errors.firstName}</div> : null}
               </div>
               <div className="flex flex-col mb-3">

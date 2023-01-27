@@ -104,7 +104,7 @@ const Moviedetails = () => {
           <img className="w-[236px] h-[362px] rounded-[4px]" src={movieDetail.picture} alt={movieDetail.title} />
           {/* <img className="w-[236px] h-[362px]" src={require("../assets/images/spidey.png")} alt="Spiderman" /> */}
         </div>
-        <div className="w-[850px]">
+        <div className="md:w-[850px]">
           <div className="mb-[32px] font-Mulish">
             <div className="text-[#14142B] text-[32px] font-bold">{movieDetail.title}</div>
             <div className="text-[#4E4B66] text-[18px]">{movieDetail.genre}</div>

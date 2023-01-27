@@ -50,7 +50,7 @@ const Signin = () => {
     }
   };
   return (
-    <div className="flex ">
+    <div className="md:flex ">
       <div className="hidden w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] md:block">
         <div className="bg-[#0b2361] w-[800px] h-[1054px]">
           <div className="pt-[250px] pl-[150px]">

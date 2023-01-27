@@ -41,7 +41,7 @@ const Reset = () => {
     }
   };
   return (
-    <div className="flex">
+    <div className="md:flex">
       <div
         className="hidden md:block w-[800px] h-[1054px] bg-cover bg-center bg-[url('../images/background.png')]
       "
