@@ -70,8 +70,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="md:flex">
-      <div className="hidden md:block w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] ">
+    <div className="lg:flex">
+      <div className="hidden lg:block w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] ">
         <div className="bg-[#0b2361]   w-[800px] h-[1054px]">
           <div className="pt-[250px] pl-[150px]">
             <div className=" relative">
@@ -84,10 +84,10 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      <div className="basis-2/5 pt-12 md:pt-[100px] px-3 md:pr-20 md:pl-[83px] ">
-        <div className="relative block md:hidden">
-          <span className="text-[50px] text-[#ef91a1] font-Rubik md:ext-[100px]">Cluezzy</span>
-          <GiTicket className="text-[#ef91a1] text-[25px] absolute left-52 md:right-6 top-5 md:text-[50px]" />
+      <div className="basis-2/5 pt-12 lg:pt-[100px] px-3 lg:pr-20 lg:pl-[83px] ">
+        <div className="relative block lg:hidden">
+          <span className="text-[50px] text-[#ef91a1] font-Rubik lg:ext-[100px]">Cluezzy</span>
+          <GiTicket className="text-[#ef91a1] text-[25px] absolute left-52 lg:right-6 top-5 lg:text-[50px]" />
         </div>
         <div className=" text-[48px] mb-3 font-[600px]">Sign Up</div>
         <div className="text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">Fill your additional details</div>

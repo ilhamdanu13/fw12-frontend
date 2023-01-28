@@ -23,62 +23,62 @@ const TicketResult2 = () => {
   return (
     <div>
       <NavbarUser />
-      <div className="md:flex bg-[#F5F6F8] md:px-[195px] ">
+      <div className="lg:flex bg-[#F5F6F8] lg:px-[195px] ">
         <div className="pt-[72px] pb-[96px] w-full">
           <div className="bg-white">
             <div className="mb-[48px] pt-[56px] flex justify-center items-center">
               <div className="text-[24px] font-bold">Proof of Payment</div>
             </div>
             {/* Ticket */}
-            <div className="px-3 md:px-[72px] md:flex ">
+            <div className="px-3 lg:px-[72px] lg:flex ">
               <div className=" w-full pb-[145px]">
-                <div className="bg-[#f1554c] px-3 md:px-[56px] rounded-t-2xl py-[20px] md:py-0">
+                <div className="bg-[#f1554c] px-3 lg:px-[56px] rounded-t-2xl py-[20px] lg:py-0">
                   <div className="flex justify-center items-center">
                     <div className=" relative flex-1">
-                      <span className="text-[20px] md:text-[50px] text-white font-Rubik">Cluezzy</span>
+                      <span className="text-[20px] lg:text-[50px] text-white font-Rubik">Cluezzy</span>
                     </div>
                     <div className="flex-1 flex justify-center items-center">
-                      <span className="text-white font-Mulish font-semibold text-[16px] md:text-[18px]">Admit One</span>
+                      <span className="text-white font-Mulish font-semibold text-[16px] lg:text-[18px]">Admit One</span>
                     </div>
-                    <div className="hidden md:block ">
+                    <div className="hidden lg:block ">
                       <span className="text-[50px] text-white font-Rubik">Cluezzy</span>
                     </div>
                   </div>
                 </div>
-                <div className="pt-5 md:pt-[32px] pb-5 md:pb-[43px] pl-3 md:pl-[56px]  border-l-2 border-b-2 border-r-2 rounded-b-2xl">
-                  <div className="md:hidden flex justify-center items-center">
+                <div className="pt-5 lg:pt-[32px] pb-5 lg:pb-[43px] pl-3 lg:pl-[56px]  border-l-2 border-b-2 border-r-2 rounded-b-2xl">
+                  <div className="lg:hidden flex justify-center items-center">
                     <img src={require("../assets/images/QR Code.png")} alt="threemovies" />
                   </div>
-                  <div className="mb-3 md:mb-0">
+                  <div className="mb-3 lg:mb-0">
                     <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Movie</div>
                     <div className="font-Mulish font-semibold">{movieName}</div>
                   </div>
-                  <div className="md:flex items-center md:relative">
-                    <div className="flex-1 md:w-3/5 md:pr-[50px] ">
-                      <div className="md:flex mb-[16px]">
-                        <div className="flex-1 mb-3 md:mb-0">
+                  <div className="lg:flex items-center lg:relative">
+                    <div className="flex-1 lg:w-3/5 lg:pr-[50px] ">
+                      <div className="lg:flex mb-[16px]">
+                        <div className="flex-1 mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Date</div>
                           <div className="font-Mulish font-semibold">
                             {dates} {month}
                           </div>
                         </div>
-                        <div className="flex-1 w-[50px] mb-3 md:mb-0">
+                        <div className="flex-1 w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Time</div>
                           <div className="font-Mulish font-semibold">
                             {hour}:{minute}
                           </div>
                         </div>
-                        <div className="md:w-[50px] mb-3 md:mb-0">
+                        <div className="lg:w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Category</div>
                           <div className="font-Mulish font-semibold">{genre}</div>
                         </div>
                       </div>
-                      <div className="md:flex">
-                        <div className="flex-1 w-[50px] mb-3 md:mb-0">
+                      <div className="lg:flex">
+                        <div className="flex-1 w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Count</div>
                           <div className="font-Mulish font-semibold flex">{seatNum.length / 3}</div>
                         </div>
-                        <div className="flex-1 md:w-[50px] mb-3 md:mb-0">
+                        <div className="flex-1 lg:w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Seats</div>
                           <div className="font-Mulish font-semibold">{seatNum}</div>
                         </div>
@@ -88,12 +88,12 @@ const TicketResult2 = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="hidden md:block absolute top-[-175px] right-64">
+                    <div className="hidden lg:block absolute top-[-175px] right-64">
                       <div className="bg-white w-[45px] h-[45px] rounded-[50%] "></div>
                       <div className="border-dashed border-r-4 h-[340px] w-2 ml-[15px]"></div>
                       <div className="bg-white w-[45px] h-[45px] rounded-[50%] border-t-2"></div>
                     </div>
-                    <div className="hidden md:flex justify-center items-center w-2/5">
+                    <div className="hidden lg:flex justify-center items-center w-2/5">
                       <img src={require("../assets/images/QR Code.png")} alt="threemovies" />
                     </div>
                   </div>

@@ -129,11 +129,11 @@ const ProfilePage = () => {
   return (
     <div>
       <NavbarUser />
-      <div className="md:flex bg-[#F5F6F8] px-3 md:px-[79px]">
-        <div className="pt-5 md:pt-[56px]">
+      <div className="lg:flex bg-[#F5F6F8] px-3 lg:px-[79px]">
+        <div className="pt-5 lg:pt-[56px]">
           <div className="border-1 bg-white rounded-[24px]">
-            <div className="md:p-[40px] mb-3 md:mb-0">
-              <div className="pl-[40px] md:pl-0 pt-[40px] md:pt-0 text-[#4E4B66] text-[16px]">INFO</div>
+            <div className="lg:p-[40px] mb-3 lg:mb-0">
+              <div className="pl-[40px] lg:pl-0 pt-[40px] lg:pt-0 text-[#4E4B66] text-[16px]">INFO</div>
               <div className="pt-[32px] flex justify-center items-center">
                 {bio?.picture ? (
                   <img className="w-[136px] h-[136px] rounded-[50%] mb-3 shadow-lg" src={"https://res.cloudinary.com/fw12/image/upload/v1674621799/" + bio.picture} alt="Profile" />
@@ -185,17 +185,17 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
-        <div className=" md:pl-[32px]">
-          <div className="pt-3 md:pt-[56px]">
-            <div className="border-1 bg-white rounded-[16px] md:w-[900px]">
+        <div className=" lg:pl-[32px]">
+          <div className="pt-3 lg:pt-[56px]">
+            <div className="border-1 bg-white rounded-[16px] lg:w-[900px]">
               <div className="py-[25px] flex">
-                <Link className="text-[18px] tracking-[.75] leading-[34px] text-[#14142B] mr-[56px] pl-3 md:pl-[48px]">Account Settings</Link>
+                <Link className="text-[18px] tracking-[.75] leading-[34px] text-[#14142B] mr-[56px] pl-3 lg:pl-[48px]">Account Settings</Link>
                 <Link to="/order history" className="text-[18px] tracking-[.75] leading-[34px] text-[#AAAAAA]">
                   Order History
                 </Link>
               </div>
-              <div className="pl-8 md:pl-[45px]">
-                <hr className="w-[80px] md:w-[140px] pl-3 md:pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />
+              <div className="pl-8 lg:pl-[45px]">
+                <hr className="w-[80px] lg:w-[140px] pl-3 lg:pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />
               </div>
             </div>
           </div>
@@ -211,39 +211,39 @@ const ProfilePage = () => {
           >
             {({ errors, touched }) => (
               <Form>
-                <div className="pt-5 md:pt-[56px]">
-                  <div className="border-1 bg-white rounded-[16px] md:w-[900px] mb-3">
-                    <div className="px-3 md:px-[32px] pt-3 md:pt-[40px] mb-3 md:mb-[49px]">
+                <div className="pt-5 lg:pt-[56px]">
+                  <div className="border-1 bg-white rounded-[16px] lg:w-[900px] mb-3">
+                    <div className="px-3 lg:px-[32px] pt-3 lg:pt-[40px] mb-3 lg:mb-[49px]">
                       <div className="mb-[16px] text-[#14142B] text-[16px]">Details Information</div>
                       <hr />
                     </div>
                     <div className="text-[#4E4B66] text-[16px]">
-                      <div className="md:flex pl-3 md:pl-[32px] pr-3 md:pr-0 mb-3 md:mb-[32px]">
-                        <div className=" md:mr-[24px] mb-3 md:mb-0">
+                      <div className="lg:flex pl-3 lg:pl-[32px] pr-3 lg:pr-0 mb-3 lg:mb-[32px]">
+                        <div className=" lg:mr-[24px] mb-3 lg:mb-0">
                           <div className="mb-[12px] text-[#4E4B66]">First Name</div>
-                          <Field name="firstName" className="border-2 pl-3 md:pl-[24px] w-full md:pr-[160px] py-[10px] rounded-[16px] focus:outline-none" placeholder={bio.firstName} />
+                          <Field name="firstName" className="border-2 pl-3 lg:pl-[24px] w-full lg:pr-[160px] py-[10px] rounded-[16px] focus:outline-none" placeholder={bio.firstName} />
                         </div>
                         <div className="">
                           <div className="mb-[12px] text-[#4E4B66]">Last Name</div>
-                          <Field name="lastName" className="border-2 pl-3 md:pl-[24px] w-full md:pr-[160px] rounded-[16px] py-[10px] focus:outline-none" placeholder={bio.lastName} />
+                          <Field name="lastName" className="border-2 pl-3 lg:pl-[24px] w-full lg:pr-[160px] rounded-[16px] py-[10px] focus:outline-none" placeholder={bio.lastName} />
                         </div>
                       </div>
-                      <div className="md:flex pl-3 md:pl-[32px] pr-3 md:mr-0 pb-5 md:pb-[63px]">
-                        <div className=" md:mr-[24px] mb-3 md:mb-0">
+                      <div className="lg:flex pl-3 lg:pl-[32px] pr-3 lg:mr-0 pb-5 lg:pb-[63px]">
+                        <div className=" lg:mr-[24px] mb-3 lg:mb-0">
                           <div className="mb-[12px] text-[#4E4B66]">E-mail</div>
-                          <Field name="email" className="border-2 pl-3 md:pl-[24px] w-full md:pr-[160px] py-[10px] rounded-[16px] focus:outline-none" placeholder={bio.email} />
+                          <Field name="email" className="border-2 pl-3 lg:pl-[24px] w-full lg:pr-[160px] py-[10px] rounded-[16px] focus:outline-none" placeholder={bio.email} />
                           {errors.email && touched.email ? <div className="text-red-500 text-sm ">{errors.email}</div> : null}
                         </div>
                         <div className="">
                           <div className="mb-[12px] text-[#4E4B66]">Phone Number</div>
-                          <Field name="phoneNumber" className="border-2 pl-3 md:pl-[24px] w-full md:pr-[160px] rounded-[16px] py-[10px] focus:outline-none" placeholder={bio.phoneNumber} />
+                          <Field name="phoneNumber" className="border-2 pl-3 lg:pl-[24px] w-full lg:pr-[160px] rounded-[16px] py-[10px] focus:outline-none" placeholder={bio.phoneNumber} />
                           {errors.phoneNumber && touched.phoneNumber ? <div className="text-red-500 text-sm ">{errors.phoneNumber}</div> : null}
                         </div>
                       </div>
                     </div>
                   </div>
                   {alertSuccessData ? (
-                    <div className="alert alert-success shadow-lg mb-3 md:w-1/3">
+                    <div className="alert alert-success shadow-lg mb-3 lg:w-1/3">
                       <div>
                         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -254,8 +254,8 @@ const ProfilePage = () => {
                   ) : (
                     false
                   )}
-                  <div className="md:pt-[17px] mb-[22px]">
-                    <button type="submit" className="w-full md:w-1/3 border-1 rounded-[16px] bg-[#f1554c] py-[10px]  text-white ">
+                  <div className="lg:pt-[17px] mb-[22px]">
+                    <button type="submit" className="w-full lg:w-1/3 border-1 rounded-[16px] bg-[#f1554c] py-[10px]  text-white ">
                       Update changes
                     </button>
                   </div>
@@ -273,16 +273,16 @@ const ProfilePage = () => {
           >
             {({ errors, touched }) => (
               <Form>
-                <div className="border-1 bg-white rounded-[16px] md:w-[900px] mb-3">
-                  <div className="px-3 md:px-[32px] pt-3 md:pt-[40px] mb-3 md:mb-[49px]">
+                <div className="border-1 bg-white rounded-[16px] lg:w-[900px] mb-3">
+                  <div className="px-3 lg:px-[32px] pt-3 lg:pt-[40px] mb-3 lg:mb-[49px]">
                     <div className="mb-[16px] text-[#14142B] text-[16px]">Account and Privacy</div>
                     <hr />
                   </div>
-                  <div className="text-[#4E4B66] text-[16px] pb-5 md:pb-[64px] ">
-                    <div className="md:flex pl-3 md:pl-[32px] pr-3 md:pr-0 md:mb-[32px]">
-                      <div className=" md:mr-[24px] relative mb-3 md:mb-0">
+                  <div className="text-[#4E4B66] text-[16px] pb-5 lg:pb-[64px] ">
+                    <div className="lg:flex pl-3 lg:pl-[32px] pr-3 lg:pr-0 lg:mb-[32px]">
+                      <div className=" lg:mr-[24px] relative mb-3 lg:mb-0">
                         <div className="mb-[12px] text-[#4E4B66]">New Password</div>
-                        <Field name="password" className="border-2 pl-3 md:pl-[24px] w-full md:pr-[195px] py-[10px] rounded-[16px] focus:outline-none" placeholder="Write your password" type={showLeft ? "text" : "password"} />
+                        <Field name="password" className="border-2 pl-3 lg:pl-[24px] w-full lg:pr-[195px] py-[10px] rounded-[16px] focus:outline-none" placeholder="Write your password" type={showLeft ? "text" : "password"} />
                         <label onClick={handleShowLeft} className="absolute right-6 top-12 cursor-pointer">
                           {showLeft ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                         </label>
@@ -290,7 +290,7 @@ const ProfilePage = () => {
                       </div>
                       <div className="relative">
                         <div className="mb-[12px] text-[#4E4B66]">Confirm Password</div>
-                        <Field name="confirmPassword" className="border-2 pl-3 md:pl-[24px] w-full md:pr-[195px] rounded-[16px] py-[10px] focus:outline-none" placeholder="Confirm your password" type={showRight ? "text" : "password"} />
+                        <Field name="confirmPassword" className="border-2 pl-3 lg:pl-[24px] w-full lg:pr-[195px] rounded-[16px] py-[10px] focus:outline-none" placeholder="Confirm your password" type={showRight ? "text" : "password"} />
                         <label onClick={handleShowRight} className="absolute right-6 top-12 cursor-pointer">
                           {showRight ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                         </label>
@@ -300,7 +300,7 @@ const ProfilePage = () => {
                   </div>
                 </div>
                 {alertSuccessPassword ? (
-                  <div className="alert alert-success shadow-lg mb-3 md:w-1/3">
+                  <div className="alert alert-success shadow-lg mb-3 lg:w-1/3">
                     <div>
                       <svg onClick={() => setAlertSuccessPassword(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -323,8 +323,8 @@ const ProfilePage = () => {
                 ) : (
                   false
                 )}
-                <div className="md:pt-[17px] md:mb-[36px] pb-3 md:pb-0">
-                  <button type="submit" className="w-full md:w-1/3 border-1 rounded-[16px] bg-[#f1554c] py-[10px] text-white ">
+                <div className="lg:pt-[17px] lg:mb-[36px] pb-3 lg:pb-0">
+                  <button type="submit" className="w-full lg:w-1/3 border-1 rounded-[16px] bg-[#f1554c] py-[10px] text-white ">
                     Update changes
                   </button>
                 </div>

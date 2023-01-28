@@ -46,13 +46,13 @@ const OrderPage = () => {
   return (
     <div>
       <NavbarUser />
-      <div className="md:flex bg-[#F5F6F8] ">
-        <div className="py-5 md:py-[78px] pl-3 md:pl-[70px] pr-3 md:pr-[24px] md:w-[850px]">
+      <div className="lg:flex bg-[#F5F6F8] ">
+        <div className="py-5 lg:py-[78px] pl-3 lg:pl-[70px] pr-3 lg:pr-[24px] lg:w-[850px]">
           <div className="mb-[24px]">
-            <div className="text-[18px] md:text-[24px] font-bold">Movie Selected</div>
+            <div className="text-[18px] lg:text-[24px] font-bold">Movie Selected</div>
           </div>
           <div className="border-1 bg-white rounded-[8px]">
-            <div className="flex py-[15px] md:py-[37px] px-3 md:px-[48px]">
+            <div className="flex py-[15px] lg:py-[37px] px-3 lg:px-[48px]">
               <div className="text-[24px] font-semibold tracking-[.25px] leading-[30px] flex-1">{movieName}</div>
               <button onClick={() => navigate("/all")} className="border-1 rounded-[8px] text-[14px] bg-[#F5F6F8] text-[#f1554c] font-bold py-[5px] px-[10px]">
                 Change movie
@@ -61,14 +61,14 @@ const OrderPage = () => {
           </div>
           <div>
             <div className="pt-[48px] mb-[24px]">
-              <div className="text-[18px] md:text-[24px] font-bold">Choose Your Seat</div>
+              <div className="text-[18px] lg:text-[24px] font-bold">Choose Your Seat</div>
             </div>
             <div className="border-1 bg-white rounded-[8px]">
-              <div className="text-center pt-3 md:pt-[106px] pl-3 md:pl-[122px] pr-3 md:pr-[100px] mb-[24px]">
+              <div className="text-center pt-3 lg:pt-[106px] pl-3 lg:pl-[122px] pr-3 lg:pr-[100px] mb-[24px]">
                 <div className="text-[14px] font-semibold mb-[8px]">Screen</div>
                 <hr className="border-2 rounded-[4px]" />
               </div>
-              <div className="grid grid-cols-2 gap-2 md:gap-11 md:ml-[50px]">
+              <div className="grid grid-cols-2 gap-2 lg:gap-11 lg:ml-[50px]">
                 <div className="grid grid-rows-8 gap-1 font-Mulish font-semibold">
                   {["A", "B", "C", "D", "E", "F", "G", ""].map((alphabet, _i) => {
                     return (
@@ -112,47 +112,47 @@ const OrderPage = () => {
                 <div></div>
               </div>
 
-              <div className="pl-3 md:pl-[87px] pb-3 md:pb-[106px] pt-3 md:pt-0">
-                <div className="mb-3 md:mb-[41px]">
+              <div className="pl-3 lg:pl-[87px] pb-3 lg:pb-[106px] pt-3 lg:pt-0">
+                <div className="mb-3 lg:mb-[41px]">
                   <div className="font-Mulish font-semibold">Seating key</div>
                 </div>
-                <div className="md:flex">
-                  <div className="flex mr-[40px] mb-3 md:mb-0">
+                <div className="lg:flex">
+                  <div className="flex mr-[40px] mb-3 lg:mb-0">
                     <div className="border-[13px] rounded-[4px] border-[#D6D8E7] mr-[16px]"></div>
                     <div>Available</div>
                   </div>
-                  <div className="flex mr-[40px] mb-3 md:mb-0">
+                  <div className="flex mr-[40px] mb-3 lg:mb-0">
                     <div className="border-[13px] rounded-[4px] border-[#5F2EEA] mr-[16px]"></div>
                     <div>Selected</div>
                   </div>
-                  <div className="flex mr-[40px] mb-3 md:mb-0">
+                  <div className="flex mr-[40px] mb-3 lg:mb-0">
                     <div className="border-[13px] rounded-[4px] border-[#0b2361] mr-[16px]"></div>
                     <div className="">Sold</div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="flex pt-5 md:pt-[40px]">
+            <div className="flex pt-5 lg:pt-[40px]">
               <div className="flex-1">
-                <button onClick={() => navigate("/all")} className="border-2 border-[#f1554c] text-[#f1554c] px-1 md:px-[75px] py-3 md:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
+                <button onClick={() => navigate("/all")} className="border-2 border-[#f1554c] text-[#f1554c] px-1 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
                   Change your movie
                 </button>
               </div>
               <div>
-                <button onClick={checkout} className="border-2 border-[#f1554c] text-[#f1554c] px-1 md:px-[75px] py-3 md:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
+                <button onClick={checkout} className="border-2 border-[#f1554c] text-[#f1554c] px-1 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
                   Checkout now
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <div className="py-3 md:py-[85px] md:w-[410px] px-3 md:px-0">
+        <div className="py-3 lg:py-[85px] lg:w-[410px] px-3 lg:px-0">
           <div>
             <div className="text-[24px] font-bold leading-[30px] tracking-[.25px] mb-[24px]">Order Info</div>
           </div>
           <div className="border-1 bg-white rounded-[8px]">
-            <div className="text-center pt-[32px] md:px-[77px] flex flex-col justify-center items-center md:block">
-              <div className="mb-[13px] md:pl-[70px]">
+            <div className="text-center pt-[32px] lg:px-[77px] flex flex-col justify-center items-center lg:block">
+              <div className="mb-[13px] lg:pl-[70px]">
                 <img className="" src={cinemaPicture} alt="Cineone" />
               </div>
               <div className="mb-[24px]">

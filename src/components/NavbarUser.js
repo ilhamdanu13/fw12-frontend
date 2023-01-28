@@ -31,19 +31,19 @@ const NavbarUser = () => {
     }, 3000);
   };
   return (
-    <nav className="md:flex flex-1 pt-[36px] mb-3 md:mb-[80px] px-3 md:px-[136px] items-center">
+    <nav className="lg:flex flex-1 pt-[36px] mb-3 lg:mb-[80px] px-3 lg:px-[136px] items-center">
       <div className=" mr-[80px]">
         <span className="text-[30px] text-[#ef91a1] font-Rubik">Cluezzy</span>
       </div>
 
-      <div className="flex md:block flex-1 items-center content-center pt-[13px]">
-        <Link className="pt-[13px] mr-[20px] md:mr-[81px] font-Mulish font-semibold " to="/homepage">
+      <div className="flex lg:block flex-1 items-center content-center pt-[13px]">
+        <Link className="pt-[13px] mr-[20px] lg:mr-[81px] font-Mulish font-semibold " to="/homepage">
           Home
         </Link>
         <Link className="pt-[13px] font-Mulish font-semibold" to="/all">
           List Movie
         </Link>
-        <div className="block md:hidden flex flex-1 md:flex-0 rounded-[10px] items-center py-[8px] px-[16px] md:mr-[50px] group">
+        <div className="block lg:hidden flex flex-1 lg:flex-0 rounded-[10px] items-center py-[8px] px-[16px] lg:mr-[50px] group">
           <div className="text-[10px] text-[#a0a3bd]">
             <img className="w-[18px]" src={require("../assets/images/search.png")} alt="Search" />
           </div>
@@ -51,7 +51,7 @@ const NavbarUser = () => {
             <input placeholder="Search..." className="border-0 focus:outline-none bg-unset font-bold p-[8px] text-[#4E4B66]" />
           </div>
         </div>
-        <div className="block md:hidden items-center pt-[13px] group">
+        <div className="block lg:hidden items-center pt-[13px] group">
           {bio?.picture ? (
             <img className="w-[28px] h-[28px] rounded-[50%] mb-3 shadow-lg" src={"https://res.cloudinary.com/fw12/image/upload/v1674621799/" + bio.picture} alt="Profile" />
           ) : (
@@ -69,7 +69,7 @@ const NavbarUser = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex justify-center items-center rounded-[10px] items-center py-[8px] px-[16px] mr-[50px] group">
+      <div className="hidden lg:flex justify-center items-center rounded-[10px] items-center py-[8px] px-[16px] mr-[50px] group">
         <div className="text-[10px] text-[#a0a3bd]">
           <img className="w-[18px]" src={require("../assets/images/search.png")} alt="Search" />
         </div>
@@ -78,7 +78,7 @@ const NavbarUser = () => {
         </div>
       </div>
 
-      <div className="hidden md:block items-center pt-[13px] group">
+      <div className="hidden lg:block items-center pt-[13px] group">
         {bio?.picture ? (
           <img className="w-[28px] h-[28px] rounded-[50%] mb-3 shadow-lg" src={"https://res.cloudinary.com/fw12/image/upload/v1674621799/" + bio.picture} alt="Profile" />
         ) : (

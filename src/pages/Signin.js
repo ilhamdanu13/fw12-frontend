@@ -49,8 +49,8 @@ const Signin = () => {
     }
   };
   return (
-    <div className="md:flex ">
-      <div className="hidden w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] md:block">
+    <div className="lg:flex ">
+      <div className="hidden w-[800px] h-[1054px] bg-cover bg-center  bg-[url('../images/background.png')] lg:block">
         <div className="bg-[#0b2361] w-[800px] h-[1054px]">
           <div className="pt-[250px] pl-[150px]">
             <div className=" relative">
@@ -63,10 +63,10 @@ const Signin = () => {
           </div>
         </div>
       </div>
-      <div className="basis-2/5 pt-12 pr-3 pl-3 md:pt-[100px] md:pl-[83px] md:pr-20">
-        <div className="relative block md:hidden">
-          <span className="text-[50px] text-[#ef91a1] font-Rubik md:ext-[100px]">Cluezzy</span>
-          <GiTicket className="text-[#ef91a1] text-[25px] absolute top-5 md:text-[50px] left-52 md:top-10" />
+      <div className="basis-2/5 pt-12 pr-3 pl-3 lg:pt-[100px] lg:pl-[83px] lg:pr-20">
+        <div className="relative block lg:hidden">
+          <span className="text-[50px] text-[#ef91a1] font-Rubik lg:ext-[100px]">Cluezzy</span>
+          <GiTicket className="text-[#ef91a1] text-[25px] absolute top-5 lg:text-[50px] left-52 lg:top-10" />
         </div>
         <div className=" text-[48px] mb-3 font-[600px]">Sign In</div>
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-3 text-[#AAAAAA] font-[400px] ">Sign in with your data that you entered during your registration</div>
@@ -86,7 +86,7 @@ const Signin = () => {
                 <Field type="email" name="email" placeholder="Write your email" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
               </div>
-              <div className="flex flex-col mb-3 relative w-full">
+              <div className="flex flex-col mb-5 relative w-full">
                 <label>Password</label>
                 <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
                 <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">

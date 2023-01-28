@@ -99,58 +99,59 @@ const Moviedetails = () => {
   return (
     <div>
       <NavbarUser />
-      <div className="px-3 md:px-[79px] md:flex mb-5 md:mb-[80px] pt-[40px]">
-        <div className="border-box border-2 p-[32px] rounded-[8px] md:mr-[28px] mb-3 md:mb-0 flex justify-center items-center">
-          <img className="w-[236px] h-[362px] rounded-[4px]" src={movieDetail.picture} alt={movieDetail.title} />
-          {/* <img className="w-[236px] h-[362px]" src={require("../assets/images/spidey.png")} alt="Spiderman" /> */}
+      <div className="px-3 lg:px-[79px] lg:flex mb-5 lg:mb-[80px] pt-[40px]">
+        <div className="flex justify-center items-center">
+          <div className="border-box border-2 p-[32px] rounded-[8px] lg:mr-[28px] mb-3 lg:mb-0 flex justify-center items-center">
+            <img className="w-[236px] h-[362px] rounded-[4px]" src={movieDetail.picture} alt={movieDetail.title} />
+          </div>
         </div>
-        <div className="md:w-[850px]">
+        <div className="lg:w-[850px]">
           <div className="mb-[32px] font-Mulish">
             <div className="text-[#14142B] text-[32px] font-bold">{movieDetail.title}</div>
             <div className="text-[#4E4B66] text-[18px]">{movieDetail.genre}</div>
           </div>
           <div className="text-[#8692A6] text-[14px] flex font-Mulish">
             <div className="mr-[181px]">Release date</div>
-            <div className="hidden md:block">Directed by</div>
+            <div className="hidden lg:block">Directed by</div>
           </div>
           <div className="flex mb-[16px] text-[#121212] text-[16px]">
             <div className="mr-[177px] text-[#12121] font-Mulish">
               {month} {dates}, {year}
             </div>
-            <div className="text-[#12121] font-Mulish hidden md:block">{movieDetail.director}</div>
+            <div className="text-[#12121] font-Mulish hidden lg:block">{movieDetail.director}</div>
           </div>
           <div className="flex text-[#8692A6] text-[14px] font-Mulish">
             <div className="mr-[210px]">Duration</div>
-            <div className="hidden md:block">Casts</div>
+            <div className="hidden lg:block">Casts</div>
           </div>
           <div className="flex mb-[24px] text-[#121212] text-[16px]">
             <div className="mr-[117px] text-[#12121] font-Mulish">
               {hour} hours {minute} minutes
             </div>
-            <div className="text-[#12121] font-Mulish hidden md:block">{movieDetail.casts}, ...</div>
+            <div className="text-[#12121] font-Mulish hidden lg:block">{movieDetail.casts}, ...</div>
           </div>
-          <div className="block md:hidden mb-3">
+          <div className="block lg:hidden mb-3">
             <div className="text-[#8692A6] text-[14px] font-Mulish">Directed by</div>
             <div className="text-[#12121] font-Mulish">{movieDetail.director}</div>
           </div>
-          <div className="block md:hidden mb-3 w-[250px]">
+          <div className="block lg:hidden mb-3 w-[250px]">
             <div className="text-[#8692A6] text-[14px] font-Mulish">Casts</div>
             <div className="text-[#12121] font-Mulish">{movieDetail.casts}, ...</div>
           </div>
           <hr className="mb-[16px]" />
-          <div className="w-[280px] md:w-auto">
+          <div className="w-[280px] lg:w-auto">
             <div className="text-[20px] font-semibold mb-[4px] font-Mulish">Synopsis</div>
             <div className="text-[16px] tracking-[.75px] leading-[32px] text-[#12121] font-Mulish text-[#4E4B66]">{movieDetail.synopsis}</div>
           </div>
         </div>
       </div>
 
-      <div className="bg-[#F5F6F8] py-5 md:py-[78px]">
+      <div className="bg-[#F5F6F8] py-5 lg:py-[78px]">
         <div className="text-center justify-center">
           <div className="text-[24px] font-bold mb-[24px]">Showtimes and Tickets</div>
 
-          <div className="flex justify-center flex-col md:flex-row">
-            <div className="text-[#4E4B66] mb-3 md:mb-0">
+          <div className="flex justify-center flex-col lg:flex-row">
+            <div className="text-[#4E4B66] mb-3 lg:mb-0">
               <input className="border-2 mr-[24px] py-[4px] pl-[5px]  rounded-[4px]" type="date" defaultValue={date} onChange={(e) => setDate(e.target.value)} />
             </div>
             <div className="text-[#4E4B66] ">
@@ -163,10 +164,10 @@ const Moviedetails = () => {
           </div>
         </div>
 
-        <div className="px-3 md:px-[79px] pt-6 md:pt-[72px] mb-7 md:mb-[66px] flex">
+        <div className="px-3 lg:px-[79px] pt-6 lg:pt-[72px] mb-7 lg:mb-[66px] flex">
           <div className="flex">
-            <div className="border-2 rounded-[8px] py-3 md:py-[24px] bg-white md:mr-[32px]">
-              <div className="flex pl-3 md:pl-[41px] pr-3 md:pr-[24px]">
+            <div className="border-2 rounded-[8px] py-3 lg:py-[24px] bg-white lg:mr-[32px]">
+              <div className="flex pl-3 lg:pl-[41px] pr-3 lg:pr-[24px]">
                 <div className="pt-[15px]">
                   <img className="" src={schedule.cinemapicture} alt={schedule.cinema} />
                 </div>
@@ -178,14 +179,14 @@ const Moviedetails = () => {
               </div>
               <hr className="mt-[24px] mb-[16px]" />
               {token ? (
-                <div className="w-full md:w-[381px] pl-3 md:pl-[32px] text-[12px]">
+                <div className="w-full lg:w-[381px] pl-3 lg:pl-[32px] text-[12px]">
                   <div className="flex mb-[16px] font-semibold flex-wrap">
                     {schedule?.times?.map((time) => (
                       <button
                         className={` mb-[16px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`}
                         onClick={() => selectTime(time, schedule.cinema, schedule.price, schedule.title, schedule.cinemapicture, movieDetail.genre)}
                       >
-                        <span className="mr-5 md:mr-[40px]">{time}</span>
+                        <span className="mr-5 lg:mr-[40px]">{time}</span>
                       </button>
                     ))}
                   </div>
@@ -202,11 +203,11 @@ const Moviedetails = () => {
                 </div>
               )}
 
-              <div className="flex pl-3 md:pl-[32px] pr-[24px] text-[16px] mb-[32px]">
+              <div className="flex pl-3 lg:pl-[32px] pr-[24px] text-[16px] mb-[32px]">
                 <div className="flex-1 text-[#6B6B6B] ">Price</div>
                 <div className="font-semibold">IDR.{schedule.price}/seat</div>
               </div>
-              <div className="px-3 md:px-[32px] flex justify-center text-center">
+              <div className="px-3 lg:px-[32px] flex justify-center text-center">
                 <button disabled={selectedCinema !== schedule.cinema} onClick={book} className="rounded-[8px] w-full py-[4px] bg-[#f1554c] text-white font-bold">
                   Book now
                 </button>
@@ -214,10 +215,10 @@ const Moviedetails = () => {
             </div>
           </div>
         </div>
-        <div className="flex px-3 md:px-[70px] justify-center items-center">
-          <hr className="w-[80px] md:w-[523px] " />
-          <div className="text-[#f1554c] text-[16px] px-3 md:px-[23px]">view more</div>
-          <hr className="w-[80px] md:w-[523px]" />
+        <div className="flex px-3 lg:px-[70px] justify-center items-center">
+          <hr className="w-[80px] lg:w-[523px] " />
+          <div className="text-[#f1554c] text-[16px] px-3 lg:px-[23px]">view more</div>
+          <hr className="w-[80px] lg:w-[523px]" />
         </div>
       </div>
       <Footer />
