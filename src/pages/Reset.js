@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { GiTicket } from "react-icons/gi";
 import { RxDividerVertical } from "react-icons/rx";
@@ -11,15 +11,14 @@ import YupPassword from "yup-password";
 YupPassword(Yup);
 
 const forgotScheme = Yup.object().shape({
-  // email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
   confirmPassword: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
   code: Yup.string().required("Required"),
 });
 
 const Reset = () => {
+  const state = useLocation();
   const [errMessage, setErrMessage] = React.useState("");
-  const [showAlert, setShowAlert] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,12 +28,22 @@ const Reset = () => {
   };
 
   const reset = async (value) => {
+    const code = value.code;
+    const email = state;
+    const password = value.password;
+    const confirmPassword = value.confirmPassword;
+
+    if (password !== confirmPassword) {
+      return setErrMessage("Password and confirm password does not match!");
+    }
+
     const cb = () => {
       navigate("/signin");
     };
 
     try {
-      const result = await dispatch(resetAction({ ...value, cb }));
+      const result = await dispatch(resetAction({ code, email, password, confirmPassword, cb }));
+      cb();
       setErrMessage(result.payload);
     } catch (err) {
       console.log(err);
@@ -106,7 +115,6 @@ const Reset = () => {
         <Formik
           initialValues={{
             code: "",
-            // email: "",
             password: "",
             confirmPassword: "",
           }}
@@ -115,9 +123,19 @@ const Reset = () => {
         >
           {({ errors, touched }) => (
             <Form className="">
+              {errMessage ? (
+                <div className="alert alert-error shadow-lg">
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{errMessage}</span>
+                  </div>
+                </div>
+              ) : null}
               <div className=" mb-3 text-[16px]">
                 <label>Code</label>
-                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3" name="code" placeholder="Write your code" />
+                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" name="code" placeholder="Write your code" />
                 {errors.code && touched.code ? <div className="text-red-500 text-sm ">{errors.code}</div> : null}
               </div>{" "}
               {/* <div className=" mb-3">
@@ -127,7 +145,7 @@ const Reset = () => {
               </div> */}
               <div className=" mb-3 relative text-[16px] flex flex-col">
                 <label>Password</label>
-                <Field className="form-inpu lg:w-[295px] lg:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type={show ? "text" : "password"} name="password" placeholder="Write your password" />
+                <Field className="form-inpu lg:w-[295px] lg:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" type={show ? "text" : "password"} name="password" placeholder="Write your password" />
                 <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
@@ -135,7 +153,7 @@ const Reset = () => {
               </div>
               <div className="mb-5 relative text-[16px] flex flex-col">
                 <label>Confirm Password</label>
-                <Field className="form-input lg:w-[295px] lg:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 " type={show ? "text" : "password"} name="confirmPassword" placeholder="Write your confirm password" />
+                <Field className="form-input lg:w-[295px] lg:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" type={show ? "text" : "password"} name="confirmPassword" placeholder="Write your confirm password" />
                 <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>

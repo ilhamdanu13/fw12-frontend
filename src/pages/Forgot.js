@@ -21,7 +21,7 @@ const Forgot = () => {
 
   const forgot = async (value) => {
     const cb = () => {
-      navigate("/reset");
+      navigate("/reset", { state: value });
     };
 
     try {
@@ -106,7 +106,7 @@ const Forgot = () => {
             <Form>
               <label>Email</label>
               <div className="mb-5">
-                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3" type="email" name="email" placeholder="Write your email" />
+                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" type="email" name="email" placeholder="Write your email" />
                 {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
               </div>
               <div>

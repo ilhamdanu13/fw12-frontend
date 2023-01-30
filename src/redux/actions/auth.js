@@ -40,10 +40,11 @@ export const forgotPassword = createAsyncThunk("auth/forgotPassword", async ({ e
   }
 });
 
-export const resetPassword = createAsyncThunk("auth/resetPassword", async ({ code, password, confirmPassword, cb }) => {
+export const resetPassword = createAsyncThunk("auth/resetPassword", async ({ code, email, password, confirmPassword, cb }) => {
   try {
     const { data } = await http().post("https://fw12-backend-red.vercel.app/auth/resetPassword", {
       code,
+      email,
       password,
       confirmPassword,
     });
