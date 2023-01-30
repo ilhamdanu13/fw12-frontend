@@ -99,14 +99,12 @@ const ProfilePage = () => {
       try {
         const form = new FormData();
         form.append("picture", file);
-        const { data } = await http(token).patch(`https://fw12-backend-red.vercel.app/profile/${id}/update/`, form, {
-          headers: { "Content-Type": "application/json" },
-        });
+        const { data } = await http(token).patch(`https://fw12-backend-red.vercel.app/profile/${id}/update/`, form);
         setAlertSuccessUpload(true);
         setTimeout(() => {
           navigate(0);
 
-          setPicture(true);
+          setPicture(false);
         }, 1500);
       } catch (err) {
         window.alert(err.response);
