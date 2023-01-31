@@ -11,7 +11,7 @@ const Dashboard = () => {
   }, []);
 
   const getMovieDetail = async () => {
-    const { data } = await axios.get("http://localhost:8888/movies/1");
+    const { data } = await axios.get("https://fw12-backend-shr6.vercel.app/movies/1");
     return data;
   };
 

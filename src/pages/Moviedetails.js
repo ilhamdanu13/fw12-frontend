@@ -49,13 +49,13 @@ const Moviedetails = () => {
   }, []);
 
   const getMovieDetail = async () => {
-    const { data } = await http(token).get("https://fw12-backend-red.vercel.app/movies/" + id);
+    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/movies/" + id);
     setMovieDetail(data.results);
     // console.log(data);
   };
 
   const getCinemas = async () => {
-    const { data } = await http(token).get("https://fw12-backend-red.vercel.app/cinemas");
+    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/cinemas");
     setCityList(data.results);
     // console.log(data);
     if (data.results.length) {
@@ -64,7 +64,7 @@ const Moviedetails = () => {
   };
 
   const getSchedule = async () => {
-    const { data } = await http(token).get(`https://fw12-backend-red.vercel.app/movieSchedules/${id}`);
+    const { data } = await http(token).get(`https://fw12-backend-shr6.vercel.app/movieSchedules/${id}`);
     setSchedule(data.results);
   };
 

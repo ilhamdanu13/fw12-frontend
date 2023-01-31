@@ -19,12 +19,12 @@ const Index = () => {
   }, []);
 
   const getNowShowing = async () => {
-    const { data } = await axios.get("https://fw12-backend-red.vercel.app/movies/now");
+    const { data } = await axios.get("https://fw12-backend-shr6.vercel.app/movies/now");
     return data;
   };
 
   const getUpcoming = async () => {
-    const { data } = await axios.get("https://fw12-backend-red.vercel.app/movies/upcoming");
+    const { data } = await axios.get("https://fw12-backend-shr6.vercel.app/movies/upcoming");
     return data;
   };
 

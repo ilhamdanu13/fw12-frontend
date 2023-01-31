@@ -49,7 +49,7 @@ const ProfilePage = () => {
   }, [id]);
 
   const getBio = async () => {
-    const { data } = await http(token).get("https://fw12-backend-red.vercel.app/profile/" + id);
+    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/profile/" + id);
     return data;
   };
 
@@ -61,7 +61,7 @@ const ProfilePage = () => {
         phoneNumber: value.phoneNumber,
         email: value.email,
       };
-      await http(token).patch(`https://fw12-backend-red.vercel.app/profile/${id}/update/`, values);
+      await http(token).patch(`https://fw12-backend-shr6.vercel.app/profile/${id}/update/`, values);
       setAlertSuccessData(true);
       setTimeout(() => {
         setAlertSuccessData(false);
@@ -78,7 +78,7 @@ const ProfilePage = () => {
         confirmPassword: value.confirmPassword,
       };
 
-      await http(token).patch(`https://fw12-backend-red.vercel.app/profile/${id}/update/`, values);
+      await http(token).patch(`https://fw12-backend-shr6.vercel.app/profile/${id}/update/`, values);
       setAlertSuccessPassword(true);
       setTimeout(() => {
         setAlertSuccessPassword(false);
@@ -99,7 +99,7 @@ const ProfilePage = () => {
       try {
         const form = new FormData();
         form.append("picture", file);
-        const { data } = await http(token).patch(`https://fw12-backend-red.vercel.app/profile/${id}/update/`, form);
+        const { data } = await http(token).patch(`https://fw12-backend-shr6.vercel.app/profile/${id}/update/`, form);
         setAlertSuccessUpload(true);
         setTimeout(() => {
           navigate(0);

@@ -48,14 +48,15 @@ const transactionReducer = createSlice({
       });
     },
   },
-  // extraReducers: (build) => {
-  //   build.addCase(transactionAction.fulfilled, (state, action) => {
-  //     state = {
-  //       ...state,
-  //       ...action.payload,
-  //     };
-  //   });
-  // },
+
+  extraReducers: (build) => {
+    build.addCase(transactionAction.fulfilled, (state, action) => {
+      state = {
+        ...state,
+        ...action.payload,
+      };
+    });
+  },
 });
 
 export const { chooseMovie, chooseSeat, choosePayment } = transactionReducer.actions;

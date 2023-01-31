@@ -47,7 +47,7 @@ const PaymentPage = () => {
   }, [form]);
 
   const getPaymentMethod = async () => {
-    const { data } = await axios.get("https://fw12-backend-red.vercel.app/paymentMethod");
+    const { data } = await axios.get("https://fw12-backend-shr6.vercel.app/paymentMethod");
     setPaymentList(data.results);
   };
 

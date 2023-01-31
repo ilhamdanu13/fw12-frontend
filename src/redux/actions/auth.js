@@ -4,7 +4,7 @@ import http from "../../helpers/http";
 
 export const loginAction = createAsyncThunk("auth/login", async ({ email, password, cb }) => {
   try {
-    const { data } = await http().post("https://fw12-backend-red.vercel.app/auth/login", { email, password });
+    const { data } = await http().post("https://fw12-backend-shr6.vercel.app/auth/login", { email, password });
     cb();
     return data.results.token;
   } catch (error) {
@@ -14,7 +14,7 @@ export const loginAction = createAsyncThunk("auth/login", async ({ email, passwo
 
 export const registerAction = createAsyncThunk("auth/register", async ({ firstName, lastName, email, phoneNumber, password, cb }) => {
   try {
-    const { data } = await http().post("https://fw12-backend-red.vercel.app/auth/register", {
+    const { data } = await http().post("https://fw12-backend-shr6.vercel.app/auth/register", {
       firstName,
       lastName,
       email,
@@ -30,7 +30,7 @@ export const registerAction = createAsyncThunk("auth/register", async ({ firstNa
 
 export const forgotPassword = createAsyncThunk("auth/forgotPassword", async ({ email, cb }) => {
   try {
-    const { data } = await http().post("https://fw12-backend-red.vercel.app/auth/forgotPassword", {
+    const { data } = await http().post("https://fw12-backend-shr6.vercel.app/auth/forgotPassword", {
       email,
     });
     cb();
@@ -42,7 +42,7 @@ export const forgotPassword = createAsyncThunk("auth/forgotPassword", async ({ e
 
 export const resetPassword = createAsyncThunk("auth/resetPassword", async ({ code, email, password, confirmPassword, cb }) => {
   try {
-    const { data } = await http().post("https://fw12-backend-red.vercel.app/auth/resetPassword", {
+    const { data } = await http().post("https://fw12-backend-shr6.vercel.app/auth/resetPassword", {
       code,
       email,
       password,
