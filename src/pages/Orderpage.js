@@ -173,7 +173,7 @@ const OrderPage = () => {
             </div>
             <div className="flex px-[24px] mb-[16px]">
               <div className="flex-1 text-[#6B6B6B] text-[14px] font-Mulish">One ticket price</div>
-              <div className="text-[#14142B] text-[14px font-Mulish font-semibold]">{price}</div>
+              <div className="text-[#14142B] text-[14px font-Mulish font-semibold">{price}</div>
             </div>
             <div className="flex px-[24px] mb-[40px]">
               <div className="flex-1 text-[#6B6B6B] text-[14px] font-Mulish">Seat choosed</div>
@@ -182,7 +182,7 @@ const OrderPage = () => {
             <hr className="mb-[24px] " />
             <div className="flex px-[24px] pb-[24px] items-center justify-center ">
               <div className="flex-1 font-semibold text-[18px] font-Mulish">Total Payment</div>
-              <div className="text-[#5F2EEA] text-[14px] ">IDR.{selectedSeat.length * price}</div>
+              <div className="text-[#5F2EEA] text-[18px] font-semibold">IDR.{selectedSeat.length * price}</div>
             </div>
           </div>
         </div>

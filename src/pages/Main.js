@@ -139,7 +139,7 @@ const Main = () => {
         />
 
         <Route
-          path="/ticket result"
+          path="/ticket result/:id"
           element={
             <PrivateRoute>
               <TicketResult />

@@ -3,22 +3,23 @@ import { useSelector } from "react-redux";
 import Footer from "../components/Footer";
 import Copyright from "../components/Copyright";
 import NavbarUser from "../components/NavbarUser";
+import http from "../helpers/http";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 
 const TicketResult = () => {
-  const movieName = useSelector((state) => state.transaction.movieName);
-  const totalPrice = useSelector((state) => state.transaction.totalPrice);
-  const bookingDate = useSelector((state) => state.transaction.bookingDate);
-  const bookingTime = useSelector((state) => state.transaction.bookingTime);
-  const seatNum = useSelector((state) => state.transaction.seatNum);
-  const genre = useSelector((state) => state.transaction.genre);
+  const token = useSelector((state) => state?.auth?.token);
+  const { id } = useParams();
+  const [ticket, setTicket] = React.useState({});
 
-  let duration = bookingTime;
-  let hour = String(duration).split(":").slice(0, 1).join(":");
-  let minute = String(duration).split(":")[1];
+  React.useEffect(() => {
+    getTicket();
+  }, []);
 
-  let NewDate = new Date(bookingDate).toDateString();
-  let month = NewDate.split(" ")[1];
-  let dates = NewDate.split(" ")[2];
+  const getTicket = async () => {
+    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/transactions/ticket/" + id);
+    setTicket(data.results);
+  };
 
   return (
     <div>
@@ -51,40 +52,36 @@ const TicketResult = () => {
                   </div>
                   <div className="mb-3 lg:mb-0">
                     <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Movie</div>
-                    <div className="font-Mulish font-semibold">{movieName}</div>
+                    <div className="font-Mulish font-semibold">{ticket.title}</div>
                   </div>
                   <div className="lg:flex items-center lg:relative">
                     <div className="flex-1 lg:w-3/5 lg:pr-[50px] ">
                       <div className="lg:flex mb-[16px]">
                         <div className="flex-1 mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Date</div>
-                          <div className="font-Mulish font-semibold">
-                            {dates} {month}
-                          </div>
+                          <div className="font-Mulish font-semibold">{moment(ticket.bookingDate).add(-2, "day").format("0d, MMM")}</div>
                         </div>
                         <div className="flex-1 w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Time</div>
-                          <div className="font-Mulish font-semibold">
-                            {hour}:{minute}
-                          </div>
+                          <div className="font-Mulish font-semibold">{String(ticket.bookingTime).split(":").slice(0, 2).join(":")}</div>
                         </div>
                         <div className="lg:w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Category</div>
-                          <div className="font-Mulish font-semibold">{genre}</div>
+                          <div className="font-Mulish font-semibold">{ticket.genre}</div>
                         </div>
                       </div>
                       <div className="lg:flex">
                         <div className="flex-1 w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Count</div>
-                          <div className="font-Mulish font-semibold flex">{Math.round(seatNum.length / 3)}</div>
+                          <div className="font-Mulish font-semibold flex">{Math.round(ticket?.seatNum?.length / 3)}</div>
                         </div>
                         <div className="flex-1 lg:w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Seats</div>
-                          <div className="font-Mulish font-semibold">{seatNum}</div>
+                          <div className="font-Mulish font-semibold">{ticket.seatNum}</div>
                         </div>
                         <div className="w-[50px]">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Price</div>
-                          <div className="font-Mulish font-semibold">IDR.{totalPrice}</div>
+                          <div className="font-Mulish font-semibold">IDR.{ticket.totalPrice}</div>
                         </div>
                       </div>
                     </div>

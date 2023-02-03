@@ -10,12 +10,8 @@ const authReducer = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // login: (state, payload) => {
-    //   state.token = payload;
-    // },
     logout: (state, action) => {
       return initialState;
-      // state.token = null
     },
   },
   extraReducers: (build) => {

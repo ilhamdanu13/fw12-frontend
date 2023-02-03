@@ -8,27 +8,17 @@ import http from "../helpers/http";
 import { logout as logoutAction } from "../redux/reducers/auth";
 import Footer from "../components/Footer";
 import Copyright from "../components/Copyright";
+import moment from "moment";
 
 const OrderHistory = () => {
   const token = useSelector((state) => state?.auth?.token);
   const decode = jwtDecode(token);
   const { id } = decode;
   const [bio, setBio] = React.useState({});
-  const movieName = useSelector((state) => state.transaction.movieName);
-  const bookingDate = useSelector((state) => state.transaction.bookingDate);
-  const bookingTime = useSelector((state) => state.transaction.bookingTime);
-  const cinemaPicture = useSelector((state) => state.transaction.cinemaPicture);
+  const [history, setHistory] = React.useState([]);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  let duration = bookingTime;
-  let hour = String(duration).split(":").slice(0, 1).join(":");
-  let minute = String(duration).split(":")[1];
-
-  let NewDate = new Date(bookingDate).toDateString();
-  let month = NewDate.split(" ")[1];
-  let dates = NewDate.split(" ")[2];
-  let year = NewDate.split(" ")[3];
 
   React.useEffect(() => {
     getBio().then((data) => {
@@ -36,8 +26,19 @@ const OrderHistory = () => {
     });
   }, [id]);
 
+  React.useEffect(() => {
+    getHistory().then((data) => {
+      setHistory(data?.results);
+    });
+  }, [id]);
+
   const getBio = async () => {
     const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/profile/" + id);
+    return data;
+  };
+
+  const getHistory = async () => {
+    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/transactions/history/" + id);
     return data;
   };
 
@@ -47,6 +48,8 @@ const OrderHistory = () => {
       navigate("/signin");
     }, 2000);
   };
+
+  console.log(history[1]);
 
   return (
     <div>
@@ -88,29 +91,31 @@ const OrderHistory = () => {
               </div>
             </div>
           </div>
-          <div className="pt-5 lg:pt-[56px] pb-5 lg:pb-0">
-            <div className="border-1 bg-white rounded-[16px] lg:w-[900px] mb-[24px]">
-              <div className="pl-[32px] pr-[67px] pt-[40px] mb-[49px] lg:flex ">
-                <div className="flex-1">
-                  <div className=" text-[#AAAAAA] text-[14px]">
-                    {month} {dates}, {year} - {hour} {minute}
+          {history?.map((ticket) => (
+            <div className="pt-5 lg:pt-[56px] pb-5 lg:pb-0">
+              <div className="border-1 bg-white rounded-[16px] lg:w-[900px] mb-[24px]">
+                <div className="pl-[32px] pr-[67px] pt-[40px] mb-[49px] lg:flex ">
+                  <div className="flex-1">
+                    <div className=" text-[#AAAAAA] text-[14px]">
+                      {moment(ticket.bookingDate).format("LL")} - {String(ticket.bookingTime).split(":").slice(0, 2).join(":")}
+                    </div>
+                    <div className="text-[24px] font-semibold">{ticket.title}</div>
                   </div>
-                  <div className="text-[24px] font-semibold">{movieName}</div>
+                  <div className="pt-[15px]">
+                    <img className="" src={ticket.cinemapicture} alt="cinema" />
+                  </div>
                 </div>
-                <div className="pt-[15px]">
-                  <img className="" src={cinemaPicture} alt="cinema" />
-                </div>
-              </div>
 
-              <hr className="mb-[32px]" />
-              <div className="lg:flex pl-3 lg:pl-[32px] pr-3 lg:pr-[67px] pb-[32px]">
-                <div className="border-1 bg-[#00BA88] py-[10px] text-center lg:px-[50px] rounded-[4px] text-white lg:mr-[500px] mb-3 lg:mb-0">Ticket in active</div>
-                <Link to="/ticket result" className="text-[#AAAAAA] text-[18px] pt-[8px] flex justify-center items-center lg:block">
-                  See Details
-                </Link>
+                <hr className="mb-[32px]" />
+                <div className="lg:flex pl-3 lg:pl-[32px] pr-3 lg:pr-[67px] pb-[32px]">
+                  <div className="border-1 bg-[#00BA88] py-[10px] text-center lg:px-[50px] rounded-[4px] text-white lg:mr-[500px] mb-3 lg:mb-0">Ticket in active</div>
+                  <Link to={"/ticket result/" + ticket.id} className="text-[#AAAAAA] text-[18px] pt-[8px] flex justify-center items-center lg:block">
+                    See Details
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
       <Footer />
