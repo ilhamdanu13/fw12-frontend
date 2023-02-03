@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import Footer from "../components/Footer";
 import Copyright from "../components/Copyright";

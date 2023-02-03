@@ -18,12 +18,12 @@ const Moviedetails = () => {
   const { id } = useParams();
   const [movieDetail, setMovieDetail] = React.useState({});
   const [date, setDate] = React.useState(moment().format("YYYY-MM-DD"));
-  const [cityList, setCityList] = React.useState([]);
+  const [cinema, setCinema] = React.useState([]);
   const [city, setCity] = React.useState({});
   const [schedule, setSchedule] = React.useState({});
   const [selectedPrice, setSelectedPrice] = React.useState("");
   const [selectedTime, setSelectedTime] = React.useState("");
-  const [selectedCinema, setSelectedCinema] = React.useState(null);
+  const [selectedCinemaName, setSelectedCinemaName] = React.useState(null);
   const [selectedCinemaId, setSelectedCinemaId] = React.useState(null);
   const [selectedCinemaPicture, setSelectedCinemaPicture] = React.useState("");
   const [selectedMovie, setSelectedMovie] = React.useState("");
@@ -44,10 +44,6 @@ const Moviedetails = () => {
     getSchedule();
   }, []);
 
-  React.useEffect(() => {
-    getSchedule();
-  }, []);
-
   const getMovieDetail = async () => {
     const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/movies/" + id);
     setMovieDetail(data.results);
@@ -56,7 +52,7 @@ const Moviedetails = () => {
 
   const getCinemas = async () => {
     const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/cinemas");
-    setCityList(data.results);
+    setCinema(data.results);
     // console.log(data);
     if (data.results.length) {
       setCity(data.results[0].name);
@@ -68,13 +64,14 @@ const Moviedetails = () => {
     setSchedule(data.results);
   };
 
-  const selectTime = (time, cinema, price, title, cinemaPicture, genre) => {
+  const selectTime = (time, cinemaName, price, title, cinemaPicture, genre, cinemaId) => {
     setSelectedTime(time);
-    setSelectedCinema(cinema);
+    setSelectedCinemaName(cinemaName);
     setSelectedPrice(price);
     setSelectedMovie(title);
     setSelectedCinemaPicture(cinemaPicture);
     setSelectedGenre(genre);
+    setSelectedCinemaId(cinemaId);
   };
 
   const book = () => {
@@ -82,13 +79,14 @@ const Moviedetails = () => {
       chooseMovieAction({
         userId: userId,
         movieId: id,
-        cinemaId: selectedCinema,
+        cinemaName: selectedCinemaName,
         bookingDate: date,
         bookingTime: selectedTime,
         price: selectedPrice,
         movieName: selectedMovie,
         cinemaPicture: selectedCinemaPicture,
         genre: selectedGenre,
+        cinemaId: selectedCinemaId,
       })
     );
     navigate("/orderpage");
@@ -156,7 +154,7 @@ const Moviedetails = () => {
             </div>
             <div className="text-[#4E4B66] ">
               <select onChange={(e) => setCity(e.target.value)} className="border-2 py-[5px] pl-[5px] pr-[100px] rounded-[4px]">
-                {cityList.map((o) => (
+                {cinema.map((o) => (
                   <option>{o.city}</option>
                 ))}
               </select>
@@ -183,8 +181,8 @@ const Moviedetails = () => {
                   <div className="flex mb-[16px] font-semibold flex-wrap">
                     {schedule?.times?.map((time) => (
                       <button
-                        className={` mb-[16px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`}
-                        onClick={() => selectTime(time, schedule.cinema, schedule.price, schedule.title, schedule.cinemapicture, movieDetail.genre)}
+                        className={` mb-[16px] ${schedule.cinema === selectedCinemaName && time === selectedTime && "text-violet-700 font-bold"}`}
+                        onClick={() => selectTime(time, schedule.cinema, schedule.price, schedule.title, schedule.cinemapicture, movieDetail.genre, schedule.cinemaid)}
                       >
                         <span className="mr-5 lg:mr-[40px]">{time}</span>
                       </button>
@@ -195,7 +193,7 @@ const Moviedetails = () => {
                 <div className=" pl-[32px] text-[12px]">
                   <div className="flex mb-[16px] font-semibold">
                     {schedule?.times?.map((time) => (
-                      <button className={`mr-[32px] ${schedule.cinema === selectedCinema && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => window.alert("Please login")}>
+                      <button className={`mr-[32px] ${schedule.cinema === selectedCinemaName && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => window.alert("Please login")}>
                         <span className="mr-5">{time}</span>
                       </button>
                     ))}
@@ -208,7 +206,7 @@ const Moviedetails = () => {
                 <div className="font-semibold">IDR.{schedule.price}/seat</div>
               </div>
               <div className="px-3 lg:px-[32px] flex justify-center text-center">
-                <button disabled={selectedCinema !== schedule.cinema} onClick={book} className="rounded-[8px] w-full py-[4px] bg-[#f1554c] text-white font-bold">
+                <button disabled={selectedCinemaName !== schedule.cinema} onClick={book} className="rounded-[8px] w-full py-[4px] bg-[#f1554c] text-white font-bold">
                   Book now
                 </button>
               </div>

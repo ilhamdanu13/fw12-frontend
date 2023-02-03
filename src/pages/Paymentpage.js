@@ -18,7 +18,7 @@ const PaymentPage = () => {
   const bookingTime = useSelector((state) => state.transaction.bookingTime);
   const seatNum = useSelector((state) => state.transaction.seatNum);
   const price = useSelector((state) => state.transaction.price);
-  const cinema = useSelector((state) => state.transaction.cinema);
+  const cinema = useSelector((state) => state.transaction.cinemaName);
   const movieName = useSelector((state) => state.transaction.movieName);
   const totalPrice = useSelector((state) => state.transaction.totalPrice);
 
