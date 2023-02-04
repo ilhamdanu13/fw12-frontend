@@ -64,9 +64,9 @@ const OrderPage = () => {
               <div className="text-[18px] lg:text-[24px] font-bold">Choose Your Seat</div>
             </div>
             <div className="border-1 bg-white rounded-[8px]">
-              <div className="text-center pt-3 lg:pt-[106px] pl-3 lg:pl-[122px] pr-3 lg:pr-[100px] mb-[24px]">
+              <div className="text-center pt-3 lg:pt-[106px] pl-3 lg:pl-[90px] pr-3 lg:pr-[65px] mb-[24px]">
                 <div className="text-[14px] font-semibold mb-[8px]">Screen</div>
-                <hr className="border-2 rounded-[4px]" />
+                <hr className="border-2 rounded-[4px] " />
               </div>
               <div className="grid grid-cols-2 gap-2 lg:gap-11 lg:ml-[50px]">
                 <div className="grid grid-rows-8 gap-1 font-Mulish font-semibold">

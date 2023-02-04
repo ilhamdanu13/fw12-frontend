@@ -39,6 +39,8 @@ const Signup = () => {
   // Register
   const register = async (value) => {
     const cb = () => {
+      setAlertError(false);
+      setAlertSuccess(true);
       setTimeout(() => {
         navigate("/Signin");
       }, 3000);
@@ -55,17 +57,16 @@ const Signup = () => {
       if (results.payload.startsWith("Email")) {
         setAlertError(true);
         setErrMessage(results.payload);
-      } else if (results.payload.startsWith("Phone")) {
+        return;
+      }
+      if (results.payload.startsWith("Phone")) {
         setAlertError(true);
         setErrMessage(results.payload);
+        return;
       }
-      if (results.payload.startsWith("Register")) {
-        setAlertError(false);
-        setAlertSuccess(true);
-        setSuccessMessage(results.payload);
-      }
+      cb();
     } catch (error) {
-      setErrMessage(error?.response?.data?.message);
+      console.log(error);
     }
   };
 
@@ -151,14 +152,14 @@ const Signup = () => {
                       <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span>{succesMessage}</span>
+                      <span>Register Successfully</span>
                     </div>
                   </div>
                 ) : (
                   false
                 )}
               </div>
-              <button type="submit" className="w-full box-border  pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white">
+              <button type="submit" className="w-full box-border  pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
                 Sign Up
               </button>
             </Form>
@@ -168,7 +169,7 @@ const Signup = () => {
         <div className="text-center">
           <div className="text-[#8692A6] mb-[19px]">
             Already have account ?{" "}
-            <Link to="/signin" className="text-blue-700">
+            <Link to="/signin" className="text-blue-500 font-bold">
               Sign In
             </Link>
           </div>

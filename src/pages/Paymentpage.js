@@ -21,6 +21,10 @@ const PaymentPage = () => {
   const cinema = useSelector((state) => state.transaction.cinemaName);
   const movieName = useSelector((state) => state.transaction.movieName);
   const totalPrice = useSelector((state) => state.transaction.totalPrice);
+  const [paymentList, setPaymentList] = React.useState([]);
+  const [alertPayment, setAlertPayment] = React.useState(false);
+  const [alertSuccess, setAlertSuccess] = React.useState(false);
+  const [alertForm, setAlertForm] = React.useState(false);
 
   let duration = bookingTime;
   let hour = String(duration).split(":").slice(0, 1).join(":");
@@ -37,7 +41,7 @@ const PaymentPage = () => {
     phoneNumber: "",
     paymentMethodId: "",
   });
-  const [paymentList, setPaymentList] = React.useState([]);
+
   React.useEffect(() => {
     getPaymentMethod();
   }, []);
@@ -52,14 +56,36 @@ const PaymentPage = () => {
   };
 
   const pay = () => {
-    dispatch(trxAction({ ...dataTransaction, ...form, token }));
-  };
+    if (!form.paymentMethodId) {
+      setAlertPayment(true);
+      setAlertSuccess(false);
+      return;
+    }
+    if (form.paymentMethodId) {
+      setAlertPayment(false);
+    }
+    if (!form.email) {
+      setAlertForm(true);
+      return;
+    }
+    if (!form.fullName) {
+      setAlertForm(true);
+      return;
+    }
+    if (!form.phoneNumber) {
+      setAlertForm(true);
+      return;
+    }
 
-  const redirect = () => {
+    dispatch(trxAction({ ...dataTransaction, ...form, token }));
+    setAlertSuccess(true);
+    setAlertPayment(false);
+    setAlertForm(false);
     setTimeout(() => {
       navigate("/order history");
     }, 3000);
   };
+
   console.log(paymentList);
   return (
     <div>
@@ -103,12 +129,15 @@ const PaymentPage = () => {
             <div className="pt-[48px] mb-[24px]">
               <div className="text-[18px] lg:text-[24px] font-bold">Choose a Payment Method</div>
             </div>
-            <div className="border-1 bg-white rounded-[8px]">
+            <div className="border-1 bg-white rounded-[8px] mb-5">
               <div className="grid grid-cols-4 gap-5 pl-3 lg:pl-[35px] pt-[30px] mb-[20px]">
                 {paymentList.map((item) => (
                   <div>
-                    <button onClick={() => setForm({ ...form, paymentMethodId: item.id })} className={`border-2 w-15 lg:w-32 h-11 flex justify-center items-center font-bold ${form.paymentMethodId === item.id ? "bg-violet-700" : ""}`}>
-                      {item.name}
+                    <button
+                      onClick={() => setForm({ ...form, paymentMethodId: item.id })}
+                      className={`border-2 rounded w-15 lg:w-32 h-11 flex justify-center items-center font-bold ${form.paymentMethodId === item.id ? "bg-[#f1554c] border-0" : ""}`}
+                    >
+                      <img src={item.picture} alt={item.name} />
                     </button>
                   </div>
                 ))}
@@ -124,35 +153,61 @@ const PaymentPage = () => {
                 </div>
               </div>
             </div>
+            {alertSuccess ? (
+              <div className="alert alert-success shadow-lg">
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Your order success!</span>
+                </div>
+              </div>
+            ) : (
+              false
+            )}
+
+            {alertForm ? (
+              <div className="alert alert-warning shadow-lg mb-5">
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span>Please fill form correctly</span>
+                </div>
+              </div>
+            ) : (
+              false
+            )}
+
+            {alertPayment ? (
+              <div className="alert alert-warning shadow-lg">
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span>Please choose payment</span>
+                </div>
+              </div>
+            ) : (
+              false
+            )}
             <div className="flex pt-3 lg:pt-[40px]">
               <div className="flex-1">
-                <button onClick={() => navigate("/orderpage")} className="border-2 border-[#f1554c] text-[#f1554c] px-1 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
+                <button onClick={() => navigate("/orderpage")} className="border-2 border-[#f1554c] text-[#f1554c] px-3 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
                   Previous step
                 </button>
               </div>
               <div>
-                {/* <button onClick={pay} type="submit" className="border-2 border-[#f1554c] text-[#f1554c] px-[75px] py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
+                <button onClick={pay} type="submit" className="border-2 border-[#f1554c] text-[#f1554c] px-3 lg:px-[75px] py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
                   Pay your order
-                </button> */}
+                </button>
               </div>
               {/* The button to open modal */}
-              <label htmlFor="my-modal-6" className="border-2 border-[#f1554c] text-[#f1554c] px-1 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md" onClick={pay}>
+              {/* <label htmlFor="my-modal-6" className="border-2 border-[#f1554c] text-[#f1554c] px-1 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md" onClick={pay}>
                 Pay your order
-              </label>
+              </label> */}
 
               {/* Put this part before </body> tag */}
-              <input type="checkbox" id="my-modal-6" className="modal-toggle" />
-              <div className="modal modal-bottom sm:modal-middle">
-                <div className="modal-box">
-                  <h3 className="font-bold text-lg">Congratulations order ticket succeed!</h3>
-                  <p className="py-4">While we prepare your seat, please check other movies</p>
-                  <div className="modal-action">
-                    <label htmlFor="my-modal-6" className="bg-[#f1554c] px-[20px] py-[10px] text-white font-[500] font-Mulish rounded-[10px]" onClick={redirect}>
-                      Yay!
-                    </label>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

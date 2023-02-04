@@ -3,5 +3,5 @@ node_modules
 # history
 .history
 
-# local env files
+# env
 .env

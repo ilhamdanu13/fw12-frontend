@@ -160,7 +160,7 @@ const Reset = () => {
                 {errors.confirmPassword && touched.confirmPassword ? <div className="text-red-500 text-sm ">{errors.confirmPassword}</div> : null}
               </div>
               <div>
-                <button type="submit" className="w-[295px] box-border border-2 pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
+                <button type="submit" className=" w-full  py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
                   Submit
                 </button>
               </div>

@@ -16,18 +16,26 @@ const resetScheme = Yup.object().shape({
 const Forgot = () => {
   const [errMessage, setErrMessage] = React.useState("");
   const [showAlert, setShowAlert] = React.useState(false);
+  const [alertEmail, setAlertEmail] = React.useState(false);
+  const [alertRequested, setAlertRequested] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const forgot = async (value) => {
     const cb = () => {
-      navigate("/reset", { state: value });
+      setAlertEmail(false);
+      setAlertRequested(true);
+      setTimeout(() => {
+        navigate("/reset", { state: value });
+      }, 3000);
     };
 
     try {
       const result = await dispatch(forgotAction({ ...value, cb }));
-      if (result.payload.startsWith("Req")) {
-        setErrMessage(result.payload);
+      if (result.payload.startsWith("Reset")) {
+        cb();
+      } else {
+        setAlertEmail(true);
       }
     } catch (err) {
       console.log(err);
@@ -109,6 +117,30 @@ const Forgot = () => {
                 <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" type="email" name="email" placeholder="Write your email" />
                 {errors.email && touched.email ? <div className=" text-red-500 text-sm">{errors.email}</div> : null}
               </div>
+              {alertRequested ? (
+                <div className="alert alert-success shadow-lg mb-5">
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Request sent, please check your email</span>
+                  </div>
+                </div>
+              ) : (
+                false
+              )}
+              {alertEmail ? (
+                <div className="alert alert-warning shadow-lg mb-5">
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>User not found</span>
+                  </div>
+                </div>
+              ) : (
+                false
+              )}
               <div>
                 <button type="submit" className="w-full box-border pr-10 pl-10 py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
                   Send

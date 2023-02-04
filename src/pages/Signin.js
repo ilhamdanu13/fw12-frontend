@@ -131,13 +131,13 @@ const Signin = () => {
         <div className="text-center">
           <div className="text-[#8692A6] mb-[19px]">
             Forgot your password?{" "}
-            <Link to="/forgot" className="text-blue-700">
+            <Link to="/forgot" className="text-blue-500 font-bold">
               Reset now
             </Link>
           </div>
           <div className="text-[#8692A6]">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-700">
+            <Link to="/signup" className="text-blue-500 font-bold">
               Sign up
             </Link>
           </div>
