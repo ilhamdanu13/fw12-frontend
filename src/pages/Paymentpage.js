@@ -135,7 +135,7 @@ const PaymentPage = () => {
                   <div>
                     <button
                       onClick={() => setForm({ ...form, paymentMethodId: item.id })}
-                      className={`border-2 rounded w-15 lg:w-32 h-11 flex justify-center items-center font-bold ${form.paymentMethodId === item.id ? "bg-[#f1554c] border-0" : ""}`}
+                      className={`border-2 rounded w-15 lg:w-32 h-11 flex justify-center items-center font-bold ${form.paymentMethodId === item.id ? "bg-amber-300 border-0" : ""}`}
                     >
                       <img src={item.picture} alt={item.name} />
                     </button>

@@ -20,6 +20,7 @@ const OrderPage = () => {
   const price = useSelector((state) => state.transaction.price);
   const cinema = useSelector((state) => state.transaction.cinema);
   const cinemaPicture = useSelector((state) => state.transaction.cinemaPicture);
+  const [alertSeat, setAlertSeat] = React.useState(false);
 
   let duration = bookingTime;
   let hour = String(duration).split(":").slice(0, 1).join(":");
@@ -39,6 +40,10 @@ const OrderPage = () => {
   };
 
   const checkout = () => {
+    if (!selectedSeat.length) {
+      setAlertSeat(true);
+      return;
+    }
     dispatch(chooseSeatAction({ seatNumber: selectedSeat.join(", "), totalPrice: selectedSeat.length * price }));
     navigate("/paymentpage");
   };
@@ -63,7 +68,7 @@ const OrderPage = () => {
             <div className="pt-[48px] mb-[24px]">
               <div className="text-[18px] lg:text-[24px] font-bold">Choose Your Seat</div>
             </div>
-            <div className="border-1 bg-white rounded-[8px]">
+            <div className="border-1 bg-white rounded-[8px] mb-5">
               <div className="text-center pt-3 lg:pt-[106px] pl-3 lg:pl-[90px] pr-3 lg:pr-[65px] mb-[24px]">
                 <div className="text-[14px] font-semibold mb-[8px]">Screen</div>
                 <hr className="border-2 rounded-[4px] " />
@@ -132,6 +137,18 @@ const OrderPage = () => {
                 </div>
               </div>
             </div>
+            {alertSeat ? (
+              <div className="alert alert-warning shadow-lg">
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span>Please choose seat!</span>
+                </div>
+              </div>
+            ) : (
+              false
+            )}
             <div className="flex pt-5 lg:pt-[40px]">
               <div className="flex-1">
                 <button onClick={() => navigate("/all")} className="border-2 border-[#f1554c] text-[#f1554c] px-1 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">

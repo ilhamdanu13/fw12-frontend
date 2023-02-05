@@ -19,6 +19,7 @@ const forgotScheme = Yup.object().shape({
 const Reset = () => {
   const state = useLocation();
   const [errMessage, setErrMessage] = React.useState("");
+  const [alertError, setAlertError] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -43,6 +44,10 @@ const Reset = () => {
 
     try {
       const result = await dispatch(resetAction({ code, email, password, confirmPassword, cb }));
+      if (result.payload.startsWith("Reset")) {
+        setAlertError(true);
+        return;
+      }
       cb();
       setErrMessage(result.payload);
     } catch (err) {
@@ -159,6 +164,18 @@ const Reset = () => {
                 </label>
                 {errors.confirmPassword && touched.confirmPassword ? <div className="text-red-500 text-sm ">{errors.confirmPassword}</div> : null}
               </div>
+              {alertError ? (
+                <div className="alert alert-error shadow-lg mb-5">
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Wrong code!</span>
+                  </div>
+                </div>
+              ) : (
+                false
+              )}
               <div>
                 <button type="submit" className=" w-full  py-4 text-center bg-[#f1554c] rounded-[12px] mb-[32px] text-white font-bold">
                   Submit
