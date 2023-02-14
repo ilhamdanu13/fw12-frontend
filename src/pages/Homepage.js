@@ -1,15 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-import NavbarUser from "../components/NavbarUser";
-import Footer from "../components/Footer";
-import Copyright from "../components/Copyright";
-import Subscribe from "../components/Subscribe";
+import NavbarUser from '../components/NavbarUser';
+import Footer from '../components/Footer';
+import Copyright from '../components/Copyright';
+import Subscribe from '../components/Subscribe';
 
-const Homepage = () => {
+function Homepage() {
   const [nowShowing, setNowShowing] = React.useState({});
   const [upcoming, setUpcoming] = React.useState({});
+
+  const getNowShowing = async () => {
+    const { data } = await axios.get('https://fw12-backend-shr6.vercel.app/movies/now');
+    return data;
+  };
+
+  const getUpcoming = async () => {
+    const { data } = await axios.get('https://fw12-backend-shr6.vercel.app/movies/upcoming');
+    return data;
+  };
+
   React.useEffect(() => {
     getNowShowing().then((data) => {
       setNowShowing(data);
@@ -18,16 +29,6 @@ const Homepage = () => {
       setUpcoming(data);
     });
   }, []);
-
-  const getNowShowing = async () => {
-    const { data } = await axios.get("https://fw12-backend-shr6.vercel.app/movies/now");
-    return data;
-  };
-
-  const getUpcoming = async () => {
-    const { data } = await axios.get("https://fw12-backend-shr6.vercel.app/movies/upcoming");
-    return data;
-  };
 
   return (
     <div>
@@ -38,14 +39,14 @@ const Homepage = () => {
           <div className="text-[#feb05f] font-bold text-[56px]">Find out now!</div>
         </div>
         <div className="flex items-center justify-center">
-          <img src={require("../assets/images/Group 14.png")} alt="threemovies" />
+          <img src={require('../assets/images/Group 14.png')} alt="threemovies" />
         </div>
       </div>
       <div className="bg-[#e9ecf4] px-3 lg:px-[136px] mb-[104px] pb-[80px]">
         <div className="flex pt-[64px]">
           <div className="flex-1">
             <div className="text-[24px] text-[#0b2361] font-bold mb-[10px]">Now Showing</div>
-            <div className="content-none h-[2.5px] w-[100px] bg-[#f1554c] ml-[25px]"></div>
+            <div className="content-none h-[2.5px] w-[100px] bg-[#f1554c] ml-[25px]" />
           </div>
           <Link to="/all" className="text-[16px] text-[#0b2361] font-bold">
             view all
@@ -65,8 +66,8 @@ const Homepage = () => {
                   <div className="text-[12px] text-[#A0A3BD] mb-[40px]">{char.genre}</div>
                 </div>
                 <div className="">
-                  <button className=" border-2 px-[45px] py-[5px] rounded-[4px] text-[#f1554c] text-[14px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-xl duration-300">
-                    <Link to={"/moviedetails/" + char.id}>Details</Link>
+                  <button type="submit" className=" border-2 px-[45px] py-[5px] rounded-[4px] text-[#f1554c] text-[14px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-xl duration-300">
+                    <Link to={`/moviedetails/${char.id}`}>Details</Link>
                   </button>
                 </div>
               </div>
@@ -83,8 +84,8 @@ const Homepage = () => {
         </div>
 
         <div className="flex overflow-auto mb-3 lg:mb-[68px]">
-          {["September", "October", "November", "Desember", "January", "February", "March", "April", "May", "June", "July", "August"].map((month) => (
-            <button key={month} className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#f1554c] mr-[16px] mb-[20px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-md duration-300">
+          {['September', 'October', 'November', 'Desember', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'].map((month) => (
+            <button type="submit" key={month} className="border-2 px-[35px] py-[5px] rounded-[4px] border-[#5F2EEA] text-[#f1554c] mr-[16px] mb-[20px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-md duration-300">
               {month}
             </button>
           ))}
@@ -106,8 +107,8 @@ const Homepage = () => {
                   <div className="text-[12px] font-bold mb-[10px]">{char.director}</div>
                 </div>
                 <div className="">
-                  <button className=" border-2 px-[45px] py-[5px] rounded-[4px] text-[#f1554c] text-[14px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-xl duration-300">
-                    <Link to={"/moviedetails/" + char.id}>Details</Link>
+                  <button type="submit" className=" border-2 px-[45px] py-[5px] rounded-[4px] text-[#f1554c] text-[14px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-xl duration-300">
+                    <Link to={`/moviedetails/${char.id}`}>Details</Link>
                   </button>
                 </div>
               </div>
@@ -120,6 +121,6 @@ const Homepage = () => {
       <Copyright />
     </div>
   );
-};
+}
 
 export default Homepage;

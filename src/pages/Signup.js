@@ -1,31 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { BsEyeSlash, BsEye } from "react-icons/bs";
-import { GiTicket } from "react-icons/gi";
-import { Formik, Form, Field } from "formik";
-import http from "../helpers/http";
-import { useDispatch } from "react-redux";
-import { useRoutes } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { loginAction } from "../redux/actions/auth";
-import * as Yup from "yup";
-import YupPassword from "yup-password";
-import { registerAction } from "../redux/actions/auth";
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BsEyeSlash, BsEye } from 'react-icons/bs';
+import { GiTicket } from 'react-icons/gi';
+import { Formik, Form, Field } from 'formik';
+import { useDispatch } from 'react-redux';
+
+import * as Yup from 'yup';
+import YupPassword from 'yup-password';
+import { registerAction } from '../redux/actions/auth';
+
 YupPassword(Yup);
 
 const phoneRegEx = /^(^08)(\d{8,10})$/;
 
 const SignUpScheme = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
-  lastName: Yup.string().required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
-  phoneNumber: Yup.string().matches(phoneRegEx, "Invalid phone number").required("Required"),
+  firstName: Yup.string().required('Required'),
+  lastName: Yup.string().required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().password().min(8, 'Min lenght 8').minLowercase(1, 'Min lowercase 1')
+    .minUppercase(1, 'Min uppercase 1')
+    .minSymbols(1, 'Min symbol 1')
+    .minNumbers(1, 'Min number 1')
+    .required('Required'),
+  phoneNumber: Yup.string().matches(phoneRegEx, 'Invalid phone number').required('Required'),
 });
 
-const Signup = () => {
-  const [errMessage, setErrMessage] = React.useState("");
-  const [succesMessage, setSuccessMessage] = React.useState("");
+function Signup() {
+  const [errMessage, setErrMessage] = React.useState('');
   const [alertError, setAlertError] = React.useState(false);
   const [alertSuccess, setAlertSuccess] = React.useState(false);
   const navigate = useNavigate();
@@ -42,7 +45,7 @@ const Signup = () => {
       setAlertError(false);
       setAlertSuccess(true);
       setTimeout(() => {
-        navigate("/Signin");
+        navigate('/Signin');
       }, 3000);
     };
 
@@ -51,15 +54,15 @@ const Signup = () => {
         registerAction({
           ...value,
           cb,
-        })
+        }),
       );
 
-      if (results.payload.startsWith("Email")) {
+      if (results.payload.startsWith('Email')) {
         setAlertError(true);
         setErrMessage(results.payload);
         return;
       }
-      if (results.payload.startsWith("Phone")) {
+      if (results.payload.startsWith('Phone')) {
         setAlertError(true);
         setErrMessage(results.payload);
         return;
@@ -94,11 +97,11 @@ const Signup = () => {
         <div className="text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">Fill your additional details</div>
         <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
-            phoneNumber: "",
-            email: "",
-            password: "",
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            email: '',
+            password: '',
           }}
           validationSchema={SignUpScheme}
           onSubmit={register}
@@ -106,7 +109,7 @@ const Signup = () => {
           {({ errors, touched }) => (
             <Form>
               <div className="flex flex-col mb-3">
-                <label className="">First Name</label>
+                <label htmlFor="firstName" className="">First Name</label>
                 <Field type="text" id="firstName" name="firstName" placeholder="Write your first name" className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-2 focus:outline-none" />
                 {errors.firstName && touched.firstName ? <div className=" text-red-500 text-sm">{errors.firstName}</div> : null}
               </div>
@@ -127,8 +130,8 @@ const Signup = () => {
               </div>
               <div className="flex flex-col mb-5 relative">
                 <label>Password</label>
-                <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
-                <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
+                <Field type={show ? 'text' : 'password'} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
+                <label onClick={handleShow} onKeyDown={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
                 {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
@@ -138,7 +141,7 @@ const Signup = () => {
                   <div className="alert alert-error shadow-lg mt-3">
                     <div>
                       <svg onClick={() => setAlertError(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>{errMessage}</span>
                     </div>
@@ -150,7 +153,7 @@ const Signup = () => {
                   <div className="alert alert-success shadow-lg mt-3">
                     <div>
                       <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>Register Successfully</span>
                     </div>
@@ -168,16 +171,17 @@ const Signup = () => {
 
         <div className="text-center">
           <div className="text-[#8692A6] mb-[19px]">
-            Already have account ?{" "}
+            Already have account ?
+            {' '}
             <Link to="/signin" className="text-blue-500 font-bold">
               Sign In
             </Link>
           </div>
         </div>
-        <div></div>
+        <div />
       </div>
     </div>
   );
-};
+}
 
 export default Signup;

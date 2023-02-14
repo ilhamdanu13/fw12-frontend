@@ -1,21 +1,24 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { BsEyeSlash, BsEye } from "react-icons/bs";
-import { GiTicket } from "react-icons/gi";
-import { loginAction } from "../redux/actions/auth";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import YupPassword from "yup-password";
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { BsEyeSlash, BsEye } from 'react-icons/bs';
+import { GiTicket } from 'react-icons/gi';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import YupPassword from 'yup-password';
+import { loginAction } from '../redux/actions/auth';
+
 YupPassword(Yup);
 
 const SignInScheme = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().required("Required"),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().required('Required'),
 });
 
-const Signin = () => {
-  const [errMessage, setErrMessage] = React.useState("");
+function Signin() {
+  const [errMessage, setErrMessage] = React.useState('');
   const [alertError, setAlertError] = React.useState(false);
   const [alertSuccess, setAlertSuccess] = React.useState(false);
   const navigate = useNavigate();
@@ -28,7 +31,7 @@ const Signin = () => {
 
   const cb = () => {
     setTimeout(() => {
-      navigate("/homepage");
+      navigate('/homepage');
     }, 3000);
   };
 
@@ -36,7 +39,7 @@ const Signin = () => {
     try {
       const result = await dispatch(loginAction({ ...value, cb }));
 
-      if (result.payload.startsWith("Wrong")) {
+      if (result.payload.startsWith('Wrong')) {
         setAlertError(true);
         setErrMessage(result.payload);
       } else {
@@ -73,8 +76,8 @@ const Signin = () => {
 
         <Formik
           initialValues={{
-            email: "",
-            password: "",
+            email: '',
+            password: '',
           }}
           validationSchema={SignInScheme}
           onSubmit={login}
@@ -88,8 +91,8 @@ const Signin = () => {
               </div>
               <div className="flex flex-col mb-5 relative w-full">
                 <label>Password</label>
-                <Field type={show ? "text" : "password"} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
-                <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
+                <Field type={show ? 'text' : 'password'} name="password" placeholder="Write your password" className="form-input pr-20 pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" />
+                <label onClick={handleShow} onKeyDown={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
                 {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
@@ -99,7 +102,7 @@ const Signin = () => {
                   <div className="alert alert-error shadow-lg mt-3">
                     <div>
                       <svg onClick={() => setAlertError(false)} xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>{errMessage}</span>
                     </div>
@@ -111,7 +114,7 @@ const Signin = () => {
                   <div className="alert alert-success shadow-lg mt-3">
                     <div>
                       <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>Login succesfully</span>
                     </div>
@@ -130,13 +133,15 @@ const Signin = () => {
         </Formik>
         <div className="text-center">
           <div className="text-[#8692A6] mb-[19px]">
-            Forgot your password?{" "}
+            Forgot your password?
+            {' '}
             <Link to="/forgot" className="text-blue-500 font-bold">
               Reset now
             </Link>
           </div>
           <div className="text-[#8692A6]">
-            Don't have an account?{" "}
+            Dont have an account?
+            {' '}
             <Link to="/signup" className="text-blue-500 font-bold">
               Sign up
             </Link>
@@ -145,6 +150,6 @@ const Signin = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Signin;

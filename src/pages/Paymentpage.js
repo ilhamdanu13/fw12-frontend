@@ -1,23 +1,22 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import Moment from "moment";
-import { transactionAction as trxAction } from "../redux/actions/transaction";
-import NavbarUser from "../components/NavbarUser";
-import Footer from "../components/Footer";
-import Copyright from "../components/Copyright";
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable max-len */
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { transactionAction as trxAction } from '../redux/actions/transaction';
+import NavbarUser from '../components/NavbarUser';
+import Footer from '../components/Footer';
+import Copyright from '../components/Copyright';
 
-const PaymentPage = () => {
+function PaymentPage() {
   const token = useSelector((state) => state?.auth?.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dataTransaction = useSelector((state) => state.transaction);
-  const movieId = useSelector((state) => state.transaction.movieId);
   const bookingDate = useSelector((state) => state.transaction.bookingDate);
   const bookingTime = useSelector((state) => state.transaction.bookingTime);
   const seatNum = useSelector((state) => state.transaction.seatNum);
-  const price = useSelector((state) => state.transaction.price);
   const cinema = useSelector((state) => state.transaction.cinemaName);
   const movieName = useSelector((state) => state.transaction.movieName);
   const totalPrice = useSelector((state) => state.transaction.totalPrice);
@@ -26,34 +25,34 @@ const PaymentPage = () => {
   const [alertSuccess, setAlertSuccess] = React.useState(false);
   const [alertForm, setAlertForm] = React.useState(false);
 
-  let duration = bookingTime;
-  let hour = String(duration).split(":").slice(0, 1).join(":");
-  let minute = String(duration).split(":")[1];
+  const duration = bookingTime;
+  const hour = String(duration).split(':').slice(0, 1).join(':');
+  const minute = String(duration).split(':')[1];
 
-  let NewDate = new Date(bookingDate).toDateString();
-  let month = NewDate.split(" ")[1];
-  let dates = NewDate.split(" ")[2];
-  let year = NewDate.split(" ")[3];
+  const NewDate = new Date(bookingDate).toDateString();
+  const month = NewDate.split(' ')[1];
+  const dates = NewDate.split(' ')[2];
+  const year = NewDate.split(' ')[3];
 
   const [form, setForm] = React.useState({
-    fullName: "",
-    email: "",
-    phoneNumber: "",
-    paymentMethodId: "",
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    paymentMethodId: '',
   });
-
-  React.useEffect(() => {
-    getPaymentMethod();
-  }, []);
 
   React.useEffect(() => {
     console.log(form);
   }, [form]);
 
   const getPaymentMethod = async () => {
-    const { data } = await axios.get("https://fw12-backend-shr6.vercel.app/paymentMethod");
+    const { data } = await axios.get('https://fw12-backend-shr6.vercel.app/paymentMethod');
     setPaymentList(data.results);
   };
+
+  React.useEffect(() => {
+    getPaymentMethod();
+  }, []);
 
   const pay = () => {
     if (!form.paymentMethodId) {
@@ -82,7 +81,7 @@ const PaymentPage = () => {
     setAlertPayment(false);
     setAlertForm(false);
     setTimeout(() => {
-      navigate("/order history");
+      navigate('/order history');
     }, 3000);
   };
 
@@ -100,13 +99,28 @@ const PaymentPage = () => {
               <div className="lg:flex mb-3 lg:mb-[24px]">
                 <div className="text-[18px] lg:text-[20px] text-[#6B6B6B] tracking-[.25px] leading-[25px] flex-1 mb-1 lg:mb-0">Date & time</div>
                 <div className="text-[18px] lg:text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">
-                  {month} {dates}, {year} at {hour}:{minute}{" "}
+                  {month}
+                  {' '}
+                  {dates}
+                  ,
+                  {' '}
+                  {year}
+                  {' '}
+                  at
+                  {' '}
+                  {hour}
+                  :
+                  {minute}
+                  {' '}
                 </div>
               </div>
               <hr className="mb-3 lg:mb-[24px]" />
               <div className="lg:flex mb-3 lg:mb-[24px]">
                 <div className="text-[18px] lg:text-[20px] text-[#6B6B6B] tracking-[.25px] leading-[25px] flex-1 mb-1 lg:mb-0 ">Movie title</div>
-                <div className="text-[18px] lg:text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">{movieName} </div>
+                <div className="text-[18px] lg:text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">
+                  {movieName}
+                  {' '}
+                </div>
               </div>
               <hr className="mb-3 lg:mb-[24px]" />
               <div className="lg:flex mb-3 lg:mb-[24px]">
@@ -116,12 +130,20 @@ const PaymentPage = () => {
               <hr className="mb-3 lg:mb-[24px]" />
               <div className="lg:flex mb-3 lg:mb-[24px]">
                 <div className="text-[18px] lg:text-[20px] text-[#6B6B6B] tracking-[.25px] leading-[25px] flex-1 mb-1 lg:mb-0">Number of tickets</div>
-                <div className="text-[18px] lg:text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">{seatNum} </div>
+                <div className="text-[18px] lg:text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">
+                  {seatNum}
+                  {' '}
+                </div>
               </div>
               <hr className="mb-3 lg:mb-[24px]" />
               <div className="lg:flex mb-3 lg:mb-[24px]">
                 <div className="text-[18px] lg:text-[20px] text-[#6B6B6B] tracking-[.25px] leading-[25px] flex-1 mb-1 lg:mb-0">Total payment</div>
-                <div className="text-[18px] lg:text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">IDR {totalPrice} </div>
+                <div className="text-[18px] lg:text-[20px] text-[#000000] tracking-[.25px] leading-[25px]">
+                  IDR
+                  {totalPrice}
+                  {' '}
+
+                </div>
               </div>
             </div>
           </div>
@@ -134,8 +156,9 @@ const PaymentPage = () => {
                 {paymentList.map((item) => (
                   <div>
                     <button
+                      type="submit"
                       onClick={() => setForm({ ...form, paymentMethodId: item.id })}
-                      className={`border-2 rounded w-15 lg:w-32 h-11 flex justify-center items-center font-bold ${form.paymentMethodId === item.id ? "bg-amber-300 border-0" : ""}`}
+                      className={`border-2 rounded w-15 lg:w-32 h-11 flex justify-center items-center font-bold ${form.paymentMethodId === item.id ? 'bg-amber-300 border-0' : ''}`}
                     >
                       <img src={item.picture} alt={item.name} />
                     </button>
@@ -149,7 +172,9 @@ const PaymentPage = () => {
               </div>
               <div className=" flex justify-center items-center pb-[56px]">
                 <div className="text-[16px] text-[#6E7191] justify-center items-center">
-                  Pay via cash. <Link className="text-[#f1554c]">See how it work</Link>
+                  Pay via cash.
+                  {' '}
+                  <span className="text-[#f1554c]">See how it work</span>
                 </div>
               </div>
             </div>
@@ -193,7 +218,7 @@ const PaymentPage = () => {
             )}
             <div className="flex pt-3 lg:pt-[40px]">
               <div className="flex-1">
-                <button onClick={() => navigate("/orderpage")} className="border-2 border-[#f1554c] text-[#f1554c] px-3 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
+                <button type="submit" onClick={() => navigate('/orderpage')} className="border-2 border-[#f1554c] text-[#f1554c] px-3 lg:px-[75px] py-3 lg:py-[10px] rounded-[4px] hover:bg-[#f1554c] hover:text-white duration-300 hover:shadow-md">
                   Previous step
                 </button>
               </div>
@@ -246,7 +271,7 @@ const PaymentPage = () => {
                 />
               </div>
               <div className="flex block text-[#4E4B66] text-[18px] border-1 w-full pl-[32px] py-[8px] rounded-[4px] mt-[14px] bg-[#F4B7404D]">
-                <img className="mr-[24px]" src={require("../assets/images/caution.png")} alt="caution" />
+                <img className="mr-[24px]" src={require('../assets/images/caution.png')} alt="caution" />
                 <span className="text-[16px]">Fill your data correctly.</span>
               </div>
             </form>
@@ -258,6 +283,6 @@ const PaymentPage = () => {
       <Copyright />
     </div>
   );
-};
+}
 
 export default PaymentPage;

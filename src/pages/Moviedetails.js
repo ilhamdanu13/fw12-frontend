@@ -1,15 +1,16 @@
-import React from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
-import http from "../helpers/http";
-import { useDispatch, useSelector } from "react-redux";
-import { chooseMovie as chooseMovieAction } from "../redux/reducers/transaction";
-import NavbarUser from "../components/NavbarUser";
-import Footer from "../components/Footer";
-import Copyright from "../components/Copyright";
-import jwtDecode from "jwt-decode";
+/* eslint-disable max-len */
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import jwtDecode from 'jwt-decode';
+import http from '../helpers/http';
+import { chooseMovie as chooseMovieAction } from '../redux/reducers/transaction';
+import NavbarUser from '../components/NavbarUser';
+import Footer from '../components/Footer';
+import Copyright from '../components/Copyright';
 
-const Moviedetails = () => {
+function Moviedetails() {
   const token = useSelector((state) => state?.auth?.token);
   const decode = jwtDecode(token);
   const userId = decode.id;
@@ -17,43 +18,36 @@ const Moviedetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [movieDetail, setMovieDetail] = React.useState({});
-  const [date, setDate] = React.useState(moment().format("YYYY-MM-DD"));
+  const [date, setDate] = React.useState(moment().format('YYYY-MM-DD'));
   const [cinema, setCinema] = React.useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [city, setCity] = React.useState({});
   const [schedule, setSchedule] = React.useState({});
-  const [selectedPrice, setSelectedPrice] = React.useState("");
-  const [selectedTime, setSelectedTime] = React.useState("");
+  const [selectedPrice, setSelectedPrice] = React.useState('');
+  const [selectedTime, setSelectedTime] = React.useState('');
   const [selectedCinemaName, setSelectedCinemaName] = React.useState(null);
   const [selectedCinemaId, setSelectedCinemaId] = React.useState(null);
-  const [selectedCinemaPicture, setSelectedCinemaPicture] = React.useState("");
-  const [selectedMovie, setSelectedMovie] = React.useState("");
-  const [selectedGenre, setSelectedGenre] = React.useState("");
+  const [selectedCinemaPicture, setSelectedCinemaPicture] = React.useState('');
+  const [selectedMovie, setSelectedMovie] = React.useState('');
+  const [selectedGenre, setSelectedGenre] = React.useState('');
 
-  let duration = movieDetail?.duration;
-  let hour = String(duration).split(":").slice(0, 1).join(":");
-  let minute = String(duration).split(":")[1];
+  const duration = movieDetail?.duration;
+  const hour = String(duration).split(':').slice(0, 1).join(':');
+  const minute = String(duration).split(':')[1];
 
-  let NewDate = new Date(movieDetail?.releaseDate).toDateString();
-  let month = NewDate.split(" ")[1];
-  let dates = NewDate.split(" ")[2];
-  let year = NewDate.split(" ")[3];
-
-  React.useEffect(() => {
-    getMovieDetail();
-    getCinemas();
-    getSchedule();
-  }, []);
+  const NewDate = new Date(movieDetail?.releaseDate).toDateString();
+  const month = NewDate.split(' ')[1];
+  const dates = NewDate.split(' ')[2];
+  const year = NewDate.split(' ')[3];
 
   const getMovieDetail = async () => {
-    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/movies/" + id);
+    const { data } = await http(token).get(`https://fw12-backend-shr6.vercel.app/movies/${id}`);
     setMovieDetail(data.results);
-    // console.log(data);
   };
 
   const getCinemas = async () => {
-    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/cinemas");
+    const { data } = await http(token).get('https://fw12-backend-shr6.vercel.app/cinemas');
     setCinema(data.results);
-    // console.log(data);
     if (data.results.length) {
       setCity(data.results[0].name);
     }
@@ -63,6 +57,12 @@ const Moviedetails = () => {
     const { data } = await http(token).get(`https://fw12-backend-shr6.vercel.app/movieSchedules/${id}`);
     setSchedule(data.results);
   };
+
+  React.useEffect(() => {
+    getMovieDetail();
+    getCinemas();
+    getSchedule();
+  }, []);
 
   const selectTime = (time, cinemaName, price, title, cinemaPicture, genre, cinemaId) => {
     setSelectedTime(time);
@@ -77,7 +77,7 @@ const Moviedetails = () => {
   const book = () => {
     dispatch(
       chooseMovieAction({
-        userId: userId,
+        userId,
         movieId: id,
         cinemaName: selectedCinemaName,
         bookingDate: date,
@@ -87,9 +87,9 @@ const Moviedetails = () => {
         cinemaPicture: selectedCinemaPicture,
         genre: selectedGenre,
         cinemaId: selectedCinemaId,
-      })
+      }),
     );
-    navigate("/orderpage");
+    navigate('/orderpage');
   };
 
   console.log(schedule);
@@ -114,7 +114,12 @@ const Moviedetails = () => {
           </div>
           <div className="flex mb-[16px] text-[#121212] text-[16px]">
             <div className="mr-[177px] text-[#12121] font-Mulish">
-              {month} {dates}, {year}
+              {month}
+              {' '}
+              {dates}
+              ,
+              {' '}
+              {year}
             </div>
             <div className="text-[#12121] font-Mulish hidden lg:block">{movieDetail.director}</div>
           </div>
@@ -124,9 +129,17 @@ const Moviedetails = () => {
           </div>
           <div className="flex mb-[24px] text-[#121212] text-[16px]">
             <div className="mr-[117px] text-[#12121] font-Mulish">
-              {hour} hours {minute} minutes
+              {hour}
+              {' '}
+              hours
+              {minute}
+              {' '}
+              minutes
             </div>
-            <div className="text-[#12121] font-Mulish hidden lg:block">{movieDetail.casts}, ...</div>
+            <div className="text-[#12121] font-Mulish hidden lg:block">
+              {movieDetail.casts}
+              , ...
+            </div>
           </div>
           <div className="block lg:hidden mb-3">
             <div className="text-[#8692A6] text-[14px] font-Mulish">Directed by</div>
@@ -134,7 +147,10 @@ const Moviedetails = () => {
           </div>
           <div className="block lg:hidden mb-3 w-[250px]">
             <div className="text-[#8692A6] text-[14px] font-Mulish">Casts</div>
-            <div className="text-[#12121] font-Mulish">{movieDetail.casts}, ...</div>
+            <div className="text-[#12121] font-Mulish">
+              {movieDetail.casts}
+              , ...
+            </div>
           </div>
           <hr className="mb-[16px]" />
           <div className="w-[280px] lg:w-auto">
@@ -181,7 +197,8 @@ const Moviedetails = () => {
                   <div className="flex mb-[16px] font-semibold flex-wrap">
                     {schedule?.times?.map((time) => (
                       <button
-                        className={` mb-[16px] ${schedule.cinema === selectedCinemaName && time === selectedTime && "text-violet-700 font-bold"}`}
+                        type="submit"
+                        className={` mb-[16px] ${schedule.cinema === selectedCinemaName && time === selectedTime && 'text-violet-700 font-bold'}`}
                         onClick={() => selectTime(time, schedule.cinema, schedule.price, schedule.title, schedule.cinemapicture, movieDetail.genre, schedule.cinemaid)}
                       >
                         <span className="mr-5 lg:mr-[40px]">{time}</span>
@@ -193,7 +210,7 @@ const Moviedetails = () => {
                 <div className=" pl-[32px] text-[12px]">
                   <div className="flex mb-[16px] font-semibold">
                     {schedule?.times?.map((time) => (
-                      <button className={`mr-[32px] ${schedule.cinema === selectedCinemaName && time === selectedTime && "text-violet-700 font-bold"}`} onClick={() => window.alert("Please login")}>
+                      <button type="submit" className={`mr-[32px] ${schedule.cinema === selectedCinemaName && time === selectedTime && 'text-violet-700 font-bold'}`} onClick={() => window.alert('Please login')}>
                         <span className="mr-5">{time}</span>
                       </button>
                     ))}
@@ -203,10 +220,14 @@ const Moviedetails = () => {
 
               <div className="flex pl-3 lg:pl-[32px] pr-[24px] text-[16px] mb-[32px]">
                 <div className="flex-1 text-[#6B6B6B] ">Price</div>
-                <div className="font-semibold">IDR.{schedule.price}/seat</div>
+                <div className="font-semibold">
+                  IDR.
+                  {schedule.price}
+                  /seat
+                </div>
               </div>
               <div className="px-3 lg:px-[32px] flex justify-center text-center">
-                <button disabled={selectedCinemaName !== schedule.cinema} onClick={book} className="rounded-[8px] w-full py-[4px] bg-[#f1554c] text-white font-bold">
+                <button type="submit" disabled={selectedCinemaName !== schedule.cinema} onClick={book} className="rounded-[8px] w-full py-[4px] bg-[#f1554c] text-white font-bold">
                   Book now
                 </button>
               </div>
@@ -223,6 +244,6 @@ const Moviedetails = () => {
       <Copyright />
     </div>
   );
-};
+}
 
 export default Moviedetails;

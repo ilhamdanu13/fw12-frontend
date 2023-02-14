@@ -1,16 +1,15 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import NavbarUser from "../components/NavbarUser";
-import { useSelector, useDispatch } from "react-redux";
-import jwtDecode from "jwt-decode";
-import http from "../helpers/http";
-import { logout as logoutAction } from "../redux/reducers/auth";
-import Footer from "../components/Footer";
-import Copyright from "../components/Copyright";
-import moment from "moment";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import jwtDecode from 'jwt-decode';
+import moment from 'moment';
+import NavbarUser from '../components/NavbarUser';
+import http from '../helpers/http';
+import { logout as logoutAction } from '../redux/reducers/auth';
+import Footer from '../components/Footer';
+import Copyright from '../components/Copyright';
 
-const OrderHistory = () => {
+function OrderHistory() {
   const token = useSelector((state) => state?.auth?.token);
   const decode = jwtDecode(token);
   const { id } = decode;
@@ -19,6 +18,16 @@ const OrderHistory = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const getBio = async () => {
+    const { data } = await http(token).get(`https://fw12-backend-shr6.vercel.app/profile/${id}`);
+    return data;
+  };
+
+  const getHistory = async () => {
+    const { data } = await http(token).get(`https://fw12-backend-shr6.vercel.app/transactions/history/${id}`);
+    return data;
+  };
 
   React.useEffect(() => {
     getBio().then((data) => {
@@ -32,20 +41,10 @@ const OrderHistory = () => {
     });
   }, [id]);
 
-  const getBio = async () => {
-    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/profile/" + id);
-    return data;
-  };
-
-  const getHistory = async () => {
-    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/transactions/history/" + id);
-    return data;
-  };
-
   const handlerLogout = () => {
     setTimeout(() => {
       dispatch(logoutAction());
-      navigate("/signin");
+      navigate('/signin');
     }, 2000);
   };
 
@@ -61,17 +60,17 @@ const OrderHistory = () => {
               <div className="pl-[40px] lg:pl-0 pt-[40px] lg:pt-0 text-[#4E4B66] text-[16px]">INFO</div>
               <div className="pt-[32px] flex justify-center items-center">
                 {bio?.picture ? (
-                  <img className="w-[136px] h-[136px] rounded-[50%] mb-3 shadow-lg" src={"https://res.cloudinary.com/fw12/image/upload/v1674621799/" + bio.picture} alt="Profile" />
+                  <img className="w-[136px] h-[136px] rounded-[50%] mb-3 shadow-lg" src={`https://res.cloudinary.com/fw12/image/upload/v1674621799/${bio.picture}`} alt="Profile" />
                 ) : (
-                  <img className="w-[136px] h-[136px] rounded-[50%] mb-3 shadow-lg" src={"https://res.cloudinary.com/fw12/image/upload/v1674616077/Cluezzy/User_phom73.png"} alt="Profile" />
+                  <img className="w-[136px] h-[136px] rounded-[50%] mb-3 shadow-lg" src="https://res.cloudinary.com/fw12/image/upload/v1674616077/Cluezzy/User_phom73.png" alt="Profile" />
                 )}
               </div>
-              <div className="text-[#14142B] text-[20px] text-center">{bio.firstName + " " + bio.lastName}</div>
+              <div className="text-[#14142B] text-[20px] text-center">{`${bio.firstName} ${bio.lastName}`}</div>
               <div className="text-[14px] text-[#4E4B66] text-center  tracking-[.75px] leading-[24px]">Moviegoers</div>
             </div>
             <hr className="mb-[20px]" />
             <div className="flex justify-center pb-[25px]">
-              <button onClick={handlerLogout} className="border-1 bg-[#f1554c] rounded-[16px] text-white  px-[70px] py-[8px] text-[16px]">
+              <button type="submit" onClick={handlerLogout} className="border-1 bg-[#f1554c] rounded-[16px] text-white  px-[70px] py-[8px] text-[16px]">
                 Logout
               </button>
             </div>
@@ -84,7 +83,7 @@ const OrderHistory = () => {
                 <Link to="/profile" className="text-[18px] tracking-[.75] leading-[34px] text-[#AAAAAA] mr-[56px] pl-[48px]">
                   Account Settings
                 </Link>
-                <Link className="text-[18px] tracking-[.75] leading-[34px] text-[#14142B]">Order History</Link>
+                <Link to="/order history" className="text-[18px] tracking-[.75] leading-[34px] text-[#14142B]">Order History</Link>
               </div>
               <div className="pl-[230px] lg:pl-[240px]">
                 <hr className="w-[50px] lg:w-[105px] pl-[25px] border-2 border-[#f1554c] rounded-[4px]" />
@@ -97,7 +96,11 @@ const OrderHistory = () => {
                 <div className="pl-[32px] pr-[67px] pt-[40px] mb-[49px] lg:flex ">
                   <div className="flex-1">
                     <div className=" text-[#AAAAAA] text-[14px]">
-                      {moment(ticket.bookingDate).format("LL")} - {String(ticket.bookingTime).split(":").slice(0, 2).join(":")}
+                      {moment(ticket.bookingDate).format('LL')}
+                      {' '}
+                      -
+                      {' '}
+                      {String(ticket.bookingTime).split(':').slice(0, 2).join(':')}
                     </div>
                     <div className="text-[24px] font-semibold">{ticket.title}</div>
                   </div>
@@ -109,7 +112,7 @@ const OrderHistory = () => {
                 <hr className="mb-[32px]" />
                 <div className="lg:flex pl-3 lg:pl-[32px] pr-3 lg:pr-[67px] pb-[32px]">
                   <div className="border-1 bg-[#00BA88] py-[10px] text-center lg:px-[50px] rounded-[4px] text-white lg:mr-[500px] mb-3 lg:mb-0">Ticket in active</div>
-                  <Link to={"/ticket result/" + ticket.id} className="text-[#AAAAAA] text-[18px] pt-[8px] flex justify-center items-center lg:block">
+                  <Link to={`/ticket result/${ticket.id}`} className="text-[#AAAAAA] text-[18px] pt-[8px] flex justify-center items-center lg:block">
                     See Details
                   </Link>
                 </div>
@@ -122,6 +125,6 @@ const OrderHistory = () => {
       <Copyright />
     </div>
   );
-};
+}
 
 export default OrderHistory;

@@ -1,21 +1,21 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { GiTicket } from "react-icons/gi";
-import { RxDividerVertical } from "react-icons/rx";
-import { Formik, Form, Field } from "formik";
-import { forgotPassword as forgotAction } from "../redux/actions/auth";
-import * as Yup from "yup";
-import YupPassword from "yup-password";
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { GiTicket } from 'react-icons/gi';
+import { RxDividerVertical } from 'react-icons/rx';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import YupPassword from 'yup-password';
+import { forgotPassword as forgotAction } from '../redux/actions/auth';
+
 YupPassword(Yup);
 
 const resetScheme = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email('Invalid email').required('Required'),
 });
 
-const Forgot = () => {
-  const [errMessage, setErrMessage] = React.useState("");
-  const [showAlert, setShowAlert] = React.useState(false);
+function Forgot() {
   const [alertEmail, setAlertEmail] = React.useState(false);
   const [alertRequested, setAlertRequested] = React.useState(false);
   const navigate = useNavigate();
@@ -26,13 +26,13 @@ const Forgot = () => {
       setAlertEmail(false);
       setAlertRequested(true);
       setTimeout(() => {
-        navigate("/reset", { state: value });
+        navigate('/reset', { state: value });
       }, 3000);
     };
 
     try {
       const result = await dispatch(forgotAction({ ...value, cb }));
-      if (result.payload.startsWith("Reset")) {
+      if (result.payload.startsWith('Reset')) {
         cb();
       } else {
         setAlertEmail(true);
@@ -55,7 +55,7 @@ const Forgot = () => {
               <GiTicket className="text-[#ef91a1] text-[50px] absolute right-56 top-10" />
             </div>
             <div className="mb-[77px]">
-              <div className="text-[48px] text-white">Let's reset your password</div>
+              <div className="text-[48px] text-white">Lets reset your password</div>
               <div className="text-[24px] text-[#FFFFFFB2]">To be able to use your account again, please</div>
               <div className="text-[24px] text-[#FFFFFFB2]">complete the following steps.</div>
             </div>
@@ -102,10 +102,10 @@ const Forgot = () => {
           <GiTicket className="text-[#ef91a1] text-[25px] absolute left-52 top-5" />
         </div>
         <div className=" text-[26px] mb-3 font-[600px]">Fill your complete email</div>
-        <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">we'll send a link to your email shortly</div>
+        <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">we will send a link to your email shortly</div>
         <Formik
           initialValues={{
-            email: "",
+            email: '',
           }}
           validationSchema={resetScheme}
           onSubmit={forgot}
@@ -149,10 +149,10 @@ const Forgot = () => {
             </Form>
           )}
         </Formik>
-        <div></div>
+        <div />
       </div>
     </div>
   );
-};
+}
 
 export default Forgot;

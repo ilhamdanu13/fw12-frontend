@@ -1,25 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import Footer from "../components/Footer";
-import Copyright from "../components/Copyright";
-import NavbarUser from "../components/NavbarUser";
-import http from "../helpers/http";
-import { useParams } from "react-router-dom";
-import moment from "moment";
+/* eslint-disable no-unsafe-optional-chaining */
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import moment from 'moment';
+import Footer from '../components/Footer';
+import Copyright from '../components/Copyright';
+import NavbarUser from '../components/NavbarUser';
+import http from '../helpers/http';
 
-const TicketResult = () => {
+function TicketResult() {
   const token = useSelector((state) => state?.auth?.token);
   const { id } = useParams();
   const [ticket, setTicket] = React.useState({});
 
+  const getTicket = async () => {
+    const { data } = await http(token).get(`https://fw12-backend-shr6.vercel.app/transactions/ticket/${id}`);
+    setTicket(data.results);
+  };
+
   React.useEffect(() => {
     getTicket();
   }, []);
-
-  const getTicket = async () => {
-    const { data } = await http(token).get("https://fw12-backend-shr6.vercel.app/transactions/ticket/" + id);
-    setTicket(data.results);
-  };
 
   return (
     <div>
@@ -48,7 +49,7 @@ const TicketResult = () => {
                 </div>
                 <div className="pt-5 lg:pt-[32px] pb-5 lg:pb-[43px] pl-3 lg:pl-[56px]  border-l-2 border-b-2 border-r-2 rounded-b-2xl">
                   <div className="lg:hidden flex justify-center items-center">
-                    <img src={require("../assets/images/QR Code.png")} alt="threemovies" />
+                    <img src={require('../assets/images/QR Code.png')} alt="threemovies" />
                   </div>
                   <div className="mb-3 lg:mb-0">
                     <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Movie</div>
@@ -59,11 +60,11 @@ const TicketResult = () => {
                       <div className="lg:flex mb-[16px]">
                         <div className="flex-1 mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Date</div>
-                          <div className="font-Mulish font-semibold">{moment(ticket.bookingDate).add(-2, "day").format("0d, MMM")}</div>
+                          <div className="font-Mulish font-semibold">{moment(ticket.bookingDate).add(-2, 'day').format('0d, MMM')}</div>
                         </div>
                         <div className="flex-1 w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Time</div>
-                          <div className="font-Mulish font-semibold">{String(ticket.bookingTime).split(":").slice(0, 2).join(":")}</div>
+                          <div className="font-Mulish font-semibold">{String(ticket.bookingTime).split(':').slice(0, 2).join(':')}</div>
                         </div>
                         <div className="lg:w-[50px] mb-3 lg:mb-0">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Category</div>
@@ -81,17 +82,20 @@ const TicketResult = () => {
                         </div>
                         <div className="w-[50px]">
                           <div className="font-Mulish text-[#AAAAAA] text-[12px] mb-1">Price</div>
-                          <div className="font-Mulish font-semibold">IDR.{ticket.totalPrice}</div>
+                          <div className="font-Mulish font-semibold">
+                            IDR.
+                            {ticket.totalPrice}
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div className="hidden lg:block absolute top-[-175px] right-64">
-                      <div className="bg-white w-[45px] h-[45px] rounded-[50%] "></div>
-                      <div className="border-dashed border-r-4 h-[340px] w-2 ml-[15px]"></div>
-                      <div className="bg-white w-[45px] h-[45px] rounded-[50%] border-t-2"></div>
+                      <div className="bg-white w-[45px] h-[45px] rounded-[50%] " />
+                      <div className="border-dashed border-r-4 h-[340px] w-2 ml-[15px]" />
+                      <div className="bg-white w-[45px] h-[45px] rounded-[50%] border-t-2" />
                     </div>
                     <div className="hidden lg:flex justify-center items-center w-2/5">
-                      <img src={require("../assets/images/QR Code.png")} alt="threemovies" />
+                      <img src={require('../assets/images/QR Code.png')} alt="threemovies" />
                     </div>
                   </div>
                 </div>
@@ -104,6 +108,6 @@ const TicketResult = () => {
       <Copyright />
     </div>
   );
-};
+}
 
 export default TicketResult;

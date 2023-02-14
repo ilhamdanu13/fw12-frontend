@@ -1,32 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import NavbarUser from "../components/NavbarUser";
-import Month from "../components/Month";
-import Footer from "../components/Footer";
-import Copyright from "../components/Copyright";
-import { useSelector } from "react-redux";
-import { FiChevronDown } from "react-icons/fi";
-import http from "../helpers/http";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { FiChevronDown } from 'react-icons/fi';
+import NavbarUser from '../components/NavbarUser';
+import Month from '../components/Month';
+import Footer from '../components/Footer';
+import Copyright from '../components/Copyright';
+import http from '../helpers/http';
 
-const Viewall = () => {
+function Viewall() {
   const token = useSelector((state) => state?.auth?.token);
   const [page, setPage] = React.useState(1);
-  const [sort, setSort] = React.useState("");
-  const [search, setSearch] = React.useState("");
+  const [sort, setSort] = React.useState('');
+  const [search, setSearch] = React.useState('');
   const [allMovie, setAllMovie] = React.useState({});
-
-  React.useEffect(() => {
-    getAllMovie().then((data) => {
-      setAllMovie(data);
-    });
-  }, [page, sort, search]);
 
   const getAllMovie = async () => {
     const { data } = await http(token).get(`https://fw12-backend-red.vercel.app/movies?page=${page}&limit=8&search=${search}&sortBy=title&sort=${sort}`);
     return data;
   };
 
+  React.useEffect(() => {
+    getAllMovie().then((data) => {
+      setAllMovie(data);
+    });
+  }, [page, sort, search]);
   return (
     <div>
       <NavbarUser />
@@ -61,8 +59,8 @@ const Viewall = () => {
                     <div className="text-[12px] text-[#A0A3BD] mb-[40px]">{char.genre}</div>
                   </div>
                   <div className="">
-                    <button className=" border-2 px-[45px] py-[5px] rounded-[4px] text-[#f1554c] text-[14px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-xl duration-300">
-                      <Link to={"/moviedetails/" + char.id}>Details</Link>
+                    <button type="submit" className=" border-2 px-[45px] py-[5px] rounded-[4px] text-[#f1554c] text-[14px] border-[#f1554c] hover:text-white hover:bg-[#f1554c] hover:font-semibold hover:shadow-xl duration-300">
+                      <Link to={`/moviedetails/${char.id}`}>Details</Link>
                     </button>
                   </div>
                 </div>
@@ -77,18 +75,18 @@ const Viewall = () => {
           </div>
         )}
         <div className="flex justify-center items-center ">
-          <div onClick={() => setPage(1)} className="mr-[8px] cursor-pointer">
+          <button type="submit" onClick={() => setPage(1)} className="mr-[8px] cursor-pointer">
             <div className=" w-[40px] h-[40px] bg-white rounded-[8px] flex justify-center items-center text-[18px] font-Mulish hover:bg-[#f1554c] hover:text-white hover:shadow-lg duration-500">1</div>
-          </div>
-          <div onClick={() => setPage(2)} className="mr-[8px] cursor-pointer">
+          </button>
+          <button type="submit" onClick={() => setPage(2)} className="mr-[8px] cursor-pointer">
             <div className=" w-[40px] h-[40px] bg-white rounded-[8px] flex justify-center items-center text-[18px] font-Mulish hover:bg-[#f1554c] hover:text-white hover:shadow-lg duration-500">2</div>
-          </div>
-          <div onClick={() => setPage(3)} className="mr-[8px] cursor-pointer">
+          </button>
+          <button type="submit" onClick={() => setPage(3)} className="mr-[8px] cursor-pointer">
             <div className=" w-[40px] h-[40px] bg-white rounded-[8px] flex justify-center items-center text-[18px] font-Mulish hover:bg-[#f1554c] hover:text-white hover:shadow-lg duration-500">3</div>
-          </div>
-          <div onClick={() => setPage(4)} className="cursor-pointer">
+          </button>
+          <button type="submit" onClick={() => setPage(4)} className="cursor-pointer">
             <div className=" w-[40px] h-[40px] bg-white rounded-[8px] flex justify-center items-center text-[18px] font-Mulish hover:bg-[#f1554c] hover:text-white hover:shadow-lg duration-500">4</div>
-          </div>
+          </button>
         </div>
       </div>
 
@@ -96,6 +94,6 @@ const Viewall = () => {
       <Copyright />
     </div>
   );
-};
+}
 
 export default Viewall;

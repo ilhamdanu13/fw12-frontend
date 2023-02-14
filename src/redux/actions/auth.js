@@ -1,10 +1,9 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import http from "../../helpers/http";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import http from '../../helpers/http';
 
-export const loginAction = createAsyncThunk("auth/login", async ({ email, password, cb }) => {
+export const loginAction = createAsyncThunk('auth/login', async ({ email, password, cb }) => {
   try {
-    const { data } = await http().post("https://fw12-backend-shr6.vercel.app/auth/login", { email, password });
+    const { data } = await http().post('https://fw12-backend-shr6.vercel.app/auth/login', { email, password });
     cb();
     return data.results.token;
   } catch (error) {
@@ -12,9 +11,11 @@ export const loginAction = createAsyncThunk("auth/login", async ({ email, passwo
   }
 });
 
-export const registerAction = createAsyncThunk("auth/register", async ({ firstName, lastName, email, phoneNumber, password, cb }) => {
+export const registerAction = createAsyncThunk('auth/register', async ({
+  firstName, lastName, email, phoneNumber, password, cb,
+}) => {
   try {
-    const { data } = await http().post("https://fw12-backend-shr6.vercel.app/auth/register", {
+    const { data } = await http().post('https://fw12-backend-shr6.vercel.app/auth/register', {
       firstName,
       lastName,
       email,
@@ -28,9 +29,9 @@ export const registerAction = createAsyncThunk("auth/register", async ({ firstNa
   }
 });
 
-export const forgotPassword = createAsyncThunk("auth/forgotPassword", async ({ email, cb }) => {
+export const forgotPassword = createAsyncThunk('auth/forgotPassword', async ({ email, cb }) => {
   try {
-    const { data } = await http().post("https://fw12-backend-shr6.vercel.app/auth/forgotPassword", {
+    const { data } = await http().post('https://fw12-backend-shr6.vercel.app/auth/forgotPassword', {
       email,
     });
     cb();
@@ -40,9 +41,17 @@ export const forgotPassword = createAsyncThunk("auth/forgotPassword", async ({ e
   }
 });
 
-export const resetPassword = createAsyncThunk("auth/resetPassword", async ({ code, email, password, confirmPassword, cb }) => {
+export const resetPassword = createAsyncThunk('auth/resetPassword', async ({
+  code, email, password, confirmPassword, cb,
+}) => {
   try {
-    const { data } = await http().post("https://fw12-backend-shr6.vercel.app/auth/resetPassword", {
+    console.log({
+      code,
+      email,
+      password,
+      confirmPassword,
+    });
+    const { data } = await http().post('https://fw12-backend-shr6.vercel.app/auth/resetPassword', {
       code,
       email,
       password,

@@ -1,24 +1,36 @@
-import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BsEyeSlash, BsEye } from "react-icons/bs";
-import { GiTicket } from "react-icons/gi";
-import { RxDividerVertical } from "react-icons/rx";
-import { useDispatch } from "react-redux";
-import { resetPassword as resetAction } from "../redux/actions/auth";
-import { Formik, Form, Field, validateYupSchema } from "formik";
-import * as Yup from "yup";
-import YupPassword from "yup-password";
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable consistent-return */
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { BsEyeSlash, BsEye } from 'react-icons/bs';
+import { GiTicket } from 'react-icons/gi';
+import { RxDividerVertical } from 'react-icons/rx';
+import { useDispatch } from 'react-redux';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import YupPassword from 'yup-password';
+import { resetPassword as resetAction } from '../redux/actions/auth';
+
 YupPassword(Yup);
 
 const forgotScheme = Yup.object().shape({
-  password: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
-  confirmPassword: Yup.string().password().min(8, "Min lenght 8").minLowercase(1, "Min lowercase 1").minUppercase(1, "Min uppercase 1").minSymbols(1, "Min symbol 1").minNumbers(1, "Min number 1").required("Required"),
-  code: Yup.string().required("Required"),
+  password: Yup.string().password().min(8, 'Min lenght 8').minLowercase(1, 'Min lowercase 1')
+    .minUppercase(1, 'Min uppercase 1')
+    .minSymbols(1, 'Min symbol 1')
+    .minNumbers(1, 'Min number 1')
+    .required('Required'),
+  confirmPassword: Yup.string().password().min(8, 'Min lenght 8').minLowercase(1, 'Min lowercase 1')
+    .minUppercase(1, 'Min uppercase 1')
+    .minSymbols(1, 'Min symbol 1')
+    .minNumbers(1, 'Min number 1')
+    .required('Required'),
+  code: Yup.string().required('Required'),
 });
 
-const Reset = () => {
+function Reset() {
   const state = useLocation();
-  const [errMessage, setErrMessage] = React.useState("");
+  const [errMessage, setErrMessage] = React.useState('');
   const [alertError, setAlertError] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const navigate = useNavigate();
@@ -29,22 +41,24 @@ const Reset = () => {
   };
 
   const reset = async (value) => {
-    const code = value.code;
-    const email = state;
-    const password = value.password;
-    const confirmPassword = value.confirmPassword;
+    const { code } = value;
+    const { email } = state.state;
+    const { password } = value;
+    const { confirmPassword } = value;
 
     if (password !== confirmPassword) {
-      return setErrMessage("Password and confirm password does not match!");
+      return setErrMessage('Password and confirm password does not match!');
     }
 
     const cb = () => {
-      navigate("/signin");
+      navigate('/signin');
     };
 
     try {
-      const result = await dispatch(resetAction({ code, email, password, confirmPassword, cb }));
-      if (result.payload.startsWith("Reset")) {
+      const result = await dispatch(resetAction({
+        code, email, password, confirmPassword, cb,
+      }));
+      if (result.payload.startsWith('Reset')) {
         setAlertError(true);
         return;
       }
@@ -67,7 +81,7 @@ const Reset = () => {
               <GiTicket className="text-[#ef91a1] text-[50px] absolute right-56 top-10" />
             </div>
             <div className="mb-[77px]">
-              <div className="text-[48px] text-white">Let's reset your password</div>
+              <div className="text-[48px] text-white">Lets reset your password</div>
               <div className="text-[24px] text-[#FFFFFFB2]">To be able to use your account again, please</div>
               <div className="text-[24px] text-[#FFFFFFB2]">complete the following steps.</div>
             </div>
@@ -119,9 +133,9 @@ const Reset = () => {
         <div className=" text-[18px] tracking-[.007em] leading-[22px] mb-12 text-[#AAAAAA] font-[400px]">set your new password</div>
         <Formik
           initialValues={{
-            code: "",
-            password: "",
-            confirmPassword: "",
+            code: '',
+            password: '',
+            confirmPassword: '',
           }}
           validationSchema={forgotScheme}
           onSubmit={reset}
@@ -142,24 +156,19 @@ const Reset = () => {
                 <label>Code</label>
                 <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" name="code" placeholder="Write your code" />
                 {errors.code && touched.code ? <div className="text-red-500 text-sm ">{errors.code}</div> : null}
-              </div>{" "}
-              {/* <div className=" mb-3">
-                <label>Email</label>
-                <Field className="form-input w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3" type="email" name="email" placeholder="Write your email" />
-                {errors.email && touched.email ? <div className="text-red-500 text-sm ">{errors.email}</div> : null}
-              </div> */}
+              </div>
               <div className=" mb-3 relative text-[16px] flex flex-col">
                 <label>Password</label>
-                <Field className="form-inpu lg:w-[295px] lg:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" type={show ? "text" : "password"} name="password" placeholder="Write your password" />
-                <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
+                <Field className="form-inpu lg:w-[295px] lg:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" type={show ? 'text' : 'password'} name="password" placeholder="Write your password" />
+                <label onClick={handleShow} onKeyDown={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
                 {errors.password && touched.password ? <div className="text-red-500 text-sm ">{errors.password}</div> : null}
               </div>
               <div className="mb-5 relative text-[16px] flex flex-col">
                 <label>Confirm Password</label>
-                <Field className="form-input lg:w-[295px] lg:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" type={show ? "text" : "password"} name="confirmPassword" placeholder="Write your confirm password" />
-                <label onClick={handleShow} className="absolute right-8 top-14 cursor-pointer">
+                <Field className="form-input lg:w-[295px] lg:w-full pl-5 py-4 border-2 box-border rounded-[12px] mt-3 focus:outline-none" type={show ? 'text' : 'password'} name="confirmPassword" placeholder="Write your confirm password" />
+                <label onClick={handleShow} onKeyDown={handleShow} className="absolute right-8 top-14 cursor-pointer">
                   {show ? <BsEyeSlash className="w-[20px] h-[20px]" /> : <BsEye className="w-[20px] h-[20px]" />}
                 </label>
                 {errors.confirmPassword && touched.confirmPassword ? <div className="text-red-500 text-sm ">{errors.confirmPassword}</div> : null}
@@ -187,6 +196,6 @@ const Reset = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Reset;

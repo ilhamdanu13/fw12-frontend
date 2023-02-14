@@ -1,25 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Dashboard = () => {
-  const [movieDetail, setMovieDetail] = React.useState({});
-  React.useEffect(() => {
-    getMovieDetail().then((data) => {
-      setMovieDetail(data);
-    });
-  }, []);
-
-  const getMovieDetail = async () => {
-    const { data } = await axios.get("https://fw12-backend-shr6.vercel.app/movies/1");
-    return data;
-  };
-
+function Dashboard() {
   return (
     <div>
       <nav className="flex flex-1 pt-[36px] px-[79px]">
         <div>
-          <img className="mr-[81px]" src={require("../assets/images/navlogo.png")} alt="navlogo" />
+          <img className="mr-[81px]" src={require('../assets/images/navlogo.png')} alt="navlogo" />
         </div>
         <div className="flex-1 items-center content-center pt-[13px]">
           <Link className="pt-[13px] mr-[50px]" to="/home">
@@ -33,10 +20,10 @@ const Dashboard = () => {
           </Link>
         </div>
         <div className=" pt-[23px] pr-[50px]">
-          <img className="w-[18px]" src={require("../assets/images/search.png")} alt="Search" />
+          <img className="w-[18px]" src={require('../assets/images/search.png')} alt="Search" />
         </div>
         <div className=" items-center pt-[13px]">
-          <img className="w-[56px]" src={require("../assets/images/Profile.png")} alt="Profile" />
+          <img className="w-[56px]" src={require('../assets/images/Profile.png')} alt="Profile" />
         </div>
       </nav>
       <div className="bg-[#E5E5E5]">
@@ -47,7 +34,7 @@ const Dashboard = () => {
         <div className=" px-[70px]">
           <div className="flex">
             <div className=" mr-[26px] mb-[73px]">
-              <img className="" src={require("../assets/images/dashboard.png")} alt="Dashboard" />
+              <img className="" src={require('../assets/images/dashboard.png')} alt="Dashboard" />
             </div>
             <div className="border-1 bg-white px-[20px] mb-[73px] pb-[38px] rounded-[4px]">
               <div className="pt-[34px] mb-[28px] text-[#4E4B66] text-[16px]">
@@ -80,7 +67,7 @@ const Dashboard = () => {
 
       <footer className="flex px-[136px]">
         <div className="pt-[110px] flex-1">
-          <img src={require("../assets/images/logoreal.png")} alt="logo footer" />
+          <img src={require('../assets/images/logoreal.png')} alt="logo footer" />
           <div className="pt-[30px] text-[16px] text-[#6E7191] mb-[5px]">Stop waiting in line. Buy tickets</div>
           <div className="text-[16px] text-[#6E7191]">conveniently, watch movies quietly.</div>
         </div>
@@ -91,26 +78,26 @@ const Dashboard = () => {
         </div>
         <div className="pt-[110px] text-[16px] mb-[30px] font-bold flex-1">
           <div className="mb-[30px]">Our Sponsor</div>
-          <img className="mb-[30px]" src={require("../assets/images/pic1.png")} alt="ebu" />
-          <img className="mb-[30px]" src={require("../assets/images/pic2.png")} alt="cineone" />
-          <img className="mb-[30px]" src={require("../assets/images/pic3.png")} alt="hiflix" />
+          <img className="mb-[30px]" src={require('../assets/images/pic1.png')} alt="ebu" />
+          <img className="mb-[30px]" src={require('../assets/images/pic2.png')} alt="cineone" />
+          <img className="mb-[30px]" src={require('../assets/images/pic3.png')} alt="hiflix" />
         </div>
         <div className="pt-[110px] flex-1">
           <div className="mb-[35px] font-bold">Follow us</div>
           <div className="flex flex-row mb-[28px]">
-            <img className="mr-[22px]" src={require("../assets/images/facebook.png")} alt="facebook" />
+            <img className="mr-[22px]" src={require('../assets/images/facebook.png')} alt="facebook" />
             <div>Tickitz Cinema id</div>
           </div>
           <div className="flex flex-row mb-[28px]">
-            <img className="mr-[15px]" src={require("../assets/images/instagram.png")} alt="instagram" />
+            <img className="mr-[15px]" src={require('../assets/images/instagram.png')} alt="instagram" />
             <div>tickitz.id</div>
           </div>
           <div className="flex flex-row mb-[28px]">
-            <img className="mr-[22px]" src={require("../assets/images/twitter.png")} alt="twitter" />
+            <img className="mr-[22px]" src={require('../assets/images/twitter.png')} alt="twitter" />
             <div>tickitz.id</div>
           </div>
           <div className="flex flex-row">
-            <img className="mr-[20px]" src={require("../assets/images/youtube.png")} alt="youtube" />
+            <img className="mr-[20px]" src={require('../assets/images/youtube.png')} alt="youtube" />
             <div>Tickitz Cinema id</div>
           </div>
         </div>
@@ -118,6 +105,6 @@ const Dashboard = () => {
       <div className="text-center text-[#4E4B66] text-[14px] pt-[70px] tracking-[.5px] leading-[18px] mb-[48px]">© 2020 Tickitz. All Rights Reserved.</div>
     </div>
   );
-};
+}
 
 export default Dashboard;
