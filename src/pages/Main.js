@@ -1,39 +1,39 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React from "react";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React from 'react';
 
-import Signin from "./Signin";
-import Index from "./Index";
-import Signup from "./Signup";
-import Forgot from "./Forgot";
-import Reset from "./Reset";
-import Homepage from "./Homepage";
-import Viewall from "./Viewall";
-import Moviedetails from "./Moviedetails";
-import OrderPage from "./Orderpage";
-import PaymentPage from "./Paymentpage";
-import ProfilePage from "./Profile";
-import OrderHistory from "./Orderhistory";
-import TicketResult from "./Ticketresult";
-import TicketResult2 from "./Ticketresult2";
-import TicketResult3 from "./Ticketresult3";
-import ManageMovie from "./Managemovie";
-import Dashboard from "./Dashboard";
-import ManageSchedule from "./Manageschedule";
+import Signin from './Signin';
+import Index from './Index';
+import Signup from './Signup';
+import Forgot from './Forgot';
+import Reset from './Reset';
+import Homepage from './Homepage';
+import Viewall from './Viewall';
+import Moviedetails from './Moviedetails';
+import OrderPage from './Orderpage';
+import PaymentPage from './Paymentpage';
+import ProfilePage from './Profile';
+import OrderHistory from './Orderhistory';
+import TicketResult from './Ticketresult';
+import TicketResult2 from './Ticketresult2';
+import TicketResult3 from './Ticketresult3';
+import ManageMovie from './Managemovie';
+import Dashboard from './Dashboard';
+import ManageSchedule from './Manageschedule';
 
-import PrivateRoute from "../components/PrivateRoute";
-import PublicRoute from "../components/PublicRoute";
+import PrivateRoute from '../components/PrivateRoute';
+import PublicRoute from '../components/PublicRoute';
 
-const Main = () => {
+function Main() {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/signup"
-          element={
+          element={(
             <PublicRoute>
               <Signup />
             </PublicRoute>
-          }
+          )}
         />
         {/* <Route
           path="/signin"
@@ -47,151 +47,151 @@ const Main = () => {
 
         <Route
           path="/reset"
-          element={
+          element={(
             <PublicRoute>
               <Reset />
             </PublicRoute>
-          }
+          )}
         />
         <Route
           path="/forgot"
-          element={
+          element={(
             <PublicRoute>
               <Forgot />
             </PublicRoute>
-          }
+          )}
         />
         <Route
           path="/"
-          element={
+          element={(
             <PublicRoute>
               <Index />
             </PublicRoute>
-          }
+          )}
         />
         <Route
           path="/homepage"
-          element={
+          element={(
             <PrivateRoute>
               <Homepage />
             </PrivateRoute>
-          }
+          )}
         />
 
         <Route
           path="/all"
-          element={
+          element={(
             <PrivateRoute>
               <Viewall />
             </PrivateRoute>
-          }
+          )}
         />
         <Route
           path="/moviedetails/:id"
-          element={
+          element={(
             <PrivateRoute>
               <Moviedetails />
             </PrivateRoute>
-          }
+          )}
         />
 
         <Route
           path="/orderpage"
-          element={
+          element={(
             <PrivateRoute>
               <OrderPage />
             </PrivateRoute>
-          }
+          )}
         />
 
         <Route
           path="/paymentpage"
-          element={
+          element={(
             <PrivateRoute>
               <PaymentPage />
             </PrivateRoute>
-          }
+          )}
         />
 
         <Route
           path="/profile"
-          element={
+          element={(
             <PrivateRoute>
               <ProfilePage />
             </PrivateRoute>
-          }
+          )}
         />
         <Route
           path="/profile"
-          element={
+          element={(
             <PrivateRoute>
               <ProfilePage />
             </PrivateRoute>
-          }
+          )}
         />
         <Route
           path="/order history"
-          element={
+          element={(
             <PrivateRoute>
               <OrderHistory />
             </PrivateRoute>
-          }
+          )}
         />
 
         <Route
           path="/ticket result/:id"
-          element={
+          element={(
             <PrivateRoute>
               <TicketResult />
             </PrivateRoute>
-          }
+          )}
         />
         <Route
           path="/ticket result 2"
-          element={
+          element={(
             <PrivateRoute>
               <TicketResult2 />
             </PrivateRoute>
-          }
+          )}
         />
 
         <Route
           path="/ticket result 3"
-          element={
+          element={(
             <PrivateRoute>
               <TicketResult3 />
             </PrivateRoute>
-          }
+          )}
         />
 
         <Route
           path="/manage movie page"
-          element={
+          element={(
             <PrivateRoute>
               <ManageMovie />
             </PrivateRoute>
-          }
+          )}
         />
         <Route
           path="/dashboard page"
-          element={
+          element={(
             <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
-          }
+          )}
         />
 
         <Route
           path="/manage schedule page"
-          element={
+          element={(
             <PrivateRoute>
               <ManageSchedule />
             </PrivateRoute>
-          }
+          )}
         />
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
 export default Main;

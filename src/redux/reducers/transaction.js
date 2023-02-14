@@ -1,27 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable no-return-assign */
+/* eslint-disable no-param-reassign */
+import { createSlice } from '@reduxjs/toolkit';
 
-import { transactionAction } from "../actions/transaction";
+import { transactionAction } from '../actions/transaction';
 
 const initialState = {
-  userId: "",
-  movieId: "",
-  movieName: "",
-  cinemaName: "",
-  cinemaPicture: "",
-  cinemaId: "",
-  bookingDate: "",
-  bookingTime: "",
-  price: "",
+  userId: '',
+  movieId: '',
+  movieName: '',
+  cinemaName: '',
+  cinemaPicture: '',
+  cinemaId: '',
+  bookingDate: '',
+  bookingTime: '',
+  price: '',
   seatNum: [],
-  fullName: "",
-  email: "",
-  phoneNumber: "",
-  paymentMethodId: "",
-  totalPrice: "",
-  genre: "",
+  fullName: '',
+  email: '',
+  phoneNumber: '',
+  paymentMethodId: '',
+  totalPrice: '',
+  genre: '',
 };
 const transactionReducer = createSlice({
-  name: "transaction",
+  name: 'transaction',
   initialState,
   reducers: {
     chooseMovie: (state, { payload }) => {
@@ -42,11 +44,15 @@ const transactionReducer = createSlice({
       state.totalPrice = payload.totalPrice;
     },
     choosePayment: (state, action) => {
-      const { paymentMethodId, fullName, email, phoneNumber, cb } = action.payload;
+      const {
+        paymentMethodId, fullName, email, phoneNumber, cb,
+      } = action.payload;
       cb();
       return (state = {
         ...state,
-        ...{ paymentMethodId, fullName, email, phoneNumber },
+        ...{
+          paymentMethodId, fullName, email, phoneNumber,
+        },
       });
     },
   },

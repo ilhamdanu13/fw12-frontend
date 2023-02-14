@@ -1,12 +1,12 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import { combineReducers } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-import auth from "./auth";
-import transaction from "./transaction";
+import auth from './auth';
+import transaction from './transaction';
 
 const authConfig = {
-  key: "auth",
+  key: 'auth',
   storage,
 };
 

@@ -55,10 +55,10 @@ function Dashboard() {
                 </select>
               </div>
               <div className="mb-[20px]">
-                <button className="border-2 border-[#5F2EEA] text-[#5F2EEA] w-full py-[8px] rounded-[4px]">Filter</button>
+                <button type="submit" className="border-2 border-[#5F2EEA] text-[#5F2EEA] w-full py-[8px] rounded-[4px]">Filter</button>
               </div>
               <div>
-                <button className="border-2 border-[#5F2EEA] text-[#5F2EEA] w-full py-[8px] rounded-[4px]">Reset</button>
+                <button type="submit" className="border-2 border-[#5F2EEA] text-[#5F2EEA] w-full py-[8px] rounded-[4px]">Reset</button>
               </div>
             </div>
           </div>
