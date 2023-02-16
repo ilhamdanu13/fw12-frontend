@@ -1,6 +1,6 @@
-# Cluezzy Ticket for Movie App
+# Cluezzy Ticket for Movie Web App
 ## About
-Cluezzy is a web app that you can use to order ticket to watching movie. There are bunch of movies you can watch on cinema. You can see movie details, movie times, prices, choose seats, and also many payment option when you pay the tickets.
+Cluezzy is a web & mobile app that you can use to order ticket to watching movie. There are bunch of movies you can watch on cinema. You can see movie details, movie times, prices, choose seats, and also many payment option when you pay the tickets.
 
 ## Built
 This web app built with:
