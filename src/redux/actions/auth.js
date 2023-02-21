@@ -45,12 +45,6 @@ export const resetPassword = createAsyncThunk('auth/resetPassword', async ({
   code, email, password, confirmPassword, cb,
 }) => {
   try {
-    console.log({
-      code,
-      email,
-      password,
-      confirmPassword,
-    });
     const { data } = await http().post('https://fw12-backend-shr6.vercel.app/auth/resetPassword', {
       code,
       email,
