@@ -17,7 +17,7 @@ function Homepage() {
   };
 
   const getUpcoming = async () => {
-    const { data } = await axios.get('https://fw12-backend-shr6.vercel.app/movies/upcoming');
+    const { data } = await axios.get('https://fw12-backend-shr6.vercel.app/movies/upcomingSchedule');
     return data;
   };
 
@@ -54,7 +54,7 @@ function Homepage() {
         </div>
         <div className="flex overflow-auto ">
           {nowShowing?.results?.map((char) => (
-            <div className="pt-[56px] ">
+            <div key={char.id} className="pt-[56px] ">
               <div className="flex flex-col border-box h-[452px] border-2 p-[32px] rounded-[8px] border-white mr-[28px] text-center mb-[20px]">
                 <div className="">
                   <img className="w-[159px] h-[200px] rounded-[4px]" src={char.picture} alt={char.title} />
@@ -92,7 +92,7 @@ function Homepage() {
         </div>
         <div className="flex overflow-x-auto ">
           {upcoming?.results?.map((char) => (
-            <div className="lg:pt-[56px] ">
+            <div key={char.id} className="lg:pt-[56px] ">
               <div className="flex flex-col border-box h-[452px] border-2 p-[32px] rounded-[8px] border-[#e9ecf4] mr-[28px] text-center mb-[20px]">
                 <div className="">
                   <img className="w-[159px] h-[200px] rounded-[4px] " src={char.picture} alt={char.title} />
