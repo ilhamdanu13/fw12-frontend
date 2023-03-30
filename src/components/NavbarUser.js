@@ -5,7 +5,7 @@ import jwtDecode from 'jwt-decode';
 import { logout as logoutAction } from '../redux/reducers/auth';
 import http from '../helpers/http';
 
-function NavbarUser() {
+const NavbarUser = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const [bio, setBio] = React.useState({});

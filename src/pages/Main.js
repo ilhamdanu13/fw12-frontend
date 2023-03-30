@@ -23,7 +23,7 @@ import ManageSchedule from './Manageschedule';
 import PrivateRoute from '../components/PrivateRoute';
 import PublicRoute from '../components/PublicRoute';
 
-function Main() {
+const Main = () => {
   return (
     <BrowserRouter>
       <Routes>

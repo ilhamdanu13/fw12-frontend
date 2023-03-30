@@ -10,7 +10,7 @@ import NavbarUser from '../components/NavbarUser';
 import Footer from '../components/Footer';
 import Copyright from '../components/Copyright';
 
-function Moviedetails() {
+const Moviedetails = () => {
   const token = useSelector((state) => state?.auth?.token);
   const decode = jwtDecode(token);
   const userId = decode.id;

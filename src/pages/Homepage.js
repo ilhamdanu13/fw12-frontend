@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import Copyright from '../components/Copyright';
 import Subscribe from '../components/Subscribe';
 
-function Homepage() {
+const Homepage = () => {
   const [nowShowing, setNowShowing] = React.useState({});
   const [upcoming, setUpcoming] = React.useState({});
 

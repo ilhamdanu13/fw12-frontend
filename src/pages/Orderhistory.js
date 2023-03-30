@@ -9,7 +9,7 @@ import { logout as logoutAction } from '../redux/reducers/auth';
 import Footer from '../components/Footer';
 import Copyright from '../components/Copyright';
 
-function OrderHistory() {
+const OrderHistory = () => {
   const token = useSelector((state) => state?.auth?.token);
   const decode = jwtDecode(token);
   const { id } = decode;

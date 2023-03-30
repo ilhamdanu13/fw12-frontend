@@ -17,7 +17,7 @@ const SignInScheme = Yup.object().shape({
   password: Yup.string().required('Required'),
 });
 
-function Signin() {
+const Signin = () => {
   const [errMessage, setErrMessage] = React.useState('');
   const [alertError, setAlertError] = React.useState(false);
   const [alertSuccess, setAlertSuccess] = React.useState(false);

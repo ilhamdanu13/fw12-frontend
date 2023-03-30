@@ -15,7 +15,7 @@ const resetScheme = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
 });
 
-function Forgot() {
+const Forgot = () => {
   const [alertEmail, setAlertEmail] = React.useState(false);
   const [alertRequested, setAlertRequested] = React.useState(false);
   const navigate = useNavigate();

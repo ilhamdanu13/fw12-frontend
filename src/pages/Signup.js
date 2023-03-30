@@ -27,7 +27,7 @@ const SignUpScheme = Yup.object().shape({
   phoneNumber: Yup.string().matches(phoneRegEx, 'Invalid phone number').required('Required'),
 });
 
-function Signup() {
+const Signup = () => {
   const [errMessage, setErrMessage] = React.useState('');
   const [alertError, setAlertError] = React.useState(false);
   const [alertSuccess, setAlertSuccess] = React.useState(false);

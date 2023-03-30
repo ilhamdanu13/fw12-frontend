@@ -8,7 +8,7 @@ import Footer from '../components/Footer';
 import Copyright from '../components/Copyright';
 import http from '../helpers/http';
 
-function Viewall() {
+const Viewall = () => {
   const token = useSelector((state) => state?.auth?.token);
   const [page, setPage] = React.useState(1);
   const [sort, setSort] = React.useState('');

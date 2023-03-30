@@ -9,7 +9,7 @@ import NavbarUser from '../components/NavbarUser';
 import Footer from '../components/Footer';
 import Copyright from '../components/Copyright';
 
-function OrderPage() {
+const OrderPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedSeat, setSelectedSeat] = React.useState([]);

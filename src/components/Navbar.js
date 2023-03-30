@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Navbar() {
+const Navbar = () => {
   return (
     <nav className="lg:flex  py-[36px] mb-[48px] lg:px-[136px] px-3">
       <div className=" relative mr-[80px]">

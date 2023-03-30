@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Subscribe() {
+const Subscribe = () => {
   return (
     <div className="px-3 md:px-[136px] pt-5 md:pt-[138px] md:mb-[96px]">
       <div className="shadow-xl pb-[48px]">

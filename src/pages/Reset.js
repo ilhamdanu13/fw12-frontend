@@ -28,7 +28,7 @@ const forgotScheme = Yup.object().shape({
   code: Yup.string().required('Required'),
 });
 
-function Reset() {
+const Reset = () => {
   const state = useLocation();
   const [errMessage, setErrMessage] = React.useState('');
   const [alertError, setAlertError] = React.useState(false);

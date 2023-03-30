@@ -36,7 +36,7 @@ const passwordScheme = Yup.object().shape({
     .minNumbers(1, 'Min number 1'),
 });
 
-function ProfilePage() {
+const ProfilePage = () => {
   const token = useSelector((state) => state?.auth?.token);
   const decode = jwtDecode(token);
   const { id } = decode;

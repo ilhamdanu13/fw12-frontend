@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Month() {
+const Month = () => {
   return (
     <div className="flex overflow-auto mb-3 md:mb-[68px]">
       {['September', 'October', 'November', 'Desember', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'].map((month) => (

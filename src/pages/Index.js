@@ -6,7 +6,7 @@ import Subscribe from '../components/Subscribe';
 import Footer from '../components/Footer';
 import Copyright from '../components/Copyright';
 
-function Index() {
+const  Index = () => {
   const [nowShowing, setNowShowing] = React.useState({});
   const [upcoming, setUpcoming] = React.useState({});
 

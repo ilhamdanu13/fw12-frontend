@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Copyright from '../components/Copyright';
 import NavbarUser from '../components/NavbarUser';
 
-function TicketResult2() {
+const TicketResult2 = () => {
   const movieName = useSelector((state) => state.transaction.movieName);
   const totalPrice = useSelector((state) => state.transaction.totalPrice);
   const bookingDate = useSelector((state) => state.transaction.bookingDate);

@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-function ManageSchedule() {
+const ManageSchedule = () => {
   const [movieDetail, setMovieDetail] = React.useState({});
 
   const getMovieDetail = async () => {

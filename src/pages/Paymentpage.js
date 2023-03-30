@@ -9,7 +9,7 @@ import NavbarUser from '../components/NavbarUser';
 import Footer from '../components/Footer';
 import Copyright from '../components/Copyright';
 
-function PaymentPage() {
+const PaymentPage = () => {
   const token = useSelector((state) => state?.auth?.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import Copyright from '../components/Copyright';
 import NavbarUser from '../components/NavbarUser';
 import http from '../helpers/http';
 
-function TicketResult() {
+const TicketResult = () => {
   const token = useSelector((state) => state?.auth?.token);
   const { id } = useParams();
   const [ticket, setTicket] = React.useState({});

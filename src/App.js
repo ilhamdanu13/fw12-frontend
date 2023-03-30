@@ -6,7 +6,7 @@ import { store, persistor } from './redux/store';
 
 import Main from './pages/Main';
 
-function App() {
+const App = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
